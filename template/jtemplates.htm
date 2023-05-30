@@ -1,0 +1,635 @@
+<script id="dashboard_templ"  type="text/x-mustache">
+    {{#data}}
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+      
+  </div>
+
+  <!-- Content Row -->
+
+  <div class="row">
+
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-3 mb-3">
+          <div class="card  shadow h-100 py-2 ">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-primary text-uppercase mb-1"> 
+                            <a href="javascript:void(0);" class="btn btn-link font-weight-bold text-info text-decoration-none" onclick="Tenders('nav-tenders')" >TENDERS</a> 
+                          </div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3  text-info text-decoration-none">{{Tenders}}</div>
+                      </div>
+                      <div class="col-auto">
+                          <i class="fas fa-copy fa-2x text-gray-300"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  {{#admin}}
+
+
+      <div class="col-xl-3 col-md-3 mb-3">
+          <div class="card  shadow h-100 py-2">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-info text-uppercase mb-1"> <a href="javascript:void(0);" class="btn btn-link font-weight-bold text-info text-decoration-none" onclick="employees('nav-employees')">EMPLOYEES </a></div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3 ">{{Users}}</div>
+                      </div>
+                      <div class="col-auto">
+                          <i class="fas fa-users fa-2x text-gray-300"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+       <div class="col-xl-3 col-md-3 mb-3">
+          <div class="card  shadow h-100 py-2">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-success text-uppercase mb-1"><a href="javascript:void(0);" class="btn btn-link font-weight-bold text-info text-decoration-none" onclick="Vendors('nav-vendors')"> VENDORS</a></div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3 ">{{Vendors}}</div>
+                      </div>
+                      <div class="col-auto">
+                          <i class="fas fa-user-tag fa-2x text-gray-300"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-3 mb-3">
+          <div class="card  shadow h-100 py-2 ">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-primary text-uppercase mb-1"> 
+                            <!-- <a href="javascript:void(0);" class="btn btn-link font-weight-bold text-info text-decoration-none" onclick="TOTALEMD()" >Total EMD</a>  -->
+                            <span class=" font-weight-bold text-info ml-3">Total EMD</span>
+                            
+                          </div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3  text-info text-decoration-none">{{#CheckZeroEMDAmount}}₹0{{/CheckZeroEMDAmount}}{{^CheckZeroEMDAmount}}{{TOTALEMD}}{{/CheckZeroEMDAmount}}</div>
+                      </div>
+                      <div class="col-auto">
+                          <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    
+  </div>
+
+  <div class="row">
+
+
+      <div class="col-xl-3 col-md-3 mb-3">
+          <div class="card  shadow h-100 py-2">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-info text-uppercase mb-1">
+                           <!-- <a href="javascript:void(0);" class="btn btn-link font-weight-bold text-info text-decoration-none" onclick="TOTALASD()">Total ASD </a> -->
+                            <span class=" font-weight-bold text-info ml-3">Total ASD</span>
+
+                         </div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3 ">{{#CheckZeroASDAmount}}₹0{{/CheckZeroASDAmount}}{{^CheckZeroASDAmount}}{{TOTALASD}}{{/CheckZeroASDAmount}}</div>
+                      </div>
+                      <div class="col-auto">
+                          <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="col-xl-3 col-md-3 mb-3">
+        <div class="card  shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                  <div class="font-weight-bold text-success text-uppercase mb-1">
+                    <!-- <a href="javascript:void(0);" class="btn btn-link font-weight-bold text-info text-decoration-none" onclick="TOTALBG()"> Total BG</a> -->
+                    <span class=" font-weight-bold text-info ml-3">Total BG</span>
+
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3 ">{{#CheckZeroBankAmount}}₹0{{/CheckZeroBankAmount}}{{^CheckZeroBankAmount}}{{TOTALBG}}{{/CheckZeroBankAmount}}</div>
+              </div>
+              <div class="col-auto">
+                  <i class="fas fa-credit-card fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{{/admin}}
+{{^Accounts}}
+
+
+
+
+        <div class="col-xl-3 col-md-3 mb-3">
+          <div class="card  shadow h-100 py-2">
+              <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                          <div class="font-weight-bold text-success text-uppercase mb-1">
+                            <a href="javascript:void(0);" class="btn btn-link font-weight-bold text-info text-decoration-none" onclick="TotalRequestWidget()">TOTAL REQUEST</a>
+
+                          </div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3 ">
+                           <span class="">
+                              <span class="text-warning">{{#UnAproved}}{{TOTALREQUEST_UnAproved}} &nbsp&nbsp&nbsp&nbsp {{/UnAproved}}</span> 
+
+                              <span class="text-success">{{TOTALREQUEST}}</span>  
+                          </span> 
+
+                            
+                          </div>
+
+                          
+
+                      </div>
+                      <div class="col-auto">
+                          <i class="fas fa-credit-card fa-2x text-gray-300"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+{{/Accounts}}
+    
+  </div>
+
+
+
+
+<div class="card shadow mb-4 mt-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-secondary ">Recent Tenders</h6>
+  </div>
+  <div class="card-body">
+    {{#TenderList.length}}
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" width="100%" cellspacing="0"  id="Dt_Employee" >
+          <thead>
+              <tr class="text-center bg-light" >
+                <th  style="min-width:10px;">Sr#</th>
+                <th>Tender Name</th>
+                <th>Tender Code</th>
+                <!-- <th>Site Supervisor</th> -->
+
+                <th>PO Total</th>
+                <th>Labour Total and %</th>
+                <th>Misc. Total and %</th>
+
+                {{^Accounts}}
+                  <th>Requests </th>
+                {{/Accounts}}
+                {{#admin}}
+                  <th>Action</th>
+                {{/admin}}
+
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#TenderList}}
+              <tr>
+                <td class="text-center" >{{index}}</td>
+                <td class="text-center">
+                  <!-- <a href="javascript:void(0);" onclick="viewTender('{{id}}')" title="View Tender" data-toggle="tooltip" data-placement="top"  > {{TenderName}}</a> -->
+
+                  <a href="javascript:void(0);" onclick="View_TenderDetails('{{id}}','{{TenderName}}','dashboard')" title="View Tender Details" data-toggle="tooltip" data-placement="top"  > {{TenderName}}</a>
+                </td>
+                <td class="text-center">{{WorkOrderNo}}</td>
+               <!--  <td>{{SiteSupervisor}}</td> -->
+
+               <td class="text-center">{{#PO_null}}--{{/PO_null}} {{^PO_null}}{{PO_total}}{{/PO_null}}</td>
+               <td class="text-center">
+                 {{#labour_amount_spend_null}}--{{/labour_amount_spend_null}}
+                 {{^labour_amount_spend_null}}
+                  {{labour_amount_spend}}
+                    {{#admin}} 
+                      ( <span class="text-success">{{SpendPercentage}}%</span> )
+                    {{/admin}}
+                 {{/labour_amount_spend_null}}
+               </td>
+
+               <td class="text-center">{{#misc_amount_null}}--{{/misc_amount_null}}
+                  {{^misc_amount_null}}
+
+                    {{misc_amount}} {{#admin}}( <span class="text-success">{{misc_amount_percentage}}%</span> ){{/admin}}</td>
+                  {{/misc_amount_null}}
+                
+                {{^Accounts}}
+                  <td class="text-center">
+                    
+
+                      
+                    
+                      <span><a href="javascript:void(0);"  class="text-warning "  onclick="UnconfirmedRequests('{{id}}')">{{#UnaprovedOrderRequest}}{{UnaprovedOrderRequest}}</a> &nbsp&nbsp </span> {{/UnaprovedOrderRequest}}
+
+                    
+                    <a href="javascript:void(0);"  onclick="PO_All_Requested('{{id}}')"><span class="text-success">
+                      
+                      {{#orderRequest}} {{orderRequest}} {{/orderRequest}}</span>
+ 
+
+
+                         <!--  {{#orderRequest}}{{orderRequest}} Requests {{/orderRequest}}
+                          <span class="badge text-warning">{{UnaprovedOrderRequest}}</span> -->
+
+                     </a>
+
+                    {{^admin}}
+                      <a href="javascript:void(0);"  class="text-warning "  onclick="PlaceRequest_BypassBOQ('{{id}}')"><i class="fa fa-hand-paper text-info"></i></a>
+                    {{/admin}}
+
+                     
+                  </td>
+                {{/Accounts}}
+
+                {{#admin}}
+                  <td class="text-center">
+                
+
+                  <a href="javascript:void(0);" onclick="EditTenderFromDashboard('{{id}}')" title="Edit"  data-toggle="tooltip" data-placement="top"  ><i class="fas fa-edit"></i> </a> | 
+                  <a href="javascript:void(0);" onclick="DeleteTender('{{id}}','dashboard')" title="Delete"  data-toggle="tooltip" data-placement="top" ><span  class="text-danger"> <i class="fas fa-trash"></i></span> </a> 
+                
+
+                <!--   <a href="javascript:void(0);" onclick="BOQs('{{id}}')" data-toggle="tooltip" data-placement="top" title="Bill of Quantities">BOQ </a> |  
+                  <a href="javascript:void(0);" onclick="PO_Active('{{id}}')" data-toggle="tooltip" data-placement="top" title="Purchase Order">PO </a> -->
+
+
+                  </td>
+                {{/admin}}
+              </tr>
+            {{/TenderList}}
+              
+          </tbody>
+      </table>
+    </div>
+    {{/TenderList.length}}
+    {{^TenderList.length}}
+     <div class="alert alert-danger" role="alert">
+      No tender to display!
+    </div>
+    {{/TenderList.length}}
+
+  </div>
+</div>
+
+
+{{#admin}}
+
+<div class="card shadow mb-4  mt-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-secondary">Upcoming EMD/SD/BG</h6>
+  </div>
+  <div class="card-body">
+    {{#TenderList.length}}
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" width="100%" cellspacing="0"  id="" >
+          <thead>
+              <tr class="text-center bg-light" >
+                <th  style="max-width:10px;">S.No</th>
+                <th >Tender Name</th>
+                <th>Tender Code</th>
+                <th>Amount</th>
+                <th>Expiry Date</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#TenderList}}
+              <tr>
+                <td class="text-center">{{index}}</td>
+                <td class="text-center">{{TenderName}}</td>
+                <td class="text-center">{{WorkOrderNo}}</td>
+                <td class="text-center">{{TotalAmout}}</td>
+                <td class="text-center">
+                    <span class="{{#DateCheck}}text-success{{/DateCheck}} {{^DateCheck}}text-danger{{/DateCheck}}"> {{TenderEndDate}} </span>
+
+                </td>
+              </tr>
+            {{/TenderList}}
+              
+          </tbody>
+      </table>
+    </div>
+    {{/TenderList.length}}
+    {{^TenderList.length}}
+     <div class="alert alert-danger" role="alert">
+      No EMD SD BG!
+    </div>
+    {{/TenderList.length}}
+  </div>
+</div>
+
+
+
+{{/admin}}
+
+
+
+
+
+
+
+
+
+  {{/data}}
+
+</script>
+
+
+<script id="employee_templ"  type="text/x-mustache">
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Employees</h1>
+
+    <a href="javascript:void(0);" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"   onclick="AddNewEmployee()"><i class="fas fa-plus fa-sm text-white-50"></i> Add New</a>
+
+
+
+</div>
+ 
+
+    
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_Employee" >
+          <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th>User Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#Employees}}
+              <tr>
+                <td  class="text-center">{{index}}</td>
+                <td>{{user_name}}</td>
+                <td>{{first_name}}</td>
+                <td>{{last_name}}</td>
+                <td>{{email}}</td>
+                <td>{{mobile}}</td>
+                <td>{{roleName}}</td>
+                <td class="text-center"><a href="javascript:void(0);" onclick="EditUser('{{id}}','{{first_name}}','{{last_name}}','{{user_name}}','{{email}}','{{mobile}}','{{role}}')"><i class="fas fa-edit"></i> </a> | <a href="javascript:void(0);" onclick="DeleteUser('{{id}}')"><span  class="text-danger"> <i class="fas fa-trash"></i></span> </a></td>
+              </tr>
+            {{/Employees}}
+              
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{/data}}
+</script>
+
+
+<script id="addNewEmployee_templ"  type="text/x-mustache">
+ {{#data}}   
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Add New  </span> Employee</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="EmployeeForm">
+
+        <div class="modal-body">
+
+
+
+
+          <div class="row">
+            <div class="col-lg-12">
+             
+
+                <div class="row">
+                    <div class="col-sm-6 mb-3 mb-sm-0 form-group ">
+                        <input type="hidden" id="id" name="id" value="">
+                        <input type="text" class="form-control form-control-user" id="first_name" name="first_name"placeholder="First Name" value="">
+                    </div>
+                    <div class="col-sm-6 form-group ">
+                        <input type="text" class="form-control form-control-user"
+                            id="last_name" name="last_name" placeholder="Last Name"  value="">
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group">
+                      <input type="text" class="form-control form-control-user" id="user_name" name="user_name"
+                          placeholder="User Name" onfocusout="CheckUserName(this.value)"  value=""  autocomplete=" ">
+                  </div>
+                  <div class="form-group">
+                      <input type="email" class="form-control form-control-user" id="email" name='email'
+                          placeholder="Email" value="">
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-6 mb-3 mb-sm-0 form-group ">
+                          <input type="password" class="form-control form-control-user"
+                              id="password" name="password" placeholder="Password" value="">
+                      </div>
+                      <div class="col-sm-6 form-group ">
+                          <input type="password" class="form-control form-control-user"
+                              id="password2" name="password2"  placeholder="Retype Password" value="">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <input type="text" class="form-control form-control-user" id="mobile" name="mobile"
+                          placeholder="Mobile Number" value="">
+                  </div>
+
+                
+
+
+                  <div class="form-group ">
+                    <select  class="form-control  form-control-user" id="role" name="role" >
+                      <option value=""  disabled selected>Select a Role</option>
+                      {{#Role}}   
+                        <option value="{{id}}">{{name}}</option>
+                      {{/Role}}   
+                    </select>
+                      
+                  </div>
+
+
+ 
+                     
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <!-- <a class="btn btn-primary" href="javascript:void(0);" onclick="ValidateEmployee()">Register Account</a> -->
+
+          <button type="submit" class="btn btn-primary" id="SubmitButton" > <span id="SubmitBtnText">Register</span>  Account</button>
+
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+ {{/data}}   
+
+</script>
+
+
+
+
+<script id="Dass_PO_BOQ_templ"  type="text/x-mustache">
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Materials Requests from site <span class="text-info">{{TenderName}}</span>
+      <button class="btn btn-warning" onclick="dashboard();" id="dashboardbackbtn">Back</button>
+      <button class="btn btn-warning d-none" onclick="Tenders();" id="tenderbackbtn">Back</button>
+    </h1>
+
+</div>
+
+
+
+<div class="card shadow mb-4">
+  <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+  </div> -->
+  <div class="card-body">
+    <div class=" table-responsive">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_DashBOQ" >
+          <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th style="min-width:120px" class="fs-6">ITEM</th>
+                <th>Description</th>
+                <th>Order quantity</th>
+                <th style="min-width:120px">Date</th>
+                <th style="min-width:120px">By date</th>
+                <th class="text-center">Recieved quantity</th>
+                <th class="text-center">Pending quantity</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#BOQ}}
+
+
+
+              <tr>
+                <td>{{index}}</td>
+                <td>{{item}}</td>
+                <td title="{{description}}">{{DescShort}}</td>
+                <td class="text-center">{{TotalConfirmedQty}}</td>
+                <td class="text-center">{{created_date}}</td>
+                <td class="text-center">{{required_by}}</td>
+                <td class="text-center">{{TotalReceivedQty}}</td>
+                <td class="text-center">{{remaining_qty}}</td>
+                <td class="col-sm-2 text-center" id="ActionTd_{{id}}"> 
+                  {{#admin}}
+                    {{^confirm}}
+                      {{^rejected}}
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                      {{/rejected}}
+                    {{/confirm}}
+                    {{#confirm}}
+                      PDF 
+                    {{/confirm}}
+                  {{/admin}}
+
+                  {{^admin}}
+                    {{^confirm}}
+                      {{^rejected}}
+                        <span class="text-info">Processing..</span>
+                      {{/rejected}}
+                    {{/confirm}}
+                    
+                  {{/admin}}
+
+
+                    
+
+                </td>
+                
+              </tr>
+            {{/BOQ}}
+              
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{{/data}}
+</script>

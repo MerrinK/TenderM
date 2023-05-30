@@ -1,0 +1,1696 @@
+<script id="Tender_templ" type="text/x-mustache">
+  {{#data}}
+  
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Tender</h1>
+      {{#admin}}
+      <span id="Btn_AddNew"><a href="javascript:void(0);" class=" d-sm-inline-block btn btn-sm btn-success shadow-sm"   onclick="AddNewTender()"><i class="fas fa-plus fa-sm text-white-50"></i> Add New Tender</a></span>
+  
+      <span id="Btn_CancelAddNew" class="d-none" ><a href="javascript:void(0);" class=" d-sm-inline-block btn btn-sm btn-secondary shadow-sm "   onclick="Tenders()">Cancel</a></span>
+      
+      <span id="Btn_CancelDashboard" class="d-none" ><a href="javascript:void(0);" class=" d-sm-inline-block btn btn-sm btn-secondary shadow-sm "   onclick="dashboard()">Cancel</a></span>
+      {{/admin}}
+  
+  </div>
+  
+   
+  
+  
+  <div id="ForAddNewTender">
+    <div class="card shadow mb-4" id="ForAddNewTender">
+      <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Tender List</h6>
+      </div>
+      <div class="card-body">
+        {{#Tender.length}}
+        <div class="table-responsive text-center">
+          <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_Tender" >
+              <thead>
+                  <tr>
+                    <th style="max-width:20px;">S.l</th>
+                    <th>Tender Name</th>
+                    <th>Work Order No</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <!-- <th>EMD</th>
+                    <th>AMD</th>
+                    <th>Retention</th> -->
+  
+                    <th>BOQ</th>
+                    <th>Request</th>
+                    <th>PO</th>
+                    {{#admin}}
+                      <th>Action</th>
+                    {{/admin}}
+                  </tr>
+              </thead>
+              <tbody>
+                {{resetIndex}}
+                {{#Tender}}
+                  <tr>
+                    <td>{{index}}</td>
+                    <td>
+                      <a href="javascript:void(0);" onclick="View_TenderDetails('{{id}}','{{TenderName}}','Tenders')" title="View Tender Details" data-toggle="tooltip" data-placement="top"  > {{TenderName}}</a>
+                    </td>
+                    <td>{{WorkOrderNo}}</td>
+                    <td>{{TenderStartDate}}</td>
+                    <td>{{TenderEndDate}}</td>
+  
+                    <!-- <th><a href="{{EMDUpload}}" class="" target="_blank"><i class="fas fa-download"></i> </a></th>
+                    <td><a href="{{ASDUpload}}" target="_blank"><i class="fas fa-download"></i> </a></td>
+                    <td><a href="{{RetentionUpload}}" target="_blank"><i class="fas fa-download"></i> </a></td> -->
+  
+                    <td><button class="btn  btn-link text-info" onclick="BOQs({{id}})">View </button></td>
+                    <td>
+                      <span ><a href="javascript:void(0);" onclick="UnconfirmedRequests({{id}})" class="text-warning"> {{#orderRequestUnconfirmed}}{{orderRequestUnconfirmed}}</a> &nbsp&nbsp&nbsp{{/orderRequestUnconfirmed}}</span>
+
+                        <a href="javascript:void(0);"  onclick="PO_All_Requested_Tender('{{id}}')">
+                          <span class="text-success">{{#orderRequest}}{{orderRequest}}{{/orderRequest}}</span>
+                        </a>
+                    </td>
+                    <td>
+                    <!--  <a href="javascript:void(0);" onclick="ViewAllTenderPO('{{id}}')"  title="Purchase Order"  data-toggle="tooltip" data-placement="top"  >View </a> -->
+  
+                    <a href="javascript:void(0);" onclick="PO_Active('{{id}}')"  title="Purchase Order{{#S}}s{{/S}}"  data-toggle="tooltip" data-placement="top"  > {{#TotalRequest}}{{TotalRequest}}{{/TotalRequest}}</a>
+                    </td>
+                    {{#admin}}
+                      <td style="text-align:center;">
+                        
+                          <a href="javascript:void(0);" onclick="EditTender('{{id}}')"  title="Edit"  data-toggle="tooltip" data-placement="top"  ><i class="fas fa-edit"></i> </a> |
+                          <a href="javascript:void(0);" onclick="DeleteTender('{{id}}')"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span> </a> 
+    
+                        
+    <!-- 
+                        <a href="javascript:void(0);" onclick="viewTender('{{id}}')" title="view"  data-toggle="tooltip" data-placement="top"  ><i class="fas   fa-eye text-success"></i> </a>|
+    
+                        <a href="javascript:void(0);" onclick="AddLabourCost('{{id}}')"  title="Additional Labour Cost"  data-toggle="tooltip" data-placement="top"  ><i class="fas   fa-user text-info"></i> </a> -->
+                        
+    
+                      </td>
+                    {{/admin}}
+                  </tr>
+                {{/Tender}}
+                  
+              </tbody>
+          </table>
+        </div>
+        {{/Tender.length}}
+        {{^Tender.length}}
+           <div class="alert alert-danger" role="alert">
+            No tender details found!
+          </div>
+        {{/Tender.length}}
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  {{/data}}
+  </script>
+  
+  
+  
+  
+  <script id="addNewTender_New_templ" type="text/x-mustache">
+  {{#data}}
+  <div class="card shadow mb-4" id="ForAddNewTender" style="background-color: #fff;margin-left: 10%;margin-right: 10%;border: 1px solid #e3e6f0;border-radius: .35rem;">
+    <div class="card-header py-3" style="background-color: #fff;text-align: center;">
+        <h6 class="m-0 font-weight-bold text-primary"><span id="AddTenderHead" >Add New</span> Tender </h6>
+    </div>
+  
+  
+        
+        <form id="TenderForm">
+  
+          <div class="card-body">
+  
+            <div class="row mb-2">
+              <div class="col-sm-12 form-group">
+                <label class="AddNewTenderHead" for="tender_description">Tender Description</label>
+                <textarea class="form-control form-control-user" rows="2" id="tender_description" name="tender_description"></textarea>
+              </div>
+            </div>
+  
+            <div class="row ">
+              <div class="col-sm-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="TenderName">Tender Name</label>
+                <input type="hidden" id="id" name="id" value="">
+                <input type="text" class="form-control form-control-user" id="TenderName" name="TenderName" >
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="WorkOrderNo">Work Order Text</label>
+                <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="WorkOrderText" name="WorkOrderText">
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="WorkOrderNo">Work Order date</label>
+                <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="WorkOrderDate" name="WorkOrderDate">
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="WorkOrderNo">Work Code</label>
+                <input type="number" class="form-control form-control-user" style="width:-webkit-fill-available" id="WorkOrderNo" name="WorkOrderNo">
+              </div>
+            </div>
+  
+            
+  
+  
+  
+  
+  
+            <div class="row pb-3 mb-3" style="border-bottom: 1px solid #cbcbcd;">
+              <div class="col-sm-3  mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="SiteIncharge">Site In-charge</label>
+  
+                <select  class="form-control  form-control-user" id="SiteIncharge" name="SiteIncharge" >
+                  <option value=""  disabled selected>--Select--</option>
+                  {{#SiteIncharge}}   
+                    <option value="{{id}}">{{first_name}} {{last_name}}</option>
+                  {{/SiteIncharge}}   
+                </select>
+              </div>
+              <div class="col-sm-3  mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="SiteEngineer">Site Engineer</label>
+  
+                <select  class="form-control  form-control-user js-example-basic-single" id="SiteEngineer" name="SiteEngineer" multiple>
+                  <option value=""  disabled >--Select--</option>
+                  {{#SiteEngineer}}   
+                    <option value="{{id}}">{{first_name}} {{last_name}}</option>
+                  {{/SiteEngineer}}   
+                </select>
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead " for="SiteSupervisor">Site Supervisor</label>
+  
+                <select  class="form-control  form-control-user js-example-basic-single" id="SiteSupervisor" name="SiteSupervisor" multiple >
+                  <option value=""  disabled >--Select--</option>
+                  {{#SiteSupervisor}}   
+                    <option value="{{id}}">{{first_name}} {{last_name}}</option>
+                  {{/SiteSupervisor}}   
+                </select>
+              </div>
+              <div class="col-sm-3 form-group ">
+                <label class="AddNewTenderHead" for="BMCDepartment">Department</label>
+  
+                <select  class="form-control  form-control-user " id="BMCDepartment" name="BMCDepartment" >
+                  <option value=""  disabled selected>--Select--</option>
+                  {{#BMCDepartment}}   
+                    <option value="{{id}}">{{name}}</option>
+                  {{/BMCDepartment}}   
+                </select>
+              </div>
+            </div>
+  
+
+
+
+
+
+  
+           <div class="row pb-3 mb-3" style="border-bottom: 1px solid #cbcbcd;">
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="InsurancePolicy">Insurance WC</label>
+  
+                <input type="text" class="form-control form-control-user" id="InsurancePolicy" name="InsurancePolicy" >
+                
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="InsurancePolicyExpiryDate">Insurance Policy Expiry Date</label>
+                
+                <input type="date" class="form-control form-control-user" id="InsurancePolicyExpiryDate" name="InsurancePolicyExpiryDate" >
+  
+              </div>
+  
+            
+              <div class="col-sm-3 form-group" id="">
+                <label class="AddNewTenderHead" for="">Insurance Policy Upload</label>
+  
+                <div id="InsurancePolicyUpload_Div">
+             
+                 
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="InsurancePolicyUpload" name="InsurancePolicyUpload" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('InsurancePolicyUpload')" >
+  
+                  
+                  <label class="btn btn-info" for="InsurancePolicyUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                  
+                </div>
+                <span class="label mt-2" id="InsurancePolicyUpload_Label"></span>
+  
+              </div>
+  
+
+
+
+              <div class="col-sm-3" > </div>
+
+
+
+
+  
+               <div class="col-sm-3   form-group">
+                <label class="AddNewTenderHead" for="InsurancePolicy">Insurance CAR</label>
+  
+                <input type="text" class="form-control form-control-user" id="InsuranceCAR" name="InsuranceCAR" >
+                
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="InsuranceCARExpiryDate">Insurance CAR Expiry Date</label>
+                
+                <input type="date" class="form-control form-control-user" id="InsuranceCARExpiryDate" name="InsuranceCARExpiryDate" >
+  
+              </div>
+
+              
+              <div class="col-sm-3 form-group" id="">
+                <label class="AddNewTenderHead" for="">Insurance Policy Upload</label>
+  
+                <div id="InsuranceCARUpload_Div">
+             
+                 
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="InsuranceCARUpload" name="InsuranceCARUpload" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('InsuranceCARUpload')" >
+  
+                  
+                  <label class="btn btn-info" for="InsuranceCARUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                  
+                </div>
+                <span class="label mt-2" id="InsuranceCARUpload_Label"></span>
+  
+              </div>
+
+
+
+  
+            </div>
+  
+  
+     
+  
+  
+  
+  
+            <div class="row">
+              <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="EMDStartDate">EMD Start Date</label>
+  
+                <input type="date"  class="form-control form-control-user"  data-toggle="tooltip" data-placement="top" id="EMDStartDate" name="EMDStartDate"> 
+              </div>
+            <!--   <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="EMDEndDate">EMD End Date</label>
+  
+                  <input type="date"  onmouseover="(this.type='date')" class="form-control form-control-user" id="EMDEndDate" name="EMDEndDate"  title="EMD End Date" data-toggle="tooltip" data-placement="top" > 
+  
+              </div> -->
+  
+              <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="EMDAmount">EMD Amount</label>
+  
+                  <input type="number" class="form-control form-control-user text-right" id="EMDAmount" name="EMDAmount" >
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="">EMD Upload</label>
+  
+                <div id="EMDUpload_Div">
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="EMDUpload" name="EMDUpload" placeholder="Upload"  hidden    oninput="CheckUploadedFile_('EMDUpload')">
+                    
+                    <label class="btn btn-info" for="EMDUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                </div>
+                  
+                <span class="label" id="EMDUpload_Label"></span>
+  
+              </div>
+            </div>
+  
+            <div class="row">
+  
+              <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="ASDStartDate">ASD Start Date</label>
+  
+                  <input type="date"   class="form-control form-control-user" id="ASDStartDate" name="ASDStartDate"  title="ASD Start Date" data-toggle="tooltip" data-placement="top"> 
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="ASDEndDate">ASD End Date</label>
+                  <input type="date"   class="form-control form-control-user" id="ASDEndDate" name="ASDEndDate"  title="ASD End Date" data-toggle="tooltip" data-placement="top"> 
+  
+  
+              </div>
+  
+              <div class="col-sm-2 form-group">
+                <label class="AddNewTenderHead" for="ASDEndDate">ASD Receipt</label>
+                  <input type="text"   class="form-control form-control-user" id="ASDReceipt" name="ASDReceipt"  title="ASD Receipt" data-toggle="tooltip" data-placement="top"> 
+  
+  
+              </div>
+  
+              <div class="col-sm-2 mb-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="ASDAmount">ASD Amount</label>
+                <input type="number" class="form-control form-control-user text-right" id="ASDAmount" name="ASDAmount">
+              </div>
+              <div class="col-sm-2 form-group">
+                <label class="AddNewTenderHead" for="">ASD Upload</label>
+  
+                <div id="ASDUpload_Div">
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="ASDUpload" name="ASDUpload" placeholder="Upload"   hidden oninput="CheckUploadedFile_('ASDUpload')">
+                 
+                    
+                  <label class="btn btn-info" for="ASDUpload" ><i class="fas fa-upload text-white-300"></i> upload</label>
+                </div>
+                <span class="label" id="ASDUpload_Label"></span>
+  
+              </div>
+            </div>
+  
+  
+  
+            <div class="row">
+              <div class="col-sm-3  form-group">
+                <label class="AddNewTenderHead" for="BankAccNo">Performance BG</label>
+                  <input type="text" class="form-control form-control-user"  id="PerformanceBG" name="PerformanceBG">
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="BGIssueDate">Issue Date</label>
+  
+                  <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="BGIssueDate" name="BGIssueDate">
+              </div>
+              <div class="col-sm-2 form-group">
+                <label class="AddNewTenderHead" for="BGExpiryDate">Expiry Date</label>
+  
+                  <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="BGExpiryDate" name="BGExpiryDate" placeholder=""  value="">
+              </div>
+  
+              <div class="col-sm-2  form-group">
+                <label class="AddNewTenderHead" for="BankAmount">Amount</label>
+                  <input type="number" class="form-control form-control-user text-right" id="BankAmount" name="BankAmount" >
+              </div>
+  
+              
+  
+              <div class="col-sm-2 form-group">
+                <label class="AddNewTenderHead" for="">Performance BG Upload</label>
+  
+                <div id="PerformanceBGUpload_Div">
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="PerformanceBGUpload" name="PerformanceBGUpload" placeholder="Upload"   hidden oninput="CheckUploadedFile_('PerformanceBGUpload')">
+                 
+                    
+                  <label class="btn btn-info" for="PerformanceBGUpload" ><i class="fas fa-upload text-white-300"></i> upload</label>
+                </div>
+                <span class="label" id="PerformanceBGUpload_Label"></span>
+  
+                </div>
+  
+              </div>
+  
+  
+             
+              
+  
+            <div class="row">
+              <div class="col-sm-3  form-group">
+                <label class="AddNewTenderHead" for="ContractDeposit">BG / Contract Deposit</label>
+                  <input type="text" class="form-control form-control-user"  id="ContractDeposit" name="ContractDeposit">
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="ContractDepositIssueDate">Issue Date</label>
+  
+                  <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="ContractDepositIssueDate" name="ContractDepositIssueDate" >
+              </div>
+              <div class="col-sm-2 form-group">
+                <label class="AddNewTenderHead" for="ContractDepositExpiryDate">Expiry Date</label>
+  
+                  <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="ContractDepositExpiryDate" name="ContractDepositExpiryDate" >
+              </div>
+  
+              <div class="col-sm-2  form-group">
+                <label class="AddNewTenderHead" for="ContractDepositAmount">Amount</label>
+                  <input type="number" class="form-control form-control-user text-right" id="ContractDepositAmount" name="ContractDepositAmount" >
+              </div>
+  
+              <div class="col-sm-2 form-group">
+                <label class="AddNewTenderHead" for="">BG Contract Deposit Upload</label>
+                
+                <div id="BGContractDepositUpload_Div">
+                    <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="BGContractDepositUpload" name="BGContractDepositUpload" placeholder="Upload"   hidden oninput="CheckUploadedFile_('BGContractDepositUpload')">
+                   
+                      
+                    <label class="btn btn-info" for="BGContractDepositUpload" ><i class="fas fa-upload text-white-300"></i> upload</label>
+                  </div>
+                  <span class="label" id="BGContractDepositUpload_Label"></span>
+  
+                </div>
+              </div>
+  
+  
+  
+  
+             
+              
+  
+         <!--        
+  
+            <div class="row">
+              <div class="col-sm-3  form-group">
+                <label class="AddNewTenderHead" for="RetentionEndDate">Retention End Date</label>
+  
+  
+                  <input type="date" class="form-control form-control-user" id="RetentionEndDate" name="RetentionEndDate"  title="Retention End Date" data-toggle="tooltip" data-placement="top" > 
+  
+              </div>
+             
+  
+              <div class="col-sm-3  form-group">
+                <label class="AddNewTenderHead" for="RetentionAmount">Retention Amount</label>
+  
+                  <input type="number" class="form-control form-control-user" id="RetentionAmount" name="RetentionAmount" >
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="">Retention Upload</label>
+  
+                <div id="RetentionUpload_Div">
+                 
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="RetentionUpload" name="RetentionUpload" placeholder="Upload"  hidden oninput="CheckUploadedFile_('RetentionUpload')">
+                 
+                  
+                  <label class="btn btn-info" for="RetentionUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+  
+                </div>
+                <span class="label" id="RetentionUpload_Label"></span>
+  
+  
+              </div>
+            </div> -->
+  
+            <div class="row">
+              <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="TenderStartDate">Tender Start Date</label>
+                  <input type="date"   class="form-control form-control-user" id="TenderStartDate" name="TenderStartDate"  title="Tender Start Date" data-toggle="tooltip" data-placement="top" " > 
+  
+              </div>
+              <div class="col-sm-3 form-group">
+                <label class="AddNewTenderHead" for="TenderEndDate">Tender End Date</label>
+  
+                  <input type="date"   class="form-control form-control-user" id="TenderEndDate" name="TenderEndDate"  title="Tender End Date" data-toggle="tooltip" data-placement="top" " > 
+                  
+              </div>
+  
+              <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="Miscell">Note</label>
+  
+                  <input type="text" class="form-control form-control-user" id="Miscell" name="Miscell"  value="">
+              </div>
+       
+  
+  
+  
+                    
+            </div>
+                  
+          <div class="row pb-3 mb-3 mt-3" style="border-bottom: 1px solid #cbcbcd;">
+            <div class="col-sm-3 ">
+              <label class="AddNewTenderHead " for="">Defect Liability Period</label>
+            </div>
+             <div class="col-sm-2 mb-3 mb-sm-0 form-group">
+                <select  class="form-control  form-control-user" id="DefectLiabilityPeriod" name="DefectLiabilityPeriod" >
+                  <option value=""  disabled selected>--Select--</option>
+                    <option value="1">1 year</option>
+                    <option value="2">2 years</option>
+                    <option value="3">3 years</option>
+                    <option value="4">4 years</option>
+                    <option value="5">5 years</option>
+                    <option value="6">6 years</option>
+                    <option value="7">7 years</option>
+                    <option value="8">8 years</option>
+                    <option value="9">9 years</option>
+                    <option value="10">10 years</option>
+                    <option value="11">11 years</option>
+                    <option value="12">12 years</option>
+                    <option value="13">13 years</option>
+                    <option value="14">14 years</option>
+                    <option value="15">15 years</option>
+                    <option value="16">16 years</option>
+                    <option value="17">17 years</option>
+                    <option value="18">18 years</option>
+                    <option value="19">19 years</option>
+                    <option value="20">20 years</option>
+                </select>
+              </div>
+          </div>
+  
+  
+  
+  
+            <div class="row">
+              <div class="col-sm-6 mb-3 mb-sm-0 form-group">
+                <label class="AddNewTenderHead" for="address">Site Address</label>
+  
+                <div class="form-group ">
+                  <textarea class="form-control form-control-user" id="address" name="address" rows="4" ></textarea>
+                 
+                </div>
+              </div>
+  
+              <div class="col-sm-6">
+               <!--  <div class="row">
+                  <div class="col-sm-12 form-group">
+                      <label class="AddNewTenderHead" for="UploadBOQ">Upload BOQ</label>
+  
+                    <div id="UploadBOQ_Div">
+                     
+  
+                      <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadBOQ" name="UploadBOQ" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"   hidden  oninput="CheckUploadedFile_('UploadBOQ')">
+                     
+                       
+                      <label class="btn btn-info" for="UploadBOQ" ><i class="fas fa-upload text-white-300"></i> upload BOQ</label>
+                      <a href="sample_BOQ.xlsx" >Sample Doc</a>
+  
+                    </div>
+                    <span class="label" id="UploadBOQ_Label"></span>
+                  </div>
+                </div> -->
+                <div class="col-sm-12 form-group">
+  
+                  <div class="form-check form-check-flat form-check-primary mt-4">
+                    <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input  big-checkbox" id="ExcludeMoonsoon" name="ExcludeMoonsoon">
+                      ExcludeMoonsoon
+                  </div>
+                </div>
+  
+  
+                     
+           
+            </div>
+  
+  
+  
+  
+          </div>
+  
+          
+  
+  
+  
+          <div class="row">
+            <div class="col-sm-6 ">
+                
+  
+            </div>
+            <div class="col-sm-6 form-group">
+              <button type="submit" id="AddNewSubmitBtn" class="btn btn-primary float-right" ><span id="SubmitBtnText">Add</span> Tender</button>
+  
+              <button class="btn btn-primary d-none float-right" id="AddNewLoadBtn">
+               <span class="spinner-border spinner-border-sm"></span>
+                Please wait...
+              </button>
+  
+              <button type="button" href="javascript:void(0);" class="btn btn-secondary float-right mr-2" onclick="Tenders()">Cancel</button>
+  
+                 
+                  
+            </div>
+  
+             
+  
+  
+  
+           
+  
+                    
+            </div>
+                  
+  
+          
+      </form>
+  
+    </div>
+  {{/data}}
+  
+  </script>
+  
+  
+  
+  
+  
+  
+<script id="addNewTender_templ" type="text/x-mustache">
+  {{#data}}
+  
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Add New  </span> Tender</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <form id="TenderForm">
+  
+          <div class="modal-body">
+  
+            <div class="row">
+              <div class="col-xl-12">
+               
+  
+  
+                    <div class="row">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <input type="hidden" id="id" name="id" value="">
+                          <input type="text" class="form-control form-control-user" id="TenderName" name="TenderName" placeholder="Tender Name" value="">
+                      </div>
+                      <div class="col-sm-3 form-group">
+                          <input type="number" class="form-control form-control-user" style="width:-webkit-fill-available" id="WorkOrderNo" name="WorkOrderNo" placeholder="Work Order No"  value="">
+                      </div>
+                    </div>
+  
+  
+                    <div class="row">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                        <select  class="form-control  form-control-user" id="SiteIncharge" name="SiteIncharge" >
+                          <option value=""  disabled selected>Site in-charge</option>
+                          {{#SiteIncharge}}   
+                            <option value="{{id}}">{{first_name}} {{last_name}}</option>
+                          {{/SiteIncharge}}   
+                        </select>
+                      </div>
+                      <div class="col-sm-3 form-group">
+                        <select  class="form-control  form-control-user" id="SiteSupervisor" name="SiteSupervisor" >
+                          <option value=""  disabled selected>Site Supervisor</option>
+                          {{#SiteSupervisor}}   
+                            <option value="{{id}}">{{first_name}} {{last_name}}</option>
+                          {{/SiteSupervisor}}   
+                        </select>
+                      </div>
+                      <div class="col-sm-3 form-group">
+                        <select  class="form-control  form-control-user" id="BMCDepartment" name="BMCDepartment" >
+                          <option value=""  disabled selected>Department</option>
+                          {{#BMCDepartment}}   
+                            <option value="{{id}}">{{name}}</option>
+                          {{/BMCDepartment}}   
+                        </select>
+                      </div>
+                    </div>
+  
+  
+                    <div class="row">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                        <input type="text" class="form-control form-control-user" id="InsurancePolicy" name="InsurancePolicy" >
+                        
+                      </div>
+                      <div class="col-sm-3 form-group">
+  
+                          <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="InsurancePolicyExpiryDate" name="InsurancePolicyExpiryDate" placeholder="Insurance Policy Expiry Date" title="Insurance Policy Expiry Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='Insurance Policy Expiry Date'}" onmouseleave="if(this.value==''){this.type='Insurance Policy Expiry Date'}" > 
+  
+                      </div>
+  
+                    
+                      <div class="col-sm-3 form-group" id="">
+                        <div id="InsurancePolicyUpload_Div">
+                          <!-- <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="InsurancePolicyUpload" name="InsurancePolicyUpload" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('InsurancePolicyUpload')"> -->
+                         
+                          <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="InsurancePolicyUpload" name="InsurancePolicyUpload" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('InsurancePolicyUpload')" >
+  
+                          
+                          <label class="btn btn-info" for="InsurancePolicyUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                          
+                        </div>
+                        <span class="label mt-2" id="InsurancePolicyUpload_Label"></span>
+  
+                      </div>
+                    </div>
+  
+  
+  
+  
+                    <div class="row">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                        
+  
+                        <!-- <input type="date"   placeholder="date" class="textbox-n" id="date"   value="adsgfasdga"> -->
+  
+                           <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="EMDStartDate" name="EMDStartDate" placeholder="EMD Start Date" title="EMD Start Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='EMD Start Date'}" onmouseleave="if(this.value==''){this.type='EMD Start Date'}" > 
+                      </div>
+                      <div class="col-sm-3 form-group">
+  
+                          <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="EMDEndDate" name="EMDEndDate" placeholder="EMD End Date" title="EMD End Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='EMD End Date'}" onmouseleave="if(this.value==''){this.type='EMD End Date'}" > 
+  
+                      </div>
+  
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <input type="number" class="form-control form-control-user" id="EMDAmount" name="EMDAmount" placeholder="EMD Amount" value="">
+                      </div>
+                      <div class="col-sm-3 form-group" id="">
+                        <div id="EMDUpload_Div">
+                          <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="EMDUpload" name="EMDUpload" placeholder="Upload"  hidden    oninput="CheckUploadedFile_('EMDUpload')">
+                            
+                            <label class="btn btn-info" for="EMDUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                        </div>
+                          
+                        <span class="label" id="EMDUpload_Label"></span>
+  
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          
+  
+                          <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="ASDStartDate" name="ASDStartDate" placeholder="ASD Start Date" title="ASD Start Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='ASD Start Date'}" onmouseleave="if(this.value==''){this.type='ASD Start Date'}" > 
+                      </div>
+                      <div class="col-sm-3 form-group">
+  
+                          <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="ASDEndDate" name="ASDEndDate" placeholder="ASD End Date" title="ASD End Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='ASD End Date'}" onmouseleave="if(this.value==''){this.type='ASD End Date'}" > 
+  
+  
+                      </div>
+  
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <input type="number" class="form-control form-control-user" id="ASDAmount" name="ASDAmount" >
+                      </div>
+                      <div class="col-sm-3 form-group">
+                        <div id="ASDUpload_Div">
+                          <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="ASDUpload" name="ASDUpload" placeholder="Upload"   hidden oninput="CheckUploadedFile_('ASDUpload')">
+                         
+                            
+                          <label class="btn btn-info" for="ASDUpload" ><i class="fas fa-upload text-white-300"></i> upload</label>
+                        </div>
+                        <span class="label" id="ASDUpload_Label"></span>
+  
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <input type="text" class="form-control form-control-user"  id="BankAccNo" name="BankAccNo" placeholder="Bank Gurarentee No" value="">
+                      </div>
+                      <div class="col-sm-3 form-group">
+                          <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="BankName" name="BankName" placeholder="Bank Name"  value="">
+                      </div>
+  
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <input type="number" class="form-control form-control-user" id="BankAmount" name="BankAmount" placeholder="Bank Gurarentee Amount" value="">
+                      </div>
+                      
+                    </div>
+  
+                    <div class="row">
+                      
+                      
+                    </div>
+  
+  
+                    <div class="row">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <!-- <input type="text"  onfocus="(this.type='date')"  class="form-control form-control-user" id="RetentionEndDate" name="RetentionEndDate" placeholder="Retention End Date" value=""> -->
+  
+                          <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="RetentionEndDate" name="RetentionEndDate" placeholder="Retention End Date" title="Retention End Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='Retention End Date'}" onmouseleave="if(this.value==''){this.type='Retention End Date'}" > 
+  
+                      </div>
+                     
+  
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <input type="number" class="form-control form-control-user" id="RetentionAmount" name="RetentionAmount" placeholder="Retention Amount" value="">
+                      </div>
+                      <div class="col-sm-3 form-group">
+  
+                        <div id="RetentionUpload_Div">
+                         
+                          <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="RetentionUpload" name="RetentionUpload" placeholder="Upload"  hidden oninput="CheckUploadedFile_('RetentionUpload')">
+                         
+                          
+                          <label class="btn btn-info" for="RetentionUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+  
+                        </div>
+                        <span class="label" id="RetentionUpload_Label"></span>
+  
+  
+                      </div>
+                    </div>
+  
+                    <div class="row mt-3">
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <!-- <input type="text"  onfocus="(this.type='date')"  class="form-control form-control-user" id="TenderStartDate" name="TenderStartDate" placeholder="Tender Start Date" value=""> -->
+                          
+  
+                          <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="TenderStartDate" name="TenderStartDate" placeholder="Tender Start Date" title="Tender Start Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='Tender Start Date'}" onmouseleave="if(this.value==''){this.type='Tender Start Date'}" > 
+  
+  
+                      </div>
+                      <div class="col-sm-3 form-group">
+                          <!-- <input type="text"  onfocus="(this.type='date')" class="form-control form-control-user" style="width:-webkit-fill-available" id="TenderEndDate" name="TenderEndDate" placeholder="Tender End Date"  value=""> -->
+  
+                          <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="TenderEndDate" name="TenderEndDate" placeholder="Tender End Date" title="Tender End Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='Tender End Date'}" onmouseleave="if(this.value==''){this.type='Tender End Date'}" > 
+                          
+                      </div>
+  
+                      <div class="col-sm-3 mb-3 mb-sm-0 form-group">
+                          <input type="text" class="form-control form-control-user" id="Miscell" name="Miscell" placeholder="Note" value="">
+                      </div>
+                    <!--   <div class="col-sm-3 form-group" id="">
+                        <div id="MiscellUpload_Div">
+                          <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="MiscellUpload" name="MiscellUpload" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('MiscellUpload')">
+                         
+                            
+                          
+                          <label class="btn btn-info" for="MiscellUpload" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                        </div>
+                          <span class="label mt-2" id="MiscellUpload_Label"></span>
+  
+                      </div> -->
+  
+  
+  
+  
+                    
+                     
+                    </div>
+                  
+  
+  
+  
+  
+                    <div class="row">
+                      <div class="col-sm-6 mb-3 mb-sm-0 form-group">
+                        <div class="form-group ">
+                          <textarea class="form-control form-control-user" id="address" name="address" placeholder="Site address" rows="5" ></textarea>
+                         
+                        </div>
+                      </div>
+  
+                      <div class="col-sm-3">
+                        <div class="row">
+                          <div class="col-sm-12 form-group">
+  
+                            <div id="UploadBOQ_Div">
+                             
+  
+                              <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadBOQ" name="UploadBOQ" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"   hidden  oninput="CheckUploadedFile_('UploadBOQ')">
+                             
+                               
+                              <label class="btn btn-info" for="UploadBOQ" ><i class="fas fa-upload text-white-300"></i> upload BOQ</label>
+                              <a href="sample_BOQ.xlsx" >Sample Doc</a>
+  
+                            </div>
+                            <span class="label" id="UploadBOQ_Label"></span>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 form-group">
+  
+                          <div class="form-check form-check-flat form-check-primary mt-2">
+                            <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input  big-checkbox" id="ExcludeMoonsoon" name="ExcludeMoonsoon">
+                              ExcludeMoonsoon
+                          </div>
+                        </div>
+  
+  
+                     
+                      
+                    </div>
+              </div>
+            </div>
+  
+  
+          </div>
+          <div class="modal-footer">
+  
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  
+            <button type="submit" id="AddNewSubmitBtn" class="btn btn-primary" ><span id="SubmitBtnText">Add</span> Tender</button>
+  
+            <button class="btn btn-primary d-none" id="AddNewLoadBtn">
+              <span class="spinner-border spinner-border-sm"></span>
+              Please wait...
+            </button>
+  
+          </div>
+      </form>
+  
+    </div>
+  </div>
+  {{/data}}
+  
+</script>
+  
+
+
+
+  
+  
+  <script id="viewTender_templ" type="text/x-mustache">
+  {{#data}}
+  
+  <div class="modal-dialog modal-xl " role="document">
+    <div class="modal-content  printable autoprint"  id="Print_ViewTender">
+        <div class="modal-header d-print-none">
+            <!-- <h5 class="modal-title text-primary" id="exampleModalLabel"> Tender Details</h5> -->
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+  
+          <div class="modal-body">
+            <div class="card shadow mb-4">
+               <div class="card-body">
+                <div class="row">
+                  <div class="col-12  text-center">
+                        <h3  class="">Tender Details </h3>
+                  </div>
+                </div>
+              {{#Tender}}
+  
+                <div class="row">
+                  <div class="col-12 text center">
+                        <table class=" table table-borderless" style="text-size:100px">
+                          <tr>
+                            <th>Tender name</th>
+                            <td class="text-info">:{{TenderName}}</td>
+                          </tr>
+                          <tr>
+                            <th>Tender Work Order</th>
+                            <td>:{{WorkOrderNo}}</td>
+                          </tr>
+                          <tr>
+                            <th>Site In charge</th>
+                            <td>:{{SiteIncharge}}</td>
+                          </tr>
+                          <tr>
+                            <th>Site Supervisor</th>
+                            <td>:{{SiteSupervisor}}</td>
+                          </tr>
+                          <tr>
+                            <th>Site department</th>
+                            <td>:{{Department}}</td>
+                          </tr>
+                          <tr>
+                            <th>Site Address</th>
+                            <td>:{{address}}</td>
+                          </tr>
+                          <tr>
+                            <th>Bank Account No</th><td>: {{BankAccNo}}</td><td>Bank name : {{BankName}}</td><td>Bank Gurantee Amount : {{BankAmount}}</td> </td>
+                          </tr>
+  
+                        </table>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-12 text center">
+                        <table class="table table-bordered table-condensed ">
+                          <tr>
+                            <th></th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Amount</th>
+                            <th class="d-print-none"></th>
+                          </tr>
+                          <tr>
+                            <th>Tender</th><td>{{TenderStartDate}}</td><td>{{TenderEndDate}}</td><td>Exclude Moonsoon : {{#ExcludeMoonsoon}} yes{{/ExcludeMoonsoon}}{{^ExcludeMoonsoon}} No{{/ExcludeMoonsoon}}</span></td> <td class="d-print-none"></td>
+                          </tr>
+                          <tr>
+                            <th>EMD</th><td>{{EMDStartDate}}</td><td> {{EMDEndDate}} </td><td>{{EMDAmount}}</td> <td class="d-print-none"><a href="{{EMDUpload}}" target="_blank">view</a></td>
+                          </tr>
+                          <tr>
+                            <th>ASD</th><td>{{ASDStartDate}}</td><td>{{ASDEndDate}}</td><td>{{ASDAmount}}</td> <td class="d-print-none"><a href="{{ASDUpload}}" target="_blank">view</a></td>
+                          </tr>
+                        
+                          <tr>
+                            <th>Retention</th><td>NA</td><td>{{RetentionEndDate}}</td><td> {{RetentionAmount}}</td> <td class="d-print-none"><a href="{{RetentionUpload}}" target="_blank">view</a></td>
+                          </tr>
+                          <tr>
+                            <th>Insurance</th><td>NA</td><td>{{InsurancePolicyExpiryDate}}</td><td>NA</td> <td class="d-print-none"><a href="{{MiscellUpload}}" target="_blank">view</a></td>
+                          </tr>
+                        </table>
+                  </div>
+                </div>
+  
+              {{/Tender}}
+  
+                <div class="row">
+                  <div class="col-12 text center">
+                        <h3>Purchase Order Table</h3>
+  
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Sl.</th>
+                              <th>Material Type</th>
+                              <th>Sub Type</th>
+                              <th>Quantity</th>
+                              <th>Required by</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {{resetIndex}}
+                            {{#BOQ}}
+                              <tr>
+                                <td>{{index}}</td>
+                                <td>{{Material}}</td>
+                                <td>{{sub_type}}</td>
+                                <td>{{quantity_confirmed}}</td>
+                                <td>{{required_by}}</td>
+                              </tr>
+                            {{/BOQ}}
+  
+                          </tbody>
+                        </table>
+                  </div>
+                </div>
+              </div>
+  
+  
+  
+  
+            </div>
+          </div>
+          <div class="modal-footer  d-print-none ">
+  
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-danger" type="button" data-dismiss="modal" onclick="PrintContent('Print_ViewTender')">Print</button>
+  
+  
+          </div>
+  
+    </div>
+  </div>
+  {{/data}}
+  
+  </script>
+  
+  
+  
+  
+  <script id="PO_BOQ_templ2" type="text/x-mustache">
+  {{#data}}
+  
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle"> </span> Purchase Order Details</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+  
+      <div class="modal-body">
+  
+  
+        <div class="card shadow mb-4">
+          <!-- <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+          </div> -->
+          <div class="card-body">
+            {{#BOQ.length}}
+            <div class="table-responsive text-center">
+              <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_BOQ" >
+                  <thead>
+                      <tr class="text-center">
+                        <th>S.No</th>
+                        <th style="min-width:120px" class="fs-6">Item</th>
+                        <th>Description</th>
+                        <th class="text-center">Order quantity</th>
+                        <!-- <th style="min-width:75px">Date</th> -->
+                        <th style="min-width:75px">Required on</th>
+                        <th class="text-center">Recieved Quantity</th>
+                        <th class="text-center">Pending Quantity</th>
+                        <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {{resetIndex}}
+                    {{#BOQ}}
+  
+  
+  
+                      <tr>
+                        <td>{{index}}</td>
+                        <td>{{item}}</td>
+                        <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+                        <td class="text-center">{{TotalConfirmedQty}}</td>
+                        <!-- <td>{{created_date}}</td> -->
+                        <td class="text-center">{{required_by}}</td>
+                        <td class="text-center">{{TotalReceivedQty}}</td>
+                        <td class="text-center">{{pending_qty}}</td>
+                        <td class="col-sm-2 text-center"> 
+                            {{^status}}
+                              {{#admin}}
+                              <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                              <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                              {{/admin}}
+  
+                              {{^admin}}
+                                <span class="text-info">Pending</span>
+  
+                              {{/admin}}
+  
+                            {{/status}}
+                            {{#status}}
+                              {{#purchase}}
+                                {{#received}}
+                                  <span class="text-success">Received </span> 
+                                  
+                                  <!-- | <button class="dt-button buttons-pdf buttons-html5 btn btn-link btn-lg text-danger" tabindex="0" aria-controls="Dt_BOQ" type="button" title="PDF" onclick="downloadBoqPdf({{id}},{{BOQ_Id}});"><i class="fa fa-file-pdf"></i></button> -->
+                                {{/received}}
+                                {{^received}}
+                                  {{^admin}}
+                                    <a href="javascript:void(0);" onclick="ConfirmBOQsPO({{id}})" class="btn btn-warning btn-sm">Confirm</a>
+                                  {{/admin}}
+                                  {{#admin}}
+                                    <span class="text-info">Ordered</span>
+                                  {{/admin}}
+                                {{/received}}
+                              {{/purchase}}
+                              {{#reject}}
+                                  <span class="text-danger">Rejected</span>
+                              {{/reject}}
+                            {{/status}}
+                            {{#pdf_Available}}{{^reject}}<span id="ViewNPDF_{{id}}"> | <a href="{{pdf_location}}" class="btn btn-link text-danger"  download="Dev-PurOrd_{{tender_id}}_{{boq_id}}_{{id}}.pdf"  ><i class="fas  fa-file-pdf text-danger"></i></a></span>{{/reject}}{{/pdf_Available}}
+  
+                            
+                        </td>
+                      </tr>
+                    {{/BOQ}}
+                      
+                  </tbody>
+              </table>
+            </div>
+             {{/BOQ.length}}
+             {{^BOQ.length}}
+  
+               <div class="alert alert-danger" role="alert">
+                No PO details angainst this tender!
+              </div>
+             {{/BOQ.length}}
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  {{/data}}
+  </script>
+  
+  
+  
+  
+  <script id="AddLabourCost_templ" type="text/x-mustache">
+  {{#data}}
+  
+  
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Tender Costing details for - {{TenderName}}  
+        <button class="btn btn-warning" onclick="Tenders();"> Back</button>
+      </h1>
+  
+  </div>
+  
+  {{#admin}}
+  
+  
+   <div class="">
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="font-weight-bold text-primary">Tender Amount Details </h6>
+            <div class=" no-arrow">
+              {{#TenderCosting}}
+                <a href="javascript:void(0);" class="btn btn-primary" onclick="EditTender_Costing('{{id}}','{{tender_id}}','{{tender_amount_1}}','{{above_below}}','{{percentage}}','{{labour_work_percentage}}','{{labour_amount}}')">Edit </a>
+              {{/TenderCosting}}
+  
+              {{^TenderCosting}}
+                <a href="javascript:void(0);" class="btn btn-primary" onclick="EditTender_Costing('{{id}}','{{tender_id}}','{{tender_amount_1}}','{{above_below}}','{{percentage}}','{{labour_work_percentage}}','{{labour_amount}}')">Add </a>
+              {{/TenderCosting}}
+  
+            </div>
+        </div>
+        <!-- Card Body -->
+        {{#TenderCosting}}
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <div class="row">
+                <div class="col-12 Tender-Costing-heading" >
+                  <div class="float-left">
+                    Tender Amount: 
+                    <span class="spn-sub-head">
+                      (Proposed amount)
+                    </span>
+                  </div>
+                  <div class="float-left pl-2">
+                    <div class="div-main-amount"  >
+                       {{tender_amount}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-4">
+              <div class="row">
+                <div class="col-12 Tender-Costing-heading " >
+                  <div class="float-left">
+                    <div>Quoted Amount:</div>
+                    <span class="spn-sub-head">
+                    (<span class="{{#Below}}text-danger{{/Below}}{{^Below}}text-success{{/Below}}">{{#Below}}-{{/Below}}{{^Below}}+{{/Below}}{{percentage}}% of Tender amount </span>)
+                    </span>
+                  </div>
+                  <div class="div-main-amount float-left pl-2" >
+                     {{QuotedTenderAmount}}
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+            <div class="col-4">
+              <div class="row">
+                <div class="col-12 Tender-Costing-heading " >
+                  <div class="float-left">
+                    <div>Labour Amount:</div>
+                    <span  class="spn-sub-head">
+                    ( {{labour_work_percentage}}% of Quoted Tender Amount) </span>
+                  </div>
+                  <div class="div-main-amount float-left pl-2" >
+                     {{labour_amount}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/TenderCosting}}
+      {{^TenderCosting}}
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+              No labour details added !
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/TenderCosting}}
+    </div>
+  
+  
+  
+    
+  </div>
+  
+  {{#TenderCosting}}
+  
+  <div class="card shadow mb-4">
+    <div class="progress-bar progress-bar-striped active"  id="ProgressBar_LabourAmount" data-percentage="0">
+      <div class="red bar"><span>Labour Amount Paid Percentage. </span></div>
+      <div class="label2"></div>  
+    </div>
+  </div>
+  {{/TenderCosting}}
+  
+  
+   {{/admin}}
+  {{#TenderCosting}}
+  
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">UPLOADED LABOUR BILLS</h6>
+        {{#admin}}
+          <div>
+            Total spend labour amount: <strong class="pr-3">{{total_labour_amount}}</strong>
+            Balance: <strong class="pr-3 {{#isOver}}text-danger{{/isOver}}">{{balance_labour_amount}}</strong>
+          </div>
+        {{/admin}}
+        <div class=" no-arrow">
+          <a class="btn btn-info" href="javascript:void(0);" role="button" onclick="UploadBillLabour('{{tender_id}}')" >Upload Bills</a>
+      </div>
+    </div>
+  
+  
+    {{#Bills.length}}
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_Tender" >
+            <thead>
+                <tr>
+                  <th style="max-width:20px;">S.l</th>
+                  <th>Bill Name</th>
+                  <th>Bill Amount</th>
+                  <th>Bill Date</th>
+                  <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+              {{resetIndex}}
+              {{#Bills}}
+                <tr>
+                  <td>{{index}}</td>
+                  <td>{{bill_name}}</td>
+                  <td>{{bill_amount}}</td>
+                  <td>{{bill_date}}</td>
+                  
+                  <td class="text-center">
+  
+  
+                    <a href="javascript:void(0);"   onclick="viewImage('{{url}}{{upload_bill}}')" title="view"  data-toggle="tooltip" data-placement="top" ><i class="fas   fa-eye text-success"></i> </a>{{#admin}} |
+  
+                    <a href="javascript:void(0);" onclick="DeleteTenderBill('{{id}}','{{tender_id}}')"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span> </a>{{/admin}}
+  
+  
+                  </td>
+                </tr>
+              {{/Bills}}
+                
+            </tbody>
+        </table>
+      </div>
+    </div>
+    {{/Bills.length}}
+    {{^Bills.length}}
+      <div class="card-body">
+        <div class="table-responsive">
+          <div class="alert alert-danger" role="alert">
+              No labour bill's added for this tender!
+            </div>
+        </div>
+      </div>
+    {{/Bills.length}}
+  </div>
+  
+  
+  
+  {{/TenderCosting}}
+  
+  {{^admin}}
+  {{^TenderCosting}}
+  
+  <div class="card-body">
+    <div class="table-responsive">
+      <div class="alert alert-danger" role="alert">
+          Tender Costing not added yet.
+        </div>
+    </div>
+  </div>
+  {{/TenderCosting}}
+  
+  {{/admin}}
+  
+  
+  
+  
+  {{/data}}
+  </script>
+  
+  
+  
+  
+  
+  <script id="uploadBill_templ" type="text/x-mustache">
+  
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle"> </span> Upload Labour  Bills</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="UploadBillsForm" method="post">
+  
+      <div class="modal-body">
+        <div class="card-body">
+  
+  
+            <div class="row">
+              {{#data}}
+                <div class="col-md-12 form-group">
+                  <label>Vendor</label><br/>
+                  <select  class="form-control  form-control-user" id="BillVendor" name="BillVendor" >
+                    <option value=""  disabled selected>--Select a Vendor--</option>
+                    {{#Vendor}}   
+                      <option value="{{id}}">{{name}}</option>
+                    {{/Vendor}}   
+                  </select>
+                </div>
+              {{/data}}
+              <div class="col-md-12 form-group">
+                  <label>Bill Number</label><br/>
+                  <input type="text" class="form-control form-control-user" id="BillNumber" name="BillNumber" placeholder="Bill Number" >
+              </div>
+
+              <div class="col-md-12 form-group">
+                  <label>Bill Description</label><br/>
+                  <!-- <input type="hidden" id="id" name="id" value=""> -->
+                  <input type="hidden" id="tender_id" name="tender_id" value="">
+                  <input type="text" class="form-control form-control-user" id="BillName" name="BillName" placeholder="Bill Description" value="">
+              </div>
+              <div class="col-md-12 form-group">
+                  <label>Bill Amount</label><br/>
+                  <input type="number" class="form-control form-control-user" id="BillAmount" name="BillAmount" placeholder="Bill Amount" value="">
+              </div>
+
+               <div class="col-md-12 form-group">
+                  <label>Bill Date</label><br/>
+                  <input type="date" class="form-control form-control-user" id="BillDate" name="BillDate" placeholder="Bill Date" value="">
+              </div>
+              
+              
+            </div>
+  
+            <div class="row">
+             <div class="col-sm-12 form-group" id="">
+                <div id="AddCostBills_Div">
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="AddCostBills" name="AddCostBills" placeholder="Upload"  hidden oninput="CheckUploadedFile_('AddCostBills')"  onchange="$('#uploadBillInfo').text(this.files[0].name)">
+                  
+                  <label class="btn btn-info" for="AddCostBills" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                </div>
+                  <span class="label mt-2" id="AddCostBills_Label"></span>
+                  <span class='label label-info' id="uploadBillInfo"></span>
+  
+              </div>
+            </div>
+  
+             
+  
+  
+  
+       
+            
+  
+  
+  
+          </div>
+        </div>
+  
+  
+  
+        <div class="modal-footer">
+  
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  
+          <button type="submit" id="SubmitButton" class="btn btn-primary" >submit</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+  
+        </div>
+  
+      </form>
+  
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  </script>
+  
+  
+  <script id="EditTenderCosting_templ" type="text/x-mustache">
+  
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle"> </span>Edit Tender Details</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+  
+      <div class="modal-body">
+  
+  
+        <form id="TenderCostingForm" method="post">
+  
+          <div class="row">
+            
+            <div class="col-12 form-group">
+              <label for="exampleInputPassword1"> Tender Amount</label>
+              <input type="number" class="form-control form-control-user"  id="TenderAmount" name="TenderAmount" placeholder="Original Tender Amount" value="" onkeyup='CalculateLabourAmount()' >
+  
+               <input type="hidden" id="id" name="id" value="">
+              <input type="hidden" id="tender_id" name="tender_id" value="{{tender_id}}">
+            </div>
+            <div class="col-12">Quoted amount</div>
+            <div class="col-4 form-group">
+              <select  class="form-control  form-control-user" id="aboveBelow" name="aboveBelow" onchange='CalculateLabourAmount()' title="Above/Below" data-toggle="tooltip" data-placement="top" >
+                <option selected value="Above">Above</option>
+                <option value="Below">Below</option>
+              </select>
+              <input type="hidden" id="quotedAmount" name="quotedAmount" />
+            </div>
+            <div  class="col-4 form-group">
+              <span style="position: absolute; margin-right: 16%; height: 25px; display: flex; align-items: center; margin-top: 8px; right: 0;">
+                <i class="fa fa-percent" aria-hidden="true"></i>
+              </span>
+              <input type="number" class="form-control form-control-user" id="TenderPrecentage" name="TenderPrecentage" placeholder="" value="" title="Percentage" onkeyup='CalculateLabourAmount()'  data-toggle="tooltip" data-placement="top" >
+            </div>
+            <div  class="col-4 form-group">
+              <span class="spn-amt">&#8377;<span id="spn-quoted">0.00</span></span>
+            </div>
+  
+          </div>
+  
+        <div class="row">
+          <div class="col-12">Labour Work precentage </div>
+          <div class="col-4 form-group">
+             <span style="position: absolute; margin-right: 16%; height: 25px; display: flex; align-items: center; margin-top: 8px; right: 0;">  <i class="fa fa-percent" aria-hidden="true"></i>
+              </span>
+              <input type="number" class="form-control form-control-user" onfocusIn='CheckTenderAmount()' id="LabourWorkPre" name="LabourWorkPre" placeholder="" value="" onkeyup='CalculateLabourAmount()' >
+          </div>
+          <!-- <div class="col-2 form-group"><label>Labour Amount</label><div> -->
+          <div class="col-4 form-group">
+            <span class="spn-amt">&#8377;<span id="spn-labour">0.00</span></span>
+            <input type="hidden" class="form-control form-control-user" id="LabourAount" name="LabourAount" placeholder="Labour Amount" title="Labour Amount" value="" readonly  data-toggle="tooltip" data-placement="top" >
+  
+          </div>
+        
+        </div>
+  
+       
+  
+         <div class="row">
+  
+         
+          <div class="col-md-12 form-group text-right mt-3">
+  
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  
+            <button type="submit" id="SubmitButton" class="btn btn-primary"><span id="SubmitBtnText">Save</span></button>
+            <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+              <span class="spinner-border spinner-border-sm"></span>
+              Please Wait...
+            </button>
+          </div>
+         
+            
+        </div>
+  
+      </form>
+  
+  
+  
+  
+  
+  
+  
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  </script>
+  
+  
+  <script id="AllRequestedPO_templ"  type="text/x-mustache">
+  {{#data}}
+  
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Requested List
+        <button class="btn btn-warning" onclick="dashboard('nav-dashboard');">Back</button>
+      </h1>
+  
+  </div>
+  
+  
+  
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Request</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered"  cellspacing="0"  id="Dt_AllPOs" >
+            <thead>
+                <tr class="text-center">
+                  <th>S.No</th>
+                  <th>Tender Name</th>
+                  <th>Description</th>
+                  <th style="min-width:120px" class="fs-6">ITEM</th>
+                  <th>Requeired on</th>
+                  <th>Requested Quantity</th>
+                  <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+              {{resetIndex}}
+              {{#POs}}
+  
+                <tr>
+                  <td class="text-center">{{index}}</td>
+                  <td>{{TenderName}}</td>
+                  <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+  
+                  <td>{{item}}</td>
+                  <td class="text-center">{{required_by}}</td>
+                  <td class="text-center">{{quantity}}</td>
+                  <td class="text-center text-warning">
+                    {{#admin}}
+                      {{#confirm}}
+                        <span class="text-success">Pending...</span>
+                      {{/confirm}}
+                      {{^confirm}}
+                        {{#rejected}}
+                          <span class="text-danger">Rejected.</span>
+                        {{/rejected}}
+                        
+                        {{^rejected}}
+                          <a href="javascript:void(0);" class='text-info' onclick="Purchase_OrderedRequest({{id}},'widget')">Purchase</a> | 
+                          <a href="javascript:void(0);" class='text-info'>Reject</a>
+                        {{/rejected}}
+                      {{/confirm}}
+                    {{/admin}}
+  
+                      
+                  </td>
+                  </td>
+                </tr>
+              {{/POs}}
+                
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  {{/data}}
+  </script>
+  
+  

@@ -1,0 +1,242 @@
+<script id="InventoryTab_templ" type="text/x-mustache">
+  <div class="row">
+     <div class="col-12  m-2">
+      <h4>
+        <!-- Inventory  -->
+        <!-- <button class="btn btn-warning" onclick="{{location}}();"> Back</button> -->
+      </h4>
+      <!-- <input type="hidden" id="tender_id_details" value="{{id}}"> -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card card-primary card-outline card-outline-tabs">
+        <div class="card-header p-0 border-bottom-0">
+          <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="InvDocuments-tab" href="#InvDocuments" aria-controls="InvDocuments">Inventory List</a>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="card-body">
+          <div class="tab-content" id="custom-tabs-one-tabContent">
+            <div class="tab-pane fade show" role="tabpanel" id="InvDocuments"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script id="Documents"  type="text/x-mustache">
+{{#data}}
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+     <a class="btn btn-info" href="javascript:void(0);" role="button" onclick="addNewInventoryDocument()">Add Inventory</a>
+      <div class=" no-arrow">
+        
+      </div>
+  </div>
+  <div class="card-body">
+    {{#Doc.length}}
+    <div class="table-responsive">
+      <table class="table table-bordered " width="100%" cellspacing="0"  id="Dt_InvDocs" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">S.No</th>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Count</th>
+                <!-- <th>Location</th> -->
+                <th>Value</th>
+                <th>Tender </th>
+                {{#admin}}
+                  <th>Action</th> 
+                {{/admin}}
+
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#Doc}}
+
+
+              <tr class="text-center">
+                <td class="text-center">{{index}}</td>
+                <td class="text-center">{{doc_id}}</td>
+                <td class="text-center">{{type}}</td>
+                <td class="text-center">{{name}}</td>
+                <td class="text-center">{{description}}</td>
+                <td class="text-center">{{count}}</td>
+                <!-- <td class="text-center">{{location}}</td> -->
+                <td class="text-center">{{value}}</td>
+                <td class="text-center">{{tender_name}}</td>
+                
+                {{#admin}}
+                  <td class="col-sm-2 text-center"> 
+                      
+                    <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Edit_Inv_Doc({{id}});"   title="Edit"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-edit"></i>  </a> | 
+                    
+                    
+                    <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_Inv_Doc({{id}})"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span></a> 
+
+                  </td>
+                {{/admin}}
+
+              </tr>
+            {{/Doc}}
+              
+          </tbody>
+      </table>
+    </div>
+  </div>
+    {{/Doc.length}}
+    {{^Doc.length}}
+        <div class="alert alert-danger">
+          <strong>Not Created any Document yet!</strong>
+        </div>
+    {{/Doc.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+
+
+
+
+<script id="AddNewDocuments_tmpl"  type="text/x-mustache">
+{{#data}}
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Add New  </span> Inventory Item</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="InventoryDocumentForm">
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+             
+                <div class="row">
+
+                  <div class="col-sm-12 col-md-4 form-group">
+                    <label class="AddNewTenderHead" for="doc_id"> Id</label>
+                    <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="doc_id" name="doc_id">
+                    <input type="hidden" class="form-control form-control-user" style="width:-webkit-fill-available" id="hid_doc_id" name="hid_doc_id">
+                  </div>
+
+
+                  <div class="col-sm-12 col-md-4 form-group">
+                    <label class="AddNewTenderHead" for="doc_type"> Type</label>
+                    <select  class="form-control  form-control-user" id="doc_type" name="doc_type" onchange="OptionForVehicle(this.value);">
+                      <option value=""  disabled selected>--Select--</option>
+                      {{#InventoryType}}   
+                        <option value="{{id}}">{{name}}</option>
+                      {{/InventoryType}}   
+                    </select>
+                  </div>
+
+                 
+
+                  <div class="col-sm-12 col-md-4 form-group">
+                    <label class="AddNewTenderHead" for="doc_name">Name</label>
+                    <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="doc_name" name="doc_name">
+                  </div>
+                </div>
+
+                <div class="row d-none" id="ForVehicle">
+                  <div class="col-sm-12 col-md-6 form-group">
+                    <label class="AddNewTenderHead" for="doc_insurance_expiry_date">Insurance Expiry Date</label>
+                    <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="doc_insurance_expiry_date" name="doc_insurance_expiry_date">
+                    
+                  </div>
+
+                  <div class="col-sm-12 col-md-6 form-group">
+                    <label class="AddNewTenderHead" for="doc_fitness_expiry_date">Fitness  Expiry Date</label>
+                    <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="doc_fitness_expiry_date" name="doc_fitness_expiry_date">
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-4 form-group">
+                    <label class="AddNewTenderHead" for="doc_tender_id">Tender Id</label>
+                    <select  class="form-control  form-control-user" id="doc_tender_id" name="doc_tender_id" >
+                      <option value=""  disabled selected>--Select--</option>
+                      {{#Tender}}   
+                        <option value="{{id}}">{{name}}</option>
+                      {{/Tender}}   
+                    </select>
+                  </div>
+
+                  <div class="col-sm-12 col-md-4 form-group">
+                    <label class="AddNewTenderHead" for="doc_count">Count</label>
+                    <input type="number" class="form-control form-control-user" style="width:-webkit-fill-available" id="doc_count" name="doc_count">
+                  </div>
+                  <div class="col-sm-12 col-md-4 form-group">
+                    <label class="AddNewTenderHead" for="doc_value">Value</label>
+                    <input type="number" class="form-control form-control-user" style="width:-webkit-fill-available" id="doc_value" name="doc_value">
+                  </div>
+
+
+                </div>
+
+                
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 form-group">
+                    <label class="AddNewTenderHead" for="doc_description">Description</label>
+                    <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="doc_description" name="doc_description">
+                  </div>
+                           
+                </div>
+
+                          
+                 
+                     
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button"   data-dismiss="modal">Cancel</button>
+
+          <button type="submit" id="SubmitButton" class="btn btn-primary"><span id="SubmitBtnText">Save</span> </button>
+
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+{{/data}}
+
+</script>
+

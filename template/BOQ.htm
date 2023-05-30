@@ -1,0 +1,1170 @@
+
+<script id="BOQ_templ"  type="text/x-mustache">
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">BOQ  for <span class="text-info">{{TenderName}}</span>
+      <button class="btn btn-warning" onclick="Tenders();">Back</button>
+    </h1>
+
+</div>
+
+
+
+<div class="card shadow mb-4">
+  <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+  </div> -->
+  <div class="card-body">
+    {{#BOQ.length}}
+    <div class="table-responsive">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_BOQ" >
+          <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th>ITEM</th>
+                <th>Description</th>
+                <th >Total quantity</th>
+                <th>Units</th>
+                <th class="text-center">Remaining quantity</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#BOQ}}
+
+
+              <tr>
+                <td>{{index}}</td>
+                <td>{{item}}</td>
+                <td title="{{description}}"  data-toggle="tooltip" data-placement="top">{{DescShort}}</td>
+                <td class="text-center">{{total_qty}}</td>
+                <td class="text-center">{{unit}}</td>
+                <!-- <td class="text-center">{{pending_qty}}</td> -->
+                <td class="text-center">{{remaining_qty}}</td>
+                <td class="col-sm-2" style="text-align:center"> 
+
+                      {{^admin}} 
+
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RequestedPO({{id}},{{TenderId}})"   title="Request"  data-toggle="tooltip" data-placement="top" >Request <i class="fas fa-request"></i>
+                      {{/admin}} 
+
+                      {{#admin}} 
+
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Edit_BOQ_TotalQty({{id}},{{TenderId}},{{total_qty}},'{{item}}',`{{description}}`,'{{unit}}','{{remaining_qty}}')"   title="Edit"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-edit"></i>  </a> | 
+                        
+                        
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_BOQ({{id}},{{TenderId}})"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span></a> | 
+                        
+                        <a href="javascript:void(0);" class="btn btn-link p-0 " onclick="ViewBOQsPO({{id}},{{TenderId}})" data-toggle="tooltip" data-placement="top">PO </a> 
+
+                      {{/admin}}
+
+
+
+
+                  <!-- {{^confirm}}
+                    
+                  {{/confirm}}
+
+                  {{#confirm}}
+                    <span class="text-danger">Confirmed</span>
+                  {{/confirm}}
+
+                  {{#rejected}}
+                    <span class="text-danger">Rejected</span>
+                  {{/rejected}} -->
+
+
+                </td>
+              </tr>
+            {{/BOQ}}
+              
+          </tbody>
+      </table>
+    </div>
+  </div>
+    {{/BOQ.length}}
+    {{^BOQ.length}}
+        <div class="alert alert-danger">
+          <strong>Not Created any BOQ  request yet!</strong>
+        </div>
+    {{/BOQ.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+
+<script id="PO_BOQ_templ"  type="text/x-mustache">
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Material orders for  <span class="text-info">{{TenderName}}</span>
+      <button class="btn btn-warning" onclick="BOQs('{{TenderId}}');">Back</button>
+    </h1>
+
+</div>
+
+
+
+<div class="card shadow mb-4">
+  <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+  </div> -->
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_BOQ" >
+          <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th style="min-width:120px" class="fs-6">ITEM</th>
+                <th>Description</th>
+                <th class="text-center">Order quantity</th>
+                <!-- <th style="min-width:120px">Date</th> -->
+                <th style="min-width:120px">Required by</th>
+                <th class="text-center">Pending quantity</th>
+                <th class="text-center">Remaining quantity</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#BOQ}}
+
+
+
+              <tr>
+                <td>{{index}}</td>
+                <td>{{item}}</td>
+                <td title="{{description}}">{{DescShort}}</td>
+                <td class="text-center">{{quantity}}</td>
+                <!-- <td>{{created_date}}</td> -->
+                <td>{{required_by}}</td>
+                <td class="text-center">{{pending_qty}}</td>
+                <td class="text-center">{{remaining_qty}}</td>
+                <td class="col-sm-2 text-center" id="ActionTd_{{id}}"> 
+                    {{^confirm}}
+                    {{^rejected}}
+                      <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                      <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                    {{/rejected}}
+                    {{/confirm}}
+
+                      {{#confirm}}
+                        {{^received}}
+                          <span class="text-success">Received</span>
+                        {{/received}}
+                        {{#received}}
+                          <span class="text-success">Ordered</span>
+                        {{/received}}
+
+
+                      {{/confirm}}
+
+                      {{#rejected}}
+                        <span class="text-danger">Rejected</span>
+                      {{/rejected}}
+                </td>
+              </tr>
+            {{/BOQ}}
+              
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+<script id="PO_BOQ_order_templ"  type="text/x-mustache">
+
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Material orders for  <span class="text-info">{{TenderName}}</span>
+      <button class="btn btn-warning" onclick="BOQs('{{TenderId}}');">Back</button>
+    </h1>
+
+{{^admin}}
+    <a href="javascript:void(0);" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"   onclick="PlaceRequestPO({{BOQ_Id}},{{TenderId}})"><i class="fas fa-plus fa-sm text-white-50"></i> Place Request</a>
+{{/admin}}
+
+</div>
+
+
+
+
+<div class="card shadow mb-4">
+  <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+  </div> -->
+  <div class="card-body">
+    <div class="table-responsive">
+     {{#Requests.length}}
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_BOQ" >
+
+          <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th style="min-width:120px" class="fs-6">ITEM</th>
+                <th>Description</th>
+                <th>Requested quantity</th>
+                <!-- <th style="min-width:120px">Date</th> -->
+                <th style="min-width:120px">Required by</th>
+                <th>Recieved Quantity</th>
+                <th>Materials</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+             {{#Requests}}
+              <tr>
+                <td>{{index}}</td>
+                <td>{{item}}</td>
+                <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+
+                <td class="text-center">{{TotalRequestedQty}}</td>
+                <!-- <td>{{created_date}}</td> -->
+                <td>{{required_by}}</td>
+                <td class="text-center">{{received_quantity}}</td>
+                <td class="text-center">
+                  <a href="javascript:void(0);" class="btn btn-link" onclick="ViewRequstedPO({{id}})">view</a>
+                  
+                  
+
+                </td>
+                <td class="col-sm-2 text-center" id="ActionTd_{{id}}"> 
+
+
+                   {{^status}}
+                      {{#admin}}
+                      <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                      <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                      {{/admin}}
+
+                      {{^admin}}
+                        <span class="text-info">Pending</span>
+
+                      {{/admin}}
+
+                    {{/status}}
+                    {{#status}}
+                      {{#purchase}}
+                        {{#received}}
+                          <span class="text-success">Received</span>
+                          <!-- {{#pdf_Available}}<span id="ViewNPDF_{{id}}"> | <a href="{{pdf_location}}" class="btn btn-link text-danger"  download="Dev-PurOrd_{{tender_id}}_{{boq_id}}_{{id}}.pdf"  ><i class="fas  fa-file-pdf text-danger"></i></a></span>{{/pdf_Available}} -->
+                        {{/received}}
+
+                        {{^received}}
+
+                        {{^admin}}
+                          <a href="javascript:void(0);" onclick="ConfirmBOQsPO({{id}})" class="btn btn-warning">Confirm PO</a>
+                        {{/admin}}
+                        {{#admin}}
+                           <span class="text-success">Waiting for Delivery</span>
+                        {{/admin}}
+                        {{/received}}
+                      {{/purchase}}
+                      {{#reject}}
+                          <span class="text-danger">Rejected</span>
+                      {{/reject}}
+                    {{/status}}
+                      {{#pdf_Available}}{{^reject}}<span id="ViewNPDF_{{id}}"> | <a href="{{pdf_location}}" class="btn btn-link text-danger"  download="Dev-PurOrd_{{tender_id}}_{{boq_id}}_{{id}}.pdf"  ><i class="fas  fa-file-pdf text-danger"></i></a></span>{{/reject}}{{/pdf_Available}}
+                    
+                </td>
+              </tr>
+           
+              
+          </tbody>{{/Requests}}
+      </table>
+        {{/Requests.length}}
+        {{^Requests.length}}
+        <div class="alert alert-danger">
+          <strong>Not Created any request yet!</strong>
+        </div>
+        {{/Requests.length}}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{{/data}}
+{{^data}}
+
+{{/data}}
+</script>
+
+
+
+
+<script id="Confirm_PO_order_templ"  type="text/x-mustache">
+{{#data}}
+
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel">Purchase Order Receipt Form</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="Confirm_PO_order_Form">
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-xl-12">
+             
+              {{#BOQ}}
+
+              <div class="row mb-3 d-none d-sm-block " style="border-bottom: 1px solid #cbcbcd;">
+                <div class="col-sm-3 mb-3 mb-sm-0 col-lg-12 col-md-12 form-group">
+                  <input type="hidden" name="id" id="id" >
+                  <input type="hidden" name="tender_id" id="tender_id" value={{tender_id}}>
+                  <input type="hidden" name="boq_id" id="boq_id" value={{boq_id}}>
+                  <input type="hidden" name="boq_order_id" id="boq_order_id" value={{id}}>
+                  
+                  <label >You are placing purchase order for <span class="text-danger">BOQ | Item  {{item}} </span> Ordered by :<span class="text-info"> {{first_name}} {{last_name}}</span></label>
+                </div>
+                <div class="col-sm-3 mb-3 mb-sm-0 col-lg-12 form-group">
+                  <label >Total quantity : <span class="text-info">{{total_qty}}</span></label>
+                  <label > |  Used quantity : <span class="text-info">{{confirmed_quantity}}</span></label>
+                  <label > | Remaining quantity : <span class="text-info">{{remaining_qty}}</span> </label>
+                  <label > | measurement unit : <span class="text-info">{{unit}}</span> </label>
+                
+
+                </div>
+              </div>
+              {{/BOQ}}
+
+
+          <div class="row">
+            <div id="StandardMaterialsBlock1" class="d-none">
+              <div class="col-md-12 mt-2">Standard Materials</div>
+              <div class="col-md-12 mt-2">
+                <table class="">
+                  <input type="hidden"  id="HidRowCount" value="0">
+                  <input type="hidden"  id="PORequest_id">
+                  <thead style="font-size:0.7rem">                  
+                    <tr>
+                      <th>S.No</th>
+                      <th>Material type</th>
+                      <th>Sub type</th>
+                      <th>Unit</th>
+                      <th style="width:80px">Requested qty</th>
+                      <th style="width:80px">Confirmed qty</th>
+                      <th>Material description</th>
+                      <th>Unit price</th>
+                      <th>Received Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody id="PO_confirmed_body">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div id="CustomeMaterialBlock1" class="d-none">
+              <div class="col-md-12 mt-4">Custom Material</div>
+
+              <div class="col-md-12 mt-2">
+                <table class="">
+                  <input type="hidden"  id="HidRowCount_add" value="0">
+                  <input type="hidden"  id="PORequest_id">
+                  <thead style="font-size:0.7rem">                  
+                    <tr>
+                      <th>S.No</th>
+                      <th>Material type</th>
+                      <th>Sub type</th>
+                      <th>Unit</th>
+                      <th style="width:80px">Requested qty</th>
+                      <th style="width:80px">Confirmed qty</th>
+                      <th>Material description</th>
+                      <th>Unit price</th>
+                      <th>Received Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody id="PO_confirmed_body_add">
+                  </tbody>
+
+                </table>
+              </div>
+
+            </div>
+
+
+
+
+
+
+          </div>
+
+
+
+
+
+
+              
+              <div class="row mt-4">
+
+
+                <div class="form-group col-sm-12 ">
+                  <div>Site Note</div>
+                  <input type="text" class="form-control form-control-user" id="Po_note" name="Po_note"  readonly>
+                </div>
+                
+                <div class="form-group col-lg-4 ">
+                  <label for="Required_by">Required by</label>
+
+                  <input type="date"  class="form-control form-control-user" id="Required_by" name="Required_by"  disabled="disabled"> 
+                      
+                </div>
+
+
+             
+                <div class="form-group col-lg-4 ">
+                  <label for="Quantity">Quantity</label>
+                  <input type="number" class="form-control form-control-user" id="Quantity_Con" name="Quantity_Con" placeholder="Quantity" value="" readonly>
+                  
+                </div>
+
+               <!--  <div class="form-group col-lg-3 ">
+                  <label for="rate">Rate</label>
+                  <input type="number" class="form-control form-control-user" id="rate_con" name="rate_con" placeholder="Rate" value="" readonly>
+                  
+                </div> -->
+                <div class="form-group col-lg-4 ">
+                  <label for="rate">Total Received Quantity</label>
+                  <input type="hidden" class="form-control form-control-user" id="rate_con" name="rate_con" placeholder="Rate" value="" readonly>
+
+                  <input type="number" class="form-control form-control-user" id="received_quantity" name="received_quantity"  readonly>
+                  
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <div class="form-group col-lg-12 ">
+                  <textarea class="form-control" id="description_con" name="description_con" rows="2" placeholder="Description" readonly></textarea>
+                  
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- <div class="form-group col-lg-6 ">
+                  <input type="number" class="form-control form-control-user" id="received_quantity" name="received_quantity" placeholder="Received Quantity" value="">
+                  
+                </div> -->
+
+                <div class="form-group col-lg-4 ">
+
+                  <input type="text"  onmouseover="(this.type='date')" class="form-control form-control-user" id="received_date" name="received_date" placeholder="Received Date" title="Received Date" data-toggle="tooltip" data-placement="top" onblur="if(this.value==''){this.type='Received Date'}" onmouseleave="if(this.value==''){this.type='Received Date'}" > 
+                      
+                  
+                </div>
+
+                <div class="form-group col-lg-12 ">
+                  <textarea class="form-control" id="description_received" name="description_received" rows="2" placeholder="Received Description"></textarea>
+                  
+                </div>
+              </div>
+
+                     
+            </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          <a href="javascript:void(0)" id="SubmitButton" class="btn btn-primary" onclick="SaveReceivedMaterials()"><span id="SubmitBtnText"></span>Confirm PO</a>
+
+
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+
+{{/data}}
+
+</script>
+
+
+<script id="PO_order_templ"  type="text/x-mustache">
+{{#data}}
+
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">  </span>Material Request to PO Form</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="PO_OrderBOQForm">
+
+        <div class="modal-body">
+          {{#BOQ}}
+
+              <div class="row mb-3  d-none d-sm-block " style="border-bottom: 1px solid #cbcbcd;">
+                <div class="col-sm-3 mb-3 mb-sm-0 col-lg-12 form-group">
+                  <input type="hidden" name="id" id="id" >
+                  <input type="hidden" name="tender_id" id="tender_id" value={{tender_id}}>
+                  <input type="hidden" name="boq_id" id="boq_id" value={{boq_id}}>
+                  <input type="hidden" name="boq_order_id" id="boq_order_id" value={{id}}>
+
+                  <label > <span class="text-danger">BOQ | Item  {{item}} </span> 
+                    Requested by :<span class="text-info">{{created_user}} </span> 
+                     by :<span class="text-info">{{required_by}}</span> </label>
+                </div>
+                <div class="col-sm-3 mb-3 mb-sm-0 col-lg-12 form-group">
+                  <label >Total Quantity : <span class="text-info">{{total_qty}}</span> | Used quantity : <span class="text-info">{{confirmed_quantity}}</span></label>
+
+                  <label > | Remaining Quantity : <span class="text-info">{{remaining_qty}}</span> </label>
+                  <label > | measurement unit : <span class="text-info">{{unit}}</span> </label>
+                  <input type="hidden" name="remaining_qty" id="remaining_qty" value={{remaining_qty}}>
+                </div>
+               
+              </div>
+              {{/BOQ}}
+
+
+
+          <div class="row">
+
+            <div  id="StandardMaterialBlockPO_Order" class="d-none">
+              <div class="col-md-12 mt-2">Standard Materials</div>
+              <div class="col-md-12">
+
+                <table class="">
+                  <input type="hidden"  id="HidRowCount" value="0">
+                  <input type="hidden"  id="PORequest_id">
+                  <thead style="font-size:0.7rem">                  
+                    <tr>
+                      <th>S.No</th>
+                      <th>Material type</th>
+                      <th>Sub type</th>
+                      <th>Unit</th>
+                      <th style="width:80px">Requested qty</th>
+                      <th style="width:80px">Confirmed qty</th>
+                      <th>Description</th>
+                      <th>Unit price</th>
+                    </tr>
+                  </thead>
+                  <tbody id="PO_requested_body">
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+
+            <div id="CustomeMaterialBlockPO_Order" class="d-none">
+              <div class="col-md-12 mt-4">Custom Material</div>
+
+
+              <div class="col-md-12">
+                <table class="">
+                  <input type="hidden"  id="HidRowCount_add" value="0">
+                  <input type="hidden"  id="PORequest_id">
+                  <thead style="font-size:0.7rem">                  
+                    <tr>
+                      <th>S.No</th>
+                      <th>Material type</th>
+                      <th>Sub type</th>
+                      <th>Unit</th>
+                      <th style="width:80px">Requested qty</th>
+                      <th style="width:80px">Confirmed qty</th>
+                      <th>Description</th>
+                      <th>Unit price</th>
+                    </tr>
+                  </thead>
+                  <tbody id="PO_confirmed_body_add">
+                  </tbody>
+
+                </table>
+              </div>
+
+            </div>
+
+     
+
+              <div class="row mt-4 p-4">
+                <div class="form-group col-sm-12 ">
+                  <div>Site Note</div>
+                  <input type="text" class="form-control form-control-user" id="Po_note" name="Po_note"  readonly>
+                </div>
+
+
+                <div class="form-group col-lg-3 ">
+                  <div>Vendor</div>
+                  <select  class="form-control  form-control-user" id="vendor" name="vendor" ></select>
+                </div>
+
+                <div class="form-group col-lg-3 ">
+                  <div>Required by</div>
+                  <input type="date" class="form-control form-control-user" id="required_by" name="required_by" >
+                </div>
+
+                <div class="form-group col-lg-3 ">
+                  <div>Total quantity</div>
+                  <input type="number" class="form-control form-control-user text-right" id="TotalQuantity" name="TotalQuantity" placeholder="Quantity" readonly>
+                </div>
+
+                <div class="form-group col-lg-3 ">
+                  <div>Total Amount</div>
+                  <input type="number" class="form-control form-control-user text-right" id="Rate" name="Rate" readonly>
+                  
+                </div>
+
+                <div class="form-group col-lg-12 ">
+                  <textarea class="form-control" id="description" name="description" rows="5" placeholder="Description" >1. Prices are exclusive of GST and other taxes.
+2. Transportation Including at our Mumbai Site.
+3. Delivery immediately.
+</textarea>
+
+                </div>
+            </div>
+
+                     
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a href="javascript:void(0)" id="SubmitButton" class="btn btn-primary" onclick="SaveConfirmRequestedPO()"><span id="SubmitBtnText"></span>Place Order</a>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+        </div>
+    </form>
+
+  </div>
+</div>
+
+{{/data}}
+
+</script>
+
+
+
+
+<script id="BOQ_order_templ"  type="text/x-mustache">
+{{#data}}
+
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle"></span> Purchase Order Request Form</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="OrderBOQForm">
+
+        <div class="modal-body small-device">
+
+          <div class="row">
+            <div class="col-xl-12">
+             
+              {{#BOQ}}
+
+                <div class="row mb-3  d-none d-sm-block" style="border-bottom: 1px solid #cbcbcd;">
+                  <div class="col-sm-3 mb-3 mb-sm-0 col-lg-12 col-md-12 form-group">
+                    <input type="hidden" name="id" id="id" >
+                    <input type="hidden" name="tender_id" id="tender_id" value={{TenderId}}>
+                    <input type="hidden" name="boq_id" id="boq_id" value={{id}}>
+                    <label >You are placing order for <span class="text-danger">BOQ | Item  {{item}}</span></label>
+                  </div>
+                  <div class="col-sm-3 mb-3 mb-sm-0 col-lg-12  col-md-12 form-group">
+                    <label >Total Quantity : <span class="text-info">{{total_qty}}</span></label>
+                     <label > | Used Quantity : <span class="text-info">{{used_qty}}</span></label>
+
+                
+                    <input type="hidden" name="remaining_qty" id="remaining_qty" value={{remaining_qty}}>
+
+                  </div>
+                  <div class="col-sm-3 mb-3 mb-sm-0 col-lg-12  col-md-12 form-group">
+                    <label >Remaining Quantity : <span class="text-info">{{remaining_qty}}</span></label>
+                    <label > | measurement unit : <span class="text-info">{{unit}}</span> </label>
+                  </div>
+                </div>
+              {{/BOQ}}
+
+            
+
+
+
+
+              <div class="form-group row">
+
+                  <div class="col-md-12 mt-2">Standard Materials</div>
+
+                  <div class="col-md-12 mt-2"  style="border-bottom: 1px solid #cbcbcd;">
+                    <table class="">
+                      <input type="hidden"  id="HidRowCount" value="1">
+                      <thead class="" style="font-size:0.7rem">                  
+                        <tr>
+                          <th style="width: 35%;">Material Type</th>
+                          <th style="width: 20%;">Sub Type</th>
+                          <th style="width: 15%;">Unit</th>
+                          <th style="width: 25%;">Quantity</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="PO_request_body">
+                        <tr id="MaterialsRow_1" >
+                          <td class="form-group">
+                            <select class="form-control form-control-sm" id="material_type_1" name="material_type_1" onchange="getMaterialSubType(1)" >
+                                <option value="">--SELECT--</option>
+
+                                {{#material_type}}
+                                  <option value="{{id}}_{{unit_id}}">{{name}}</option>
+                                {{/material_type}}
+                            </select>
+                          </td>
+                          <td class="form-group">
+                              <select class="form-control form-control-sm" id="material_sub_type_1" name="material_sub_type_1" >
+                                {{#material_sub_type}}
+                                  <option value="{{id}}">{{name}}</option>
+                                {{/material_sub_type}}
+                              </select>
+                          </td>
+                          <td class="form-group">
+                              <select class="form-control form-control-sm" id="unit_type_1" name="unit_type_1" >
+                                <option value="">--SELECT--</option>
+                                {{#Units}}
+                                  <option value="{{id}}">{{unit}}</option>
+                                {{/Units}}
+                              </select>
+                          </td>
+                          <td  class="form-group"><input type="number" class="form-control form-control-sm" id="Quantity_1" name="Quantity_1"></td>
+                          
+                          
+                          <td><a href="javascript:void(0)" onclick="DeleteRowMaterialType(1);" class="text-danger" ><i class="fas fa-trash"  title="Remove"  data-toggle="tooltip" data-placement="top"  ></i></a></td>
+                        </tr>
+                      
+                        
+
+                      </tbody>
+                      <tfoot>
+                        <tr> 
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-right" style="font-size:1.2rem">
+                            <a href="javascript:void(0)" onclick="AddRowMaterialType();"><i class="fas fa-plus-square  text-success" title="Add row"  data-toggle="tooltip" data-placement="top"  ></i></a>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+
+
+
+                  <div class="col-md-12 mt-4">Custom Materials</div>
+
+
+                  <div class="col-md-12 mt-2"  style="border-bottom: 1px solid #cbcbcd;">
+                    <table class="">
+                      <input type="hidden"  id="additional_HidRowCount" value="1">
+                      <thead style="font-size:0.7rem">                  
+                        <tr>
+                          <th style="width: 35%;">Material Type</th>
+                          <th style="width: 20%;">Sub Type</th>
+                          <th style="width: 15%;">Unit</th>
+                          <th style="width: 25%;">Quantity</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="additional_PO_request_body">
+                        <tr id="additional_MaterialsRow_1">
+                          <td class="form-group">
+                            <input type="text" class="form-control form-control-sm" id="additional_material_type_1" name="additional_material_type_1"></td>
+                          </td>
+                          <td class="form-group">
+                            <input type="text" class="form-control form-control-sm" id="additional_material_sub_type_1" name="additional_material_sub_type_1"></td>
+                          </td>
+                          <td class="form-group">
+                              <select class="form-control form-control-sm" id="additional_unit_type_1" name="additional_unit_type_1" >
+                                <option value="">--SELECT--</option>
+
+                                {{#Units}}
+                                  <option value="{{id}}">{{unit}}</option>
+                                {{/Units}}
+                              </select>
+                          </td>
+                          <td class="form-group"><input type="number" class="form-control form-control-sm" id="additional_Quantity_1" name="additional_Quantity_1"></td>
+                          
+                          <td><a href="javascript:void(0)" onclick="DeleteRowAdditional_MaterialType(1);" class="text-danger" ><i class="fas fa-trash"  title="Remove"  data-toggle="tooltip" data-placement="top"  ></i></a></td>
+                        </tr>
+                      
+                        
+
+                      </tbody>
+                      <tfoot>
+                        <tr> 
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-right" style="font-size:1.2rem">
+                            <a href="javascript:void(0)" onclick="AddRowAdditional_MaterialType();"><i class="fas fa-plus-square  text-success" title="Add row"  data-toggle="tooltip" data-placement="top"  ></i></a>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+
+
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 mt-4">
+                  <label class="AddNewTenderHead" for="Required_by">Required by 
+                    <a href="javascript:void(0)" class="btn btn-link" onclick="setDate('today','Required_by')">Today </a>/
+                    <a href="javascript:void(0)" class="btn btn-link" onclick="setDate('tomorrow','Required_by')">Tomorrow </a>
+                  </label>
+                  <input type="date" class="form-control form-control-user" id="Required_by" name="Required_by"  > 
+                      
+                </div>
+                <div class="col-sm-12 mb-2 form-group">
+                    <label class="AddNewTenderHead" for="request_note">Note</label>
+                    <textarea class="form-control form-control-user " rows="2" id="request_note" name="request_note" aria-describedby="request_note-error" aria-invalid="true"></textarea>
+                </div>
+              </div> 
+                     
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          <!-- <button type="button" class="btn btn-primary" id="SubmitButton" onclick="savePORequest()">Place Request</button> -->
+          <button type="submit" class="btn btn-primary" id="SubmitButton">Place Request</button>
+
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+
+{{/data}}
+
+</script>
+
+
+
+
+<script id="EditTotalQty_templ"  type="text/x-mustache">
+
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title " id="exampleModalLabel"><span id="ModelTitle">Edit  </span> total quantity of BOQ </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">  
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="UpdateTotalQtyForm">
+
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="totalQty" class="col-sm-4 col-form-label">Item </label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="product">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="totalQty" class="col-sm-4 col-form-label">Desctiption </label>
+            <div class="col-sm-8">
+              <span id="boq_description"></span>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="boq_description"> -->
+            </div>
+          </div>
+         <!--  <div class="form-group row">
+            <label for="totalQty" class="col-sm-4 col-form-label">Total Quantity </label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="totalQty">
+            </div>
+          </div> -->
+         
+
+
+          
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id">
+            <input type="hidden" name="tender_id" id="tender_id"> 
+            <!-- <input type="hidden" name="boq_id" id="boq_id">-->
+            <label for="NewTotalQty" class="col-sm-4 col-form-label">Update Quantity</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" id="NewTotalQty" name="NewTotalQty" placeholder="Enter the quantity">
+            </div>
+          </div>
+           <div class="form-group row">
+            <label for="totalQty" class="col-sm-4 col-form-label">Units </label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="boq_units">
+            </div>
+          </div>
+
+             
+           <div class="form-group row">
+            <label for="totalQty" class="col-sm-4 col-form-label">Remaining Quantity </label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="boq_remainingQty">
+            </div>
+          </div>
+
+                 
+        
+
+
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          <button type="submit" id="subBtn" class="btn btn-primary" ><span id="SubmitBtnText"></span>update </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+
+
+</script>
+
+
+
+
+
+<script id="ViewPurchaseOrderRequest_templ"  type="text/x-mustache">
+{{#data}}
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title " id="exampleModalLabel"> Material Details </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">  
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+         
+
+
+        <div class="table-responsive text-center  ">
+          <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_BOQ" >
+              <thead>
+                  <tr class="text-center">
+                    <th>S.No</th>
+                    <th>Material Type</th>
+                    <th>Sub Type</th>
+                    <th>Unit</th>
+                    <!-- <th>Description</th> -->
+                    <th class="text-center">Order Quantity</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {{resetIndex}}
+                {{#PO_Data}}
+
+
+
+                  <tr>
+                    <td>{{index}}</td>
+                    <td>{{material_type}}</td>
+                    <td>{{material_sub_type}}</td>
+                    <td>{{unit}}</td>
+                    <!-- <td>{{material_description}}</td> -->
+                    <td class="text-center">{{quantity_requested}}</td>
+                   
+                     
+                    </td>
+                  </tr>
+                {{/PO_Data}}
+                {{#PO_Data_Add}}
+                  <tr>
+                    <td>{{index}}</td>
+                    <td>{{material_type}}</td>
+                    <td>{{material_sub_type}}</td>
+                    <td>{{unit_name}}</td>
+                    <!-- <td>{{material_description}}</td> -->
+                    <td class="text-center">{{quantity_requested}}</td>
+                    </td>
+                  </tr>
+                {{/PO_Data_Add}}
+                  
+              </tbody>
+          </table>
+        </div>
+
+        <div class="row">
+          <div class="col-12 ">
+              <label for="Challan_vendor">Note: {{request_note}}</label> <br/>
+          </div>
+        </div>
+
+
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+      </div>
+
+  </div>
+</div>
+
+{{/data}}
+</script>
+
+
+
+
+<script id="ListPurchaseOrder_templ"  type="text/x-mustache">
+
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Material orders for  <span class="text-info">{{TenderName}}</span>
+      <button class="btn btn-warning" onclick="BOQs('{{TenderId}}');">Back</button>
+    </h1>
+{{^admin}}
+    <a href="javascript:void(0);" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"   onclick="PlaceRequestPO({{BOQ_Id}},{{TenderId}})"><i class="fas fa-plus fa-sm text-white-50"></i> Place Request</a>
+{{/admin}}
+
+</div>
+
+
+
+
+<div class="card shadow mb-4">
+  <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+  </div> -->
+  <div class="card-body">
+    <div class="table-responsive">
+     {{#Requests.length}}
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_MaterialOrders" >
+
+          <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th style="min-width:120px" class="fs-6">ITEM</th>
+                <th>Description</th>
+                <th>Requested quantity</th>
+                <!-- <th style="min-width:120px">Date</th> -->
+                <th style="min-width:120px">Required by</th>
+                <th>Remaining quantity</th>
+                <th>Materials</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+             {{#Requests}}
+              <tr>
+                <td>{{index}}</td>
+                <td>{{item}}</td>
+                <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+
+                <td class="text-center">{{TotalRequestedQty}}</td>
+                <!-- <td>{{created_date}}</td> -->
+                <td class="text-center">{{required_by}}</td>
+                <td class="text-center">{{remaining_qty}}</td>
+                <td class="text-center"><a href="javascript:void(0);" class="btn btn-link" onclick="ViewRequstedPO({{id}})">view</a></td>
+                <td class="col-sm-2 text-center" id="ActionTd_{{id}}">
+
+                  {{#Admin}}
+                  {{/Admin}}
+                  {{#status}}
+
+                    {{#purchase}}
+                      {{#received}}
+                        <span class="text-warning">Received</span>
+                      {{/received}}
+                      {{^received}}
+                        <span class="text-success">Ordered</span>
+                      {{/received}}
+
+                    {{/purchase}}
+                      {{#reject}}
+                        <span class="text-danger">Rejected.</span>
+                      {{/reject}}
+
+                  {{/status}}
+
+
+                  {{^status}}
+                    <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                    <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                  {{/status}}
+
+
+
+
+                  
+
+
+                </td>
+              </tr>
+           
+              
+          </tbody>{{/Requests}}
+      </table>
+        {{/Requests.length}}
+        {{^Requests.length}}
+        <div class="alert alert-danger">
+          <strong>Not Created any request yet!</strong>
+        </div>
+        {{/Requests.length}}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{{/data}}
+
+</script>
