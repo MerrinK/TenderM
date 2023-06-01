@@ -1703,7 +1703,8 @@ class TenderDetails {
 		$data["description"]=mysqli_real_escape_string($this->dbc, stripcslashes(preg_replace('/[\x00-\x1F\x7F]/u', '', $_REQUEST['boq_description'])));
 
 		$data["total_qty"]=$_REQUEST['boq_total_qty'];
-		$data["unit"]=$_REQUEST['boq_unit'];
+		// $data["unit"]=$_REQUEST['boq_unit'];
+		$data["unit"]=$_REQUEST['boq_unit_name'];
 		$data["rate"]=$_REQUEST['boq_rate'];
 		$data["amount"]=$_REQUEST['boq_rate']*$_REQUEST['boq_total_qty'];
 		$data["created_by"]=$_SESSION['USER_ID'];
@@ -2684,6 +2685,14 @@ class TenderDetails {
 
 		ajaxResponse("1", '');
 	}
+
+	public function getUnits(){
+		$sql= "SELECT * FROM units  ORDER BY unit";
+		$result = $this->dbc->get_result($sql);
+		$data=array("Units"=>$result);
+		ajaxResponse("1", $data);
+	}
+
 
 
 

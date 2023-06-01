@@ -63,8 +63,9 @@ function Login($user_name,$password){
         $opData->ROLE_ID    =   $result[0]['role'];
         $opData->IS_ADMIN   =  $result[0]['is_admin'];
         
-        $sql = "SELECT id,TenderName FROM `tenders` where SiteIncharge = $userid or find_in_set($userid, SiteSupervisor) <> 0";
-	   $fp = file_put_contents('./request.log', $sql, FILE_APPEND);
+        // $sql = "SELECT id,TenderName FROM `tenders` where SiteIncharge = $userid or find_in_set($userid, SiteSupervisor) <> 0";
+        $sql = "SELECT id,TenderName FROM `tenders` where SiteIncharge = $userid or find_in_set($userid, SiteSupervisor) <> 0 or find_in_set($userid, SiteEngineer) <> 0 ";
+	    $fp = file_put_contents('./request.log', $sql, FILE_APPEND);
 
         $result = $dbc->get_result($sql);
    

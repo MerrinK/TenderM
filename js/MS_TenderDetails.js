@@ -2040,7 +2040,10 @@ function viewExpencesIds(voucher_ids,id){
 
 function addNewBOQItem(){
 
-    loadTenderDetailsTemplate('#addNewTenderBOQItem_templ',{}, 'BaseModal');
+  successFn = function(resp)  { 
+    loadTenderDetailsTemplate('#addNewTenderBOQItem_templ',toMustacheDataObj(resp), 'BaseModal');
+ 
+
     $('#BaseModal').modal('show');
 
     $('#TenderBOQItemForm').validate({
@@ -2052,6 +2055,7 @@ function addNewBOQItem(){
         var data = new FormData(form[0]);
         data.append('function', 'TenderDetails');
         data.append('method', 'addBOQItem');
+        data.append('boq_unit_name', $('#boq_unit option:selected').text());
         data.append('tender_id', $('#tender_id_details').val());
 
         successFn = function(resp)  {
@@ -2118,7 +2122,9 @@ function addNewBOQItem(){
         $(element).removeClass('is-invalid');
       }
     });
-
+  }
+  data = {"function": 'TenderDetails', "method":"getUnits"};
+  apiCall(data,successFn);
 }
 
 

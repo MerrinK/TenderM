@@ -2855,7 +2855,17 @@
               </div>
               <div class="col-sm-12 form-group">
                   <label for="boq_unit">Units</label>
-                  <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="boq_unit" name="boq_unit" >
+
+                  <select class="form-control  form-control-user" id="boq_unit" name="boq_unit">
+                      <option value="">--SELECT--</option>
+                      {{#data}}
+                      {{#Units}}
+                        <option value="{{id}}">{{unit}}</option>
+                      {{/Units}}
+                      {{/data}}
+
+                  </select>
+                  <!-- <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="boq_unit" name="boq_unit" > -->
               </div>
               
             </div>
