@@ -775,7 +775,8 @@ class BOQ {
 		$sql5= "SELECT * FROM material_type";
 		$result5 = $this->dbc->get_result($sql5);
 
-		$poData_sql= "SELECT a.id, a.quantity_requested, b.name AS material_type, c.name AS material_sub_type, b.id AS material_type_id, c.id AS material_sub_type_id, a.	quantity_confirmed, a.unit_price, a.unit_name, a.material_description FROM po_request_materials a INNER JOIN material_type b ON b.id=a.material_type_id INNER JOIN material_sub_type c ON c.id=a.material_sub_type_id WHERE a.po_request_id=".$id;
+		$poData_sql= "SELECT a.id, a.quantity_requested, b.name AS material_type,  IFNULL(c.name, '') AS material_sub_type, b.id AS material_type_id, c.id AS material_sub_type_id, a.	quantity_confirmed, a.unit_price, a.unit_name, a.material_description FROM po_request_materials a INNER JOIN material_type b ON b.id=a.material_type_id LEFT OUTER JOIN material_sub_type c ON c.id=a.material_sub_type_id WHERE a.po_request_id=".$id;
+		// $poData_sql= "SELECT a.id, a.quantity_requested, b.name AS material_type,   a.	quantity_confirmed, a.unit_price, a.unit_name, a.material_description FROM po_request_materials a INNER JOIN material_type b ON b.id=a.material_type_id   WHERE a.po_request_id=".$id;
 		$porequstMeterials = $this->dbc->get_result($poData_sql);
 
 
