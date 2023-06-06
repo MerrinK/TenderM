@@ -848,7 +848,10 @@ class TenderDetails {
 
 		$tender_id=$_REQUEST['tender_id'];
 		
-		$sql= "SELECT * FROM progress WHERE deleted=0 AND tender_id=".$tender_id ." ORDER BY id DESC " ;
+		$sql= "SELECT p.*, CONCAT(u.first_name,' ',u.last_name) AS uploaded_by FROM progress p
+				INNER JOIN users u ON u.id=p.created_by
+				WHERE p.deleted=0 AND p.tender_id=".$tender_id ." ORDER BY p.date DESC " ;
+		// echo $sql;
 		$result = $this->dbc->get_result($sql);
 
 
