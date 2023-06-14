@@ -71,8 +71,7 @@ class DBC extends mysqli
     function insert_query($data, $table){
         //CommonFunction::addAccessLog($this,"DBC::insert_query","MODIFY",$table,json_encode($data));
         $query=$this->_createInsertQuery($data,$table);
-        // echo $query;
-        // die();
+        //echo $query;
         $this->queryresult = $this->update($query);
         if ($this->queryresult) { return true; } else { return false; }
     }
@@ -101,8 +100,7 @@ class DBC extends mysqli
         $sql = "UPDATE $table SET ".implode(',',$to)." WHERE ".implode(" AND ",$where);
         // echo $sql;
 		//CommonFunction::addAccessLog($this,"DBC::update_query","MODIFY",$table,json_encode($sql));
-		// echo $sql;
-        // die();
+		//echo $sql;
         return $this->query($sql);
     }
 

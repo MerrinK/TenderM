@@ -302,7 +302,7 @@ class TenderDetails {
 			FROM po_request a
 			INNER JOIN tender_boq_excel b ON b.id=a.boq_id 
 			INNER JOIN users u ON  a.created_by=u.id
-			WHERE  b.deleted=0 AND  a.tender_id=".$id." AND a.status=1 ORDER BY a.id DESC";
+			WHERE  b.deleted=0 AND  a.tender_id=".$id." AND a.status=1 ORDER BY a.required_by DESC";
 
 			    // echo $sql;
 		$result = $this->dbc->get_result($sql);
