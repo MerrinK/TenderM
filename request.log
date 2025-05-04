@@ -1,0 +1,321 @@
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Asdfasdf
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Asdfasdf
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Asdfasdf
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Asdfasdf
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Asdfasdf2
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsd
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsd
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsd
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsd
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsds
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsds
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsds
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsdsdd
+    [password] => 12345
+    [action] => userRegister
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Ssdfsdfsdsdd' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=0SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = 118 or find_in_set(118, t.SiteSupervisor) <> 0 or find_in_set(118, t.SiteEngineer) <> 0 SELECT id,company_name FROM `vendors` order by company_name ascArray
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsdsdd
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsdsdd
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsdsdd1
+    [password] => 12345
+    [action] => userRegister
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Ssdfsdfsdsdd1' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=0SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = 119 or find_in_set(119, t.SiteSupervisor) <> 0 or find_in_set(119, t.SiteEngineer) <> 0 SELECT id,company_name FROM `vendors` order by company_name ascArray
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Ssdfsdfsdsdd1
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Hdfsdf
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Asdf
+    [last_name] => Adsf
+    [email] => Adfasd@asdfasd.asd
+    [mobile] => 1234567890
+    [user_name] => Dfgfgsfdg
+    [password] => 12345
+    [action] => userRegister
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Dfgfgsfdg' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=0SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = 121 or find_in_set(121, t.SiteSupervisor) <> 0 or find_in_set(121, t.SiteEngineer) <> 0 SELECT id,company_name FROM `vendors` order by company_name ascArray
+(
+    [first_name] => Apple
+    [last_name] => Fruit
+    [email] => Apple@fruit.com
+    [mobile] => 1234567890
+    [user_name] => apple.fruit
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [username] => apple.fruit
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='apple.fruit' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=0SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = 122 or find_in_set(122, t.SiteSupervisor) <> 0 or find_in_set(122, t.SiteEngineer) <> 0 SELECT id,company_name FROM `vendors` order by company_name asc1Array
+(
+    [first_name] => Apple2
+    [last_name] => Fruit
+    [email] => Apple2@fruit.com
+    [mobile] => 1234567890
+    [user_name] => apple2.fruit
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Apple22
+    [last_name] => Fruit
+    [email] => Apple2@fruit.com
+    [mobile] => 1234567890
+    [user_name] => apple3.fruit
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [first_name] => Apple4
+    [last_name] => Fruit
+    [email] => Apple4@fruit.com
+    [mobile] => 1234567890
+    [user_name] => appl4.fruit
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [username] => Apple4@fruit.com
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Apple4@fruit.com' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=01Array
+(
+    [username] => Apple@fruit.com
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Apple@fruit.com' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=01Array
+(
+    [username] => Apple@fruit.com
+    [password] => 123456
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Apple@fruit.com' AND a.password='e10adc3949ba59abbe56e057f20f883e' AND deleted=01Array
+(
+    [username] => Apple@fruit.com
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Apple@fruit.com' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=01Array
+(
+    [username] => Shilendra.kori
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Shilendra.kori' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=01Array
+(
+    [username] => Shailendra.kori
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Shailendra.kori' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=0SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = 88 or find_in_set(88, t.SiteSupervisor) <> 0 or find_in_set(88, t.SiteEngineer) <> 0 SELECT id,company_name FROM `vendors` order by company_name asc1Array
+(
+    [userid] => 88
+    [tenderid] => 
+    [roleid] => 4
+    [action] => getRequest
+)
+Array
+(
+    [first_name] => Test
+    [last_name] => 1
+    [email] => Test@gmail.com
+    [mobile] => 1234567895
+    [user_name] => Testmail
+    [password] => 12345
+    [action] => userRegister
+)
+Array
+(
+    [username] => Testmail
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Testmail' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=0SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = 126 or find_in_set(126, t.SiteSupervisor) <> 0 or find_in_set(126, t.SiteEngineer) <> 0 SELECT id,company_name FROM `vendors` order by company_name asc1Array
+(
+    [username] => Satish.rawal
+    [password] => 12345
+    [action] => userLogin
+)
+SELECT a.*, b.name AS roleName FROM users a INNER JOIN role b ON b.id=a.role WHERE a.user_name='Satish.rawal' AND a.password='827ccb0eea8a706c4c34a16891f84e7b' AND deleted=0SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = 107 or find_in_set(107, t.SiteSupervisor) <> 0 or find_in_set(107, t.SiteEngineer) <> 0 SELECT id,company_name FROM `vendors` order by company_name asc1Array
+(
+    [userid] => 107
+    [tenderid] => 71
+    [action] => listProgress
+)

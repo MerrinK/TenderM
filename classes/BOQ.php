@@ -1185,7 +1185,8 @@ class BOQ {
 		$LastId=$result[0]['id'];
 		$LastId++;
 
-		$filename = 'Tender/UploadDoc/PurchaseOrder_'.$LastId.'.pdf';
+		// $filename = 'Tender/UploadDoc/PurchaseOrder_'.$LastId.'.pdf';
+		$filename = 'Tender/UpDoc/PurchaseOrder_'.$LastId.'.pdf';
 		$pdf->Output($_SERVER['DOCUMENT_ROOT'] . $filename, 'F');
 		return $filename;
 
@@ -2561,7 +2562,8 @@ class BOQ {
 	
 		//For Server
 		$ProjectFolder="tenderm/";
-		$filename = 'UploadDoc/'.$data["WorkOrderNo"].'/tenderDocs/Dev-PurOrd_'.$data["tender_id"].'_'.$data["boq_id"].'_'.$PORequest_id.'.pdf';
+		// $filename = 'UploadDoc/'.$data["WorkOrderNo"].'/tenderDocs/Dev-PurOrd_'.$data["tender_id"].'_'.$data["boq_id"].'_'.$PORequest_id.'.pdf';
+		$filename = 'UpDoc/'.$data["tender_id"].'/tenderDocs/Dev-PurOrd_'.$data["tender_id"].'_'.$data["boq_id"].'_'.$PORequest_id.'.pdf';
 		ob_clean();
 
 

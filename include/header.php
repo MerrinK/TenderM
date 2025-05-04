@@ -90,6 +90,15 @@
             </li>
             <hr class="sidebar-divider">
 
+            <?php if($_SESSION['IS_ADMIN']==1){ ?>
+                <li class="nav-item nav-active-control" id="nav-request">
+                    <a class="nav-link"  href="request.php" >
+                        <i class="fas fa-copy fa-copy-alt"></i>
+                        <span>Request</span></a>
+                </li>
+                <hr class="sidebar-divider">
+            <?php }?>
+
 
             <li class="nav-item  nav-active-control" id="nav-Inventory">
                 <a class="nav-link" href="Inventory.php">

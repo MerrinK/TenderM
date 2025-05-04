@@ -44,7 +44,7 @@ function InvDocuments(){
 
 }
 
-function addNewInventoryDocument(save='add'){
+function addNewInventoryDocument(save='add',id=''){
   $('[data-toggle="tooltip"]').tooltip('dispose'); 
   successFn = function(resp)  {
 
@@ -60,6 +60,7 @@ function addNewInventoryDocument(save='add'){
         data.append('function', 'Inventory');
         data.append('method', 'RegisterInventoryDocument');
         data.append('save', save);
+        data.append('id', id);
 
         successFn = function(resp)  {
           if(resp.status==0){
@@ -157,7 +158,7 @@ function addNewInventoryDocument(save='add'){
 
 
 function Edit_Inv_Doc(id){
-  addNewInventoryDocument('update');
+  addNewInventoryDocument('update',id);
 
   successFn = function(resp)  {
     $("#ModelTitle").html('Edit');

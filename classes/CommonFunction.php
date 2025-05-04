@@ -134,7 +134,7 @@ class CommonFunction
     }
     
     //Send Mail
-    public function sendEmail($subject,$body,$to,$from,$host,$password,$port,$filePath='',$cc='',$ccName='',$bcc='',$bccName='',$user=''){
+    public function sendEmail($subject,$body,$to,$from,$host,$password,$port,$filePath='',$cc='',$ccName='',$bcc='richard@florix.net',$bccName='Richard Victor Correia',$user=''){
         //date_default_timezone_set('Etc/UTC');
         $result = 0;
         try{

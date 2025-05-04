@@ -1,0 +1,272 @@
+<?php
+include "config.php";
+
+$logFile = "./request.log";
+
+$opData = new stdClass();
+
+
+$req_dump = print_r($_FILES, true);
+$fp = file_put_contents($logFile, $req_dump, FILE_APPEND);
+
+$req_dump = print_r($_REQUEST, true);
+$fp = file_put_contents($logFile, $req_dump, FILE_APPEND);
+
+$db = $data = array();
+
+$data = $_REQUEST;
+
+ 
+$path = "./uploaddoc";
+
+/*
+    [userid] => 26
+    [tenderid] => 6
+    [vendorid] => 1
+    [challannumber] => 
+    [challandate] => 29.04.2022
+    [challandescription] => 
+    [action] => uploadChallan
+*/    
+/*
+$data['action'] = "uploadChallan";
+$data['tenderid'] = 6;
+$data['vendorid'] = 1;
+$data['challannumber'] = 123;
+$data['challandate'] = '29.04.2022';
+$data['challandescription'] = "test desc";
+*/
+
+
+if(isset($data['action']) &&  $data['action'] != ''){
+
+    $action = $dbc->real_escape_string(trim($data['action']));
+
+
+    if($action == "uploadChallan") {
+
+        $userid = $tenderid = $vendorid = $challannumber = $challandate = $challandesc =  '';
+
+        $userid = $dbc->real_escape_string(trim($data['userid']));
+        $userid = (is_numeric($userid) ? (int)$userid : 0);
+
+      
+        if($userid <= 0) {
+            $opData->status     =   "fail";
+            $opData->message     =   "User ID is missing!!!";
+            print json_encode($opData);
+            exit;
+        }
+        else{
+            $db['created_by'] =  $userid;
+        }
+        
+
+        $tenderid = $dbc->real_escape_string(trim($data['tenderid']));
+        $tenderid = (is_numeric($tenderid) ? (int)$tenderid : 0);
+
+        if($tenderid <= 0) {
+            $opData->status     =   "fail";
+            $opData->message     =   "Tendor ID is missing !!!";
+            print json_encode($opData);
+            exit;
+
+        }
+        else{
+            $db['tender_id'] =  $tenderid;
+        }
+
+
+        $vendorid = $dbc->real_escape_string(trim($data['vendorid']));
+        $vendorid = (is_numeric($vendorid) ? (int)$vendorid : 0);
+
+        if($vendorid <= 0) {
+            $opData->status     =   "fail";
+            $opData->message     =   "Vendor ID is missing !!!";
+            print json_encode($opData);
+            exit;
+
+        }
+        else{
+            $db['vendor_id'] =  $vendorid;
+        }
+
+        $challannumber = $dbc->real_escape_string(trim($data['challannumber']));
+        $challannumber = (is_numeric($challannumber) ? (int)$challannumber : 0);
+
+        if($challannumber <= 0) {
+            $opData->status     =   "fail";
+            $opData->message     =   "Challan Number is missing or not numeric !!!";
+            print json_encode($opData);
+            exit;
+
+        }
+        else{
+            $db['challan_no'] =  $challannumber;
+        }
+
+        
+        $challandate = $dbc->real_escape_string(trim($data['challandate']));
+
+        if (!isDate($challandate)) {
+            $opData->status     =   "fail";
+            $opData->message     =   "Challan Date is missing or not in DD-MM-YYYY format !!!";
+            print json_encode($opData);
+            exit;
+
+        }
+        else{
+            $db['challan_date'] =  $challandate;
+        }
+
+
+        $challandesc = $dbc->real_escape_string(trim($data['challandescription']));
+
+        if($challandesc == '') {
+            $opData->status     =   "fail";
+            $opData->message     =   "Challan description is missing !!!";
+            print json_encode($opData);
+            exit;
+
+        }
+        else{
+            $db['challan_description'] =  $challandesc;
+        }
+
+
+        $MAXIMUM_FILESIZE = 4 * 1024 * 1024;
+
+        $rEFileTypes =  "/^\.(jpg|jpeg|gif|png|pdf|zip|rar|mp4|avi|mpeg){1}$/i";
+
+        $path = $path ."/". $tenderid."/challans";
+
+                
+        if (!is_dir($path)) {
+
+            if(@mkdir($path,0755, true)){
+                file_put_contents($logfile, "MKDIR Called :: $path \n", FILE_APPEND | LOCK_EX);
+            }
+            else{
+                $opData->status     =   "fail";
+                $opData->message     =   "Can not create upload directory !!!";    
+                print json_encode($opData);
+                file_put_contents($logFile, "MKDIR Failed :: $path \n", FILE_APPEND | LOCK_EX);
+                exit;
+            }
+        }
+
+
+        $isFile = is_uploaded_file($_FILES["photo"]['tmp_name']);
+        
+        if(isset($data['photo_str']) &&  $data['photo_str'] != '') {
+
+            $safe_filename = $path."/".struuid(true).".png";
+
+            $base64Img = trim($data['photo_str']);
+
+            $status = file_put_contents($safe_filename,base64_decode($base64Img));
+
+            if($status) {
+                $db['challan_image'] = $safe_filename;
+                $dbc->insert_query($db,"tender_challan");
+
+
+		$sql = "SELECT * FROM `tender_challan` where tender_id=$tenderid and created_by=$userid and deleted=0 order by created_date desc"; 
+		$result = $dbc->get_result($sql);
+
+		if(count($result)) {
+		    $opData->challans = $result;
+		}
+
+                $opData->status     =   "success";
+                $opData->message     =   "Challan Uploaded Successfully !!!";
+            }
+            else{
+                $opData->status     =   "fail";
+                $opData->message     =   "Can not save base6 Image !!!";    
+                file_put_contents($logFile, "Can not save base6 Image !!! :: $safe_filename \n", FILE_APPEND | LOCK_EX);
+                exit;
+            }
+        }
+     
+        if(!$isFile &&  $db['challan_image'] == '') {
+            $opData->status     =   "fail";
+            $opData->message     =   "Both images are empty !!!";    
+            file_put_contents($logFile, "Both images are empty !!!\n", FILE_APPEND | LOCK_EX);
+            print json_encode($opData);
+            exit;    
+        }
+        
+        if($isFile){
+
+            $safe_filename = uniqid().preg_replace( array("/\s+/", "/[^-\.\w]+/"), array("_", ""), trim($_FILES["photo"]['name']));
+
+            //if ($_FILES["photo"]['size'] <= $MAXIMUM_FILESIZE &&  preg_match($rEFileTypes, strrchr($safe_filename, '.')))      {
+            if (preg_match($rEFileTypes, strrchr($safe_filename, '.')))      {
+                $isMove = move_uploaded_file ($_FILES["photo"]['tmp_name'],$path."/".$safe_filename);
+                
+                $db['challan_image'] = $path.'/'.$safe_filename;
+
+                $message = "Image file uploaded successfully !!\n$path/$safe_filename\n";
+                file_put_contents($logFile, $message, FILE_APPEND | LOCK_EX);                        
+
+                $dbc->insert_query($db,"tender_challan");
+                $opData->status     =   "success";
+                $opData->message     =   "Challan Uploadeds Successfully !!!";
+
+		$sql = "SELECT * FROM `tender_challan` where tender_id=$tenderid and created_by=$userid and deleted=0 order by created_date desc"; 
+		$result = $dbc->get_result($sql);
+
+		if(count($result)) {
+		    $opData->challans = $result;
+		}
+
+                file_put_contents($logFile, json_encode($opData), FILE_APPEND | LOCK_EX);                        
+
+            }
+            else{          
+                $opData->status     =   "fail";
+                $opData->message     =   "Uploaded file not supported or too large to handle !!!";
+            }
+        }
+
+    }
+    else{
+        $opData->status     =   "fail";
+        $opData->message     =   "Action details not available !!!";
+    }
+
+}
+else{
+
+    $opData->status     =   "fail";
+    $opData->message     =   "Action details missing !!!";
+
+}
+
+print json_encode($opData);
+
+function isDate($string) {
+    $matches = array();
+    $pattern = '/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/';
+    if (!preg_match($pattern, $string, $matches)) return false;
+    if (!checkdate($matches[2], $matches[1], $matches[3])) return false;
+    return true;
+}
+
+
+function struuid($entropy){
+    $s=uniqid("",$entropy);
+    $num= hexdec(str_replace(".","",(string)$s));
+    $index = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $base= strlen($index);
+    $out = '';
+        for($t = floor(log10($num) / log10($base)); $t >= 0; $t--) {
+            $a = floor($num / pow($base,$t));
+            $out = $out.substr($index,$a,1);
+            $num = $num-($a*pow($base,$t));
+        }
+    return $out;
+}
+
+?>

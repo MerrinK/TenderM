@@ -163,6 +163,7 @@ $(document).ready(function() {
           required: "Please enter the password"
         }
 
+
       },
       errorElement: 'span',
       errorPlacement: function (error, element) {

@@ -27,13 +27,70 @@ if(isset($data['action']) &&  $data['action'] != '') {
         $password=md5($dbc->real_escape_string(trim($data['password'])));
 
         $data = Login($user_name, $password);
-	//$fp = file_put_contents('./request.log', print_r($data), FILE_APPEND);
+	    $fp = file_put_contents('./request.log', print_r($data), FILE_APPEND);
 
-        print_r($data);
+        // print_r($data);
+
+    }else if($action == "userRegister"){
+        $first_name=$dbc->real_escape_string(trim($data['first_name']));
+        $last_name=$dbc->real_escape_string(trim($data['last_name']));
+        $mobile=$dbc->real_escape_string(trim($data['mobile']));
+        $email=$dbc->real_escape_string(trim($data['email']));
+        $user_name=$dbc->real_escape_string(trim($data['user_name']));
+        // $password=$dbc->real_escape_string(trim($data['password']));
+        $password=md5($dbc->real_escape_string(trim($data['password'])));
+        
+
+        Register($user_name, $password,$first_name,$last_name,$mobile,$email);
     }
 
 }
+function Register($user_name, $password, $first_name, $last_name, $mobile, $email){
+    global $dbc; 
+    $opData = new stdClass(); // fix: define opData
 
+    // Secure inputs
+    // $user_name = mysqli_real_escape_string($dbc->conn, $user_name);
+    $sql = "SELECT id,user_name FROM users WHERE user_name='$user_name'";
+    $result = $dbc->get_result($sql);
+
+    if (isset($result[0]['id']) && $result[0]['user_name']== $user_name) {
+        $opData->status = "fail";
+        $opData->message = "Username already exists";
+        echo json_encode($opData);
+        exit;
+
+    }else{
+
+        $data = array(
+            'user_name'     => $user_name,
+            'password'      => $password, 
+            'first_name'    => $first_name,
+            'last_name'     => $last_name,
+            'email'         => $email,
+            'mobile'        => $mobile,
+            'is_admin'      => 0,
+            'role'          => 4,
+            'verify'        => 1,
+            'enable'        => 1,
+            'created_by'    => 39,
+            'created_date'  => date('Y-m-d H:i:s')
+        );
+
+        if ($dbc->insert_query($data, "users")) {
+            // Login($user_name,$password);
+            $opData->status = "success";
+            $opData->message = "Registered Successfully";
+
+        } else {
+            $opData->status = "fail";
+            $opData->message = "Database error: " . $dbc->error;
+            
+        }
+        echo json_encode($opData);
+        exit;
+    }
+}
 
 
 function Login($user_name,$password){
@@ -58,13 +115,26 @@ function Login($user_name,$password){
         $opData->status     =   "success";
         $opData->session     =   struuid(true);
         $opData->user_name = $result[0]['user_name'];
+        $opData->name = $result[0]['first_name'] . ' ' . $result[0]['last_name'];
         $opData->email  =   $result[0]['email'];
+        $opData->first_name = $result[0]['first_name'];
+        $opData->last_name = $result[0]['last_name'];
+        $opData->mobile = $result[0]['mobile'];
         $opData->ROLE   =   $result[0]['roleName'];
         $opData->ROLE_ID    =   $result[0]['role'];
         $opData->IS_ADMIN   =  $result[0]['is_admin'];
+
         
-        // $sql = "SELECT id,TenderName FROM `tenders` where SiteIncharge = $userid or find_in_set($userid, SiteSupervisor) <> 0";
-        $sql = "SELECT id,TenderName FROM `tenders` where SiteIncharge = $userid or find_in_set($userid, SiteSupervisor) <> 0 or find_in_set($userid, SiteEngineer) <> 0 ";
+        if($result[0]['role']==1 || $result[0]['role']=='1'){
+            $sql = "SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t INNER JOIN users u ON u.id=t.SiteIncharge WHERE u.deleted=0";
+        }else{
+
+            $sql = "SELECT t.id,t.TenderName, t.TenderStartDate, u.mobile AS site_incharge_mobile 
+                FROM `tenders` t  
+                INNER JOIN users u ON u.id=t.SiteIncharge WHERE t.SiteIncharge = $userid or find_in_set($userid, t.SiteSupervisor) <> 0 or find_in_set($userid, t.SiteEngineer) <> 0 ";
+        }
+
 	    $fp = file_put_contents('./request.log', $sql, FILE_APPEND);
 
         $result = $dbc->get_result($sql);

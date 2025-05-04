@@ -802,7 +802,7 @@
                   </td>
                   
                   <td class="text-center">
-                    <a href="javascript:void(0);"   onclick="viewImage('{{url}}{{upload_bill}}')" title="view"  data-toggle="tooltip" data-placement="top" >view </a>{{#admin}} |
+                    <a href="javascript:void(0);"   onclick="viewImageNew('{{upload_bill}}','','{{id}}','Labour')" title="view"  data-toggle="tooltip" data-placement="top" >view </a>{{#admin}} |
   
                     <a href="javascript:void(0);" onclick="DeleteTenderBill('{{id}}','{{tender_id}}')"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span> </a>{{/admin}}
   
@@ -3226,7 +3226,7 @@
           <div class="row">
             {{#img}}
             <div class="col-lg-2 col-md-2 col-sm-6">
-              <a class="gallery__item fresco" href="{{src}}" data-fresco-group="gallery" >
+              <a class="gallery__item fresco" href="{{src}}" data-fresco-group="{{date}}" >
                 <img src="{{src}}" alt="">
               </a>
             </div>

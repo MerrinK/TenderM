@@ -440,9 +440,9 @@ class TenderDetails {
 			ajaxResponse("0", 'Unable to insert the record');
 		}
 
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
 
 		// $Today=date('Y-m-d');
 		$data=array();
@@ -457,7 +457,9 @@ class TenderDetails {
 		
 
 		// $folder="UploadDoc/";
-		$folder="UploadDoc/".$WorkOrderNo."/Challans/";
+		// $folder="UploadDoc/".$WorkOrderNo."/Challans/";
+		$folder="UpDoc/". $_REQUEST['tender_id'] ."/Challans/";
+
 
 		if(isset($_FILES['UploadChallan']['name']) && $_FILES['UploadChallan']['name']!=''){
 			$info_1 = pathinfo($_FILES['UploadChallan']['name']);
@@ -690,9 +692,9 @@ class TenderDetails {
 		$id++;
 
 
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
 
 		$data=array();
 		$data["tender_id"]=$_REQUEST['tender_id'];
@@ -708,8 +710,8 @@ class TenderDetails {
 		$data["created_by"]=$_SESSION['USER_ID'];
 		$data["created_date"]=date("Y-m-d");
 
-		// $folder="UploadDoc/";
-		$folder="UploadDoc/".$WorkOrderNo."/Expense/";
+		// $folder="UploadDoc/".$WorkOrderNo."/Expense/";
+		$folder="UpDoc/". $_REQUEST['tender_id'] ."/Expense/";
 
 		if(isset($_FILES['UploadBills']['name']) && $_FILES['UploadBills']['name']!=''){
 			$info_1 = pathinfo($_FILES['UploadBills']['name']);
@@ -906,13 +908,13 @@ class TenderDetails {
 			// $id++;
 
 
-			$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-			$result2 = $this->dbc->get_result($sql2);
-			if(isset($result2[0]['WorkOrderNo'])){
-				$WorkOrderNo=$result2[0]['WorkOrderNo'];
-			}else{
-				ajaxResponse("0", 'Work Order No null');
-			}
+			// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+			// $result2 = $this->dbc->get_result($sql2);
+			// if(isset($result2[0]['WorkOrderNo'])){
+			// 	$WorkOrderNo=$result2[0]['WorkOrderNo'];
+			// }else{
+			// 	ajaxResponse("0", 'Work Order No null');
+			// }
 
 			$data=array();
 			$data["tender_id"]=$_REQUEST['tender_id'];
@@ -936,7 +938,8 @@ class TenderDetails {
 			$dataImage["created_date"]=date("Y-m-d");
 
 			$TotalFiles=count(array_filter($_FILES['UploadProgress']['name']));
-			$folder="UploadDoc/".$WorkOrderNo."/Progress/";
+			// $folder="UploadDoc/".$WorkOrderNo."/Progress/";
+			$folder="UpDoc/".$_REQUEST['tender_id'] ."/Progress/";
 			$last_int_id = "";
 				
 			// if($result>=1){
@@ -1316,9 +1319,9 @@ class TenderDetails {
 		$id++;
 
 
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
 
 		$data=array();
 		$data["tender_id"]=$_REQUEST['tender_id'];
@@ -1335,7 +1338,8 @@ class TenderDetails {
 		$data["summary"]=mysqli_real_escape_string($this->dbc, stripcslashes($_REQUEST['expense_summary']));
 		
 		// $folder="UploadDoc/";
-		$folder="UploadDoc/".$WorkOrderNo."/Expense/";
+		// $folder="UploadDoc/".$WorkOrderNo."/Expense/";
+		$folder="UpDoc/". $_REQUEST['tender_id'] ."/Expense/";
 
 		if(isset($_FILES['UploadExpenses']['name']) && $_FILES['UploadExpenses']['name']!=''){
 			$info_1 = pathinfo($_FILES['UploadExpenses']['name']);
@@ -1524,9 +1528,9 @@ class TenderDetails {
 		$id++;
 
 		// print_r($_FILES); die();
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
 
 		$data=array();
 		$data["tender_id"]=$_REQUEST['tender_id'];
@@ -1695,9 +1699,9 @@ class TenderDetails {
 
 
 		// print_r($_FILES); die();
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
 
 		$data=array();
 		$data["tender_id"]=$_REQUEST['tender_id'];
@@ -1735,11 +1739,12 @@ class TenderDetails {
 			ajaxResponse("0", 'Tender id is null');
 		}
 		
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
 		
-		$folder='UploadDoc/'.$WorkOrderNo."/tenderDocs/";
+		// $folder='UploadDoc/'.$WorkOrderNo."/tenderDocs/";
+		$folder='UpDoc/'.$_REQUEST['tender_id']."/tenderDocs/";
 		$User_id=$_SESSION['USER_ID'];
 		$Today=date('Y-m-d H:i:s');
 		$Tender_id=$_REQUEST['tender_id'];
@@ -1942,10 +1947,11 @@ class TenderDetails {
 
 		// $folder="UploadDoc/";
 
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
-		$folder="UploadDoc/".$WorkOrderNo."/tenderDocs/";
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $folder="UploadDoc/".$WorkOrderNo."/tenderDocs/";
+		$folder="UpDoc/".$_REQUEST['tender_id']."/tenderDocs/";
 
 		$sql= "SELECT id FROM document ORDER BY id DESC LIMIT 1";
 		$result = $this->dbc->get_result($sql);
@@ -2026,6 +2032,12 @@ class TenderDetails {
 			$sql= "SELECT id,image FROM expenses  WHERE id=".$Image_Id;
 			$result = $this->dbc->get_result($sql);
 			$src=$result[0]['image'];
+
+		}else if($table=='Labour'){
+			$sql= "SELECT id,upload_bill FROM tender_labour_bills  WHERE id=".$Image_Id;
+			$result = $this->dbc->get_result($sql);
+			$src=$result[0]['upload_bill'];
+
 		}
 			
 

@@ -295,7 +295,7 @@ class BOQ {
 
 		// $result[0]['description'] = '';
 
-		$sql1= "SELECT * FROM material_type ORDER BY order_by ASC, name ASC";
+		$sql1= "SELECT * FROM material_type ORDER BY name ASC";
 		$result1 = $this->dbc->get_result($sql1);
 
 		
@@ -499,17 +499,13 @@ class BOQ {
 
 
  		$User_id=$_SESSION['USER_ID'];
- 		$ROLE_ID=$_SESSION['ROLE_ID'];
 
-		// $AdminQry= "SELECT is_admin FROM users  WHERE id=".$User_id;
-		// $AdminData = $this->dbc->get_result($AdminQry);
+		$AdminQry= "SELECT is_admin FROM users  WHERE id=".$User_id;
+		$AdminData = $this->dbc->get_result($AdminQry);
 		$admin=0;
-		$SiteIncharge=0;
 
-		if($ROLE_ID]==1){
+		if($AdminData[0]['is_admin']==1){
 			$admin=1;
-		}else if($ROLE_ID]==2){
-			$SiteIncharge=1;
 		}
 		// print_r($PO_Qry);
 
@@ -517,7 +513,7 @@ class BOQ {
 
 
 
-		$data=array("BOQ_Id"=>$boq_id,"TenderId"=>$Tender_id, "Requests"=>$PO_Data, "TenderName"=>$TenderData[0]['TenderName'],"admin"=>$admin,"SiteIncharge"=>$SiteIncharge);
+		$data=array("BOQ_Id"=>$boq_id,"TenderId"=>$Tender_id, "Requests"=>$PO_Data, "TenderName"=>$TenderData[0]['TenderName'],"admin"=>$admin);
 
 		ajaxResponse("1", $data);
 
@@ -1463,7 +1459,6 @@ class BOQ {
 		$boq_id=$_REQUEST['boq_id'];
 
 		$User_id=$_SESSION['USER_ID'];
-		$ROLE_ID=$_SESSION['ROLE_ID'];
 		$Today=date("Y-m-d");
 		$DateTime=date("Y-m-d H:i:s");
 
@@ -1474,10 +1469,6 @@ class BOQ {
 		$data['request_note']=preg_replace('/[\x00-\x1F\x7F]/u', '', $_REQUEST['request_note']);
 		$data['created_by']=$User_id;
 		$data['created_date']=$DateTime;
-
-		if($ROLE_ID==2){
-			$data['approved']=1;
-		}
 			
 		$sql="SELECT * FROM po_request";
 		$result1=$this->dbc->get_array($sql);

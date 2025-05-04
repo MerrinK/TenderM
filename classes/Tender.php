@@ -91,19 +91,23 @@ class Tender {
 
 	}
 	public function AddTenderPage(){
-		$sql1= "SELECT id,first_name,last_name FROM users WHERE role=2 AND  deleted=0 ORDER BY first_name";
-		$SiteIncharge = $this->dbc->get_result($sql1);
-		$sql2= "SELECT id,first_name,last_name  FROM users WHERE role=3 AND  deleted=0 ORDER BY first_name";
-		$SiteSupervisor = $this->dbc->get_result($sql2);
-		$sql2= "SELECT id,first_name,last_name  FROM users WHERE role=4 AND  deleted=0 ORDER BY first_name";
-		$SiteEngineer = $this->dbc->get_result($sql2);
+		// $sql1= "SELECT id,first_name,last_name FROM users WHERE role=2 AND  deleted=0 ORDER BY first_name";
+		// $SiteIncharge = $this->dbc->get_result($sql1);
+		// $sql2= "SELECT id,first_name,last_name  FROM users WHERE role=3 AND  deleted=0 ORDER BY first_name";
+		// $SiteSupervisor = $this->dbc->get_result($sql2);
+		// $sql2= "SELECT id,first_name,last_name  FROM users WHERE role=4 AND  deleted=0 ORDER BY first_name";
+		// $SiteEngineer = $this->dbc->get_result($sql2);
 
-		// BMCDepartment
+		// BMCDepartment role IN (2, 3, 4)
 		$sql3= "SELECT *  FROM department  ORDER BY name";
 		$BMCDepartment = $this->dbc->get_result($sql3);
 
+		$sql4= "SELECT id,first_name,last_name  FROM users WHERE  role IN (2, 3, 4) AND  deleted=0 ORDER BY first_name";
+		$All = $this->dbc->get_result($sql4);
 
-		$data=array("SiteIncharge"=>$SiteIncharge,"SiteEngineer"=>$SiteEngineer,"SiteSupervisor"=>$SiteSupervisor, "BMCDepartment"=>$BMCDepartment);
+
+		// $data=array("SiteIncharge"=>$SiteIncharge,"SiteEngineer"=>$SiteEngineer,"SiteSupervisor"=>$SiteSupervisor, "BMCDepartment"=>$BMCDepartment);
+		$data=array("SiteIncharge"=>$All,"SiteEngineer"=>$All,"SiteSupervisor"=>$All, "BMCDepartment"=>$BMCDepartment);
 
 
 
@@ -172,10 +176,13 @@ class Tender {
 		if(isset($_REQUEST['id']) && $_REQUEST['id']!=''){
 			$id=$_REQUEST['id'];
 		}else{
-			$sql= "SELECT id FROM tenders ORDER BY id DESC LIMIT 1";
-			$result = $this->dbc->get_result($sql);
-			$id=$result[0]['id'];
-			$id++;
+			$id = $this->dbc->get_next_insert_id('tenders');
+
+			// $sql= "SELECT id FROM tenders ORDER BY id DESC LIMIT 1";
+			// $result = $this->dbc->get_result($sql);
+			// $id=$result[0]['id'];
+			// $id++;
+
 		}
 
 		// print_r($_REQUEST);
@@ -234,7 +241,8 @@ class Tender {
 		}
 
 
-		$folder='UploadDoc/'.$_REQUEST['WorkOrderNo']."/tenderDocs/";
+		// $folder='UploadDoc/'.$_REQUEST['WorkOrderNo']."/tenderDocs/";
+		$folder='UpDoc/'.$id."/tenderDocs/";
 
 
 		if(isset($_FILES['EMDUpload']['name']) && $_FILES['EMDUpload']['name']!=''){
@@ -325,13 +333,14 @@ class Tender {
 				if($Tender_id>=1){
 
 					$oldmask = umask(0);
-					mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'], 0777);
-					mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'].'/tenderDocs', 0777);
-					mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'].'/Labor', 0777);
-					mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'].'/Challans', 0777);
-					mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'].'/Progress', 0777);
-					mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'].'/Expense', 0777);
-					mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'].'/Miscell', 0777);
+					mkdir("UpDoc/".$Tender_id, 0777);
+					mkdir("UpDoc/".$Tender_id.'/tenderDocs', 0777);
+					mkdir("UpDoc/".$Tender_id.'/Labor', 0777);
+					mkdir("UpDoc/".$Tender_id.'/Labour', 0777);
+					mkdir("UpDoc/".$Tender_id.'/Challans', 0777);
+					mkdir("UpDoc/".$Tender_id.'/Progress', 0777);
+					mkdir("UpDoc/".$Tender_id.'/Expense', 0777);
+					mkdir("UpDoc/".$Tender_id.'/Miscell', 0777);
 					// mkdir("UploadDoc/".$_REQUEST['WorkOrderNo'].'/', 0777);
 					umask($oldmask);
 					// sleep(3);
@@ -854,9 +863,9 @@ public function DeleteBill(){
 		$id=$result[0]['id'];
 		$id++;
 
-		$sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
-		$result2 = $this->dbc->get_result($sql2);
-		$WorkOrderNo=$result2[0]['WorkOrderNo'];
+		// $sql2= "SELECT WorkOrderNo FROM tenders WHERE  id =".$_REQUEST['tender_id'];
+		// $result2 = $this->dbc->get_result($sql2);
+		// $WorkOrderNo=$result2[0]['WorkOrderNo'];
 
 		$User_id=$_SESSION['USER_ID'];
 		$Today=date("Y-m-d");
@@ -869,7 +878,9 @@ public function DeleteBill(){
 		$data['vendor']=$_REQUEST['BillVendor'];
 		$data['bill_date']=$_REQUEST['BillDate'];
 		
-		$folder="UploadDoc/".$WorkOrderNo."/Labor/";
+		// $folder="UploadDoc/".$WorkOrderNo."/Labor/";
+		$folder="UpDoc/".$_REQUEST['tender_id']."/Labor/";
+
 		if(isset($_FILES['AddCostBills']['name']) && $_FILES['AddCostBills']['name']!=''){
 			$info_1 = pathinfo($_FILES['AddCostBills']['name']);
 			$ext_1 = $info_1['extension']; 
@@ -958,6 +969,101 @@ public function DeleteBill(){
 	}
 
 
+	function RequestedPOs(){
+
+
+		$userid = $roleid = $tenderid = 0;
+
+        $userid=$_SESSION['USER_ID'];
+		$roleid=$_SESSION['ROLE_ID'];
+
+        $Whr_role = '';
+        if ($roleid > 1) {
+            $Whr_role = ' AND r.created_by = ' . $userid;
+        }
+
+        $Whr_tender = '';
+		$tenderid=$_REQUEST['tender_id'];
+
+        if ($tenderid !='') {
+            $Whr_tender = ' AND r.tender_id = ' . $tenderid;
+        }
+
+        $sql = "SELECT r.id, r.tender_id, r.boq_id, r.required_by, t.TenderName, b.item AS boq, CONCAT(u.first_name, ' ', u.last_name ) AS requested_by, r.approved,
+
+                (
+                    SELECT GROUP_CONCAT(mt.name SEPARATOR ', ')
+                    FROM po_request_materials prm 
+                    INNER JOIN material_type mt ON mt.id= prm.material_type_id
+                    WHERE prm.po_request_id = r.id
+                ) AS RequestMaterial,
+    
+                (
+                    SELECT GROUP_CONCAT(mst.name SEPARATOR ', ')
+                    FROM po_request_materials prm 
+                    INNER JOIN material_sub_type mst ON mst.id= prm.material_sub_type_id
+                    
+                    WHERE prm.po_request_id = r.id
+                ) AS RequestSubMaterial,
+                (
+                    SELECT GROUP_CONCAT(prm.quantity_requested SEPARATOR ', ')
+                    FROM po_request_materials prm 
+                    WHERE prm.po_request_id = r.id
+                ) AS RequestQuantity,
+                
+                 (
+                    SELECT GROUP_CONCAT(prm.unit_name SEPARATOR ', ')
+                    FROM po_request_materials prm 
+                    WHERE prm.po_request_id = r.id
+                ) AS RequestMaterialUnitName,
+                
+                
+                (
+                    SELECT GROUP_CONCAT(prma.material_type SEPARATOR ', ')
+                    FROM po_request_materials_additional prma 
+                    WHERE prma.po_request_id = r.id
+                ) AS RequestCustomMaterial,
+                
+                (
+                  SELECT GROUP_CONCAT(prma.material_sub_type SEPARATOR ', ')
+                    FROM po_request_materials_additional prma 
+                    WHERE prma.po_request_id = r.id
+                ) AS RequestCustomSubMaterial,
+                (
+                    SELECT GROUP_CONCAT(prma.quantity_requested SEPARATOR ', ')
+                    FROM po_request_materials_additional prma 
+                    WHERE prma.po_request_id = r.id
+                ) AS RequestCustomQuantity,
+                
+                (
+                    SELECT GROUP_CONCAT(prma.unit_name SEPARATOR ', ')
+                    FROM po_request_materials_additional prma 
+                    WHERE prma.po_request_id = r.id
+                ) AS RequestCustomMaterialUnitName
+                
+                FROM po_request r 
+                INNER JOIN tenders t ON t.id = r.tender_id
+                INNER JOIN tender_boq_excel b ON b.id = r.boq_id 
+                INNER JOIN users u ON u.id = r.created_by
+
+                WHERE r.received = 0 " . $Whr_role . $Whr_tender . " 
+                ORDER BY r.id DESC ";
+
+
+                // echo $sql;
+		$result = $this->dbc->get_result($sql);
+		$data=array("RequestedPO"=>$result);
+		ajaxResponse("1", $data);
+	}
+
+
+	public function AllTenders(){
+
+		$sql0= "SELECT id,TenderName FROM tenders WHERE deleted=0 ORDER BY TenderName ASC ";
+		$result0 = $this->dbc->get_result($sql0);
+		$data=array("Tender"=>$result0);
+		ajaxResponse("1", $data);
+	}
 }
 ?>
 

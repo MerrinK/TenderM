@@ -6,7 +6,7 @@ require_once("classes/Employees.php");//userClass
 
 // require_once("classes/addClasses.php");
 require_once('TCPDF/tcpdf.php');
-require_once("classes/CommonFunction.php");
+// require_once("classes/CommonFunction.php");
 require_once("classes/Vendors.php");
 require_once("classes/Tender.php");
 require_once("classes/BOQ.php");

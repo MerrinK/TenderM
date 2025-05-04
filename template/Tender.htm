@@ -1693,4 +1693,165 @@
   {{/data}}
   </script>
   
+
+
+
+
+<script id="RequestedPO_templ" type="text/x-mustache">
+  {{#data}}
   
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Request</h1>
+  </div>
+  
+   
+  
+  
+  <div id="ForAddNewTender">
+    <div class="card shadow mb-4"  >
+
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between m-0 p-0">
+        <div class="col-auto">
+          <h6 class="m-0 ml-2 font-weight-bold text-primary"><span class="d-none d-sm-inline">Request List </span></h6>
+        </div>
+        
+        <div class="col text-center m-0 p-0">
+          <div class="row">
+            <div class="col-md-4 mb-4 mb-3 form-group">
+            </div>
+            <label class="col-sm-6 col-md-1 mt-2" for="">Tender</label>
+            <div class="col-sm-6 col-md-4 mb-sm-0 form-group">
+              <select class="form-control  form-control-user" onchange="RequestedPOs(this.value)">
+                <option value="">All Tender</option>
+                {{#Tender}}
+                <option value="{{id}}">{{TenderName}}</option>
+                {{/Tender}}
+
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-auto ml-auto">
+        </div>
+      </div>
+
+
+     
+      <div class="card-body" id="TdBody">
+       
+      </div>
+    </div>
+  </div>
+  
+  {{/data}}
+</script>
+  
+<script id="RequestedPOMat_templ"  type="text/x-mustache">
+{{#data}}
+
+{{#RequestedPO.length}}
+<div class="table-responsive text-center">
+  <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_RequestList" >
+      <thead>
+          <tr>
+            <th style="max-width:50px;">S.l</th>
+            <th>Tender Name</th>
+            <th>BOQ</th>
+            <th>Requested By</th>
+            <th>Required By</th>
+            <th>Action</th>
+            
+          </tr>
+      </thead>
+      <tbody>
+        {{resetIndex}}
+        {{#RequestedPO}}
+          <tr>
+            <td>{{index}}</td>
+            <td>{{TenderName}}</td>
+            <td style="max-width:300px;">{{boq}}</td>
+            <td>{{requested_by}}</td>
+            <td>{{required_by}}</td>
+            <td>
+              <a href="javascript:void(0);" onclick="viewRequestedPO('{{id}}','{{RequestMaterial}}','{{RequestSubMaterial}}','{{RequestQuantity}}','{{RequestMaterialUnitName}}','{{RequestCustomMaterial}}','{{RequestCustomSubMaterial}}','{{RequestCustomQuantity}}','{{RequestCustomMaterialUnitName}}','{{requested_by}}','{{required_by}}')" title="view"  data-toggle="tooltip" data-placement="top"  ><i class="fas fa-eye text-success" ></i></a>
+
+            </td>
+           
+          </tr>
+        {{/RequestedPO}}
+          
+      </tbody>
+  </table>
+</div>
+{{/RequestedPO.length}}
+{{^RequestedPO.length}}
+   <div class="alert alert-danger" role="alert">
+    No details found!
+  </div>
+{{/RequestedPO.length}}
+{{/data}}
+
+</script>
+
+<script id="requestMaterial_templ"  type="text/x-mustache">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-primary" >Request</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="col-lg-12" id="StandardMaterial">
+                <h5>Standard Material</h5>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Material</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody id="stdMat_body">
+                  </tbody>
+                </table>
+              </div>
+
+
+              <div class="col-lg-12" id="CustomMaterial">
+                <h5>Custom Material</h5>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Material</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody id="CusMat_body">
+                  </tbody>
+                </table>
+              </div>
+
+
+            </div>
+
+
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          </div>
+
+    </div>
+  </div>
+
+</script>
+

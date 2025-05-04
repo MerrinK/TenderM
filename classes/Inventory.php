@@ -101,7 +101,7 @@ class Inventory {
 			$data["updated_by"]=$_SESSION['USER_ID'];
 			$data["updated_date"]=date('Y-m-d H:i:s');
 			$data_id=array();
-			$data_id["id"]=$_REQUEST['hid_doc_id'];
+			$data_id["id"]=$_REQUEST['id'];
 			$result = $this->dbc->update_query($data, 'inventory', $data_id);
 			
 		}

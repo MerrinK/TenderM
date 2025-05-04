@@ -1,0 +1,2884 @@
+<script id="TenderDetailsTab_templ" type="text/x-mustache">
+{{#data}}
+
+  <div class="row">
+   
+
+     <div class="col-12  m-2">
+      <h4>Tender details of : <span id="tenderDetailsName" class="text-info">{{TenderName}}</span>  <button class="btn btn-warning" onclick="{{location}}();"> Back</button> </h4>
+      <input type="hidden" id="tender_id_details" value="{{id}}">
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card card-primary card-outline card-outline-tabs">
+        <div class="card-header p-0 border-bottom-0">
+          <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+
+          {{^Accounts}}
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="ViewTenderDetails-tab" href="#ViewTenderDetails" aria-controls="ViewTenderDetails"> Tender Details</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="TenderBOQ-tab" href="#TenderBOQ" aria-controls="TenderBOQ">BOQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="AdditionalLabourCost-tab" href="#AdditionalLabourCost" aria-controls="AdditionalLabourCost">Labour</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Details_PORequest-tab" href="#Details_PORequest" aria-controls="Details_PORequest">PO Request</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Details_PO-tab" href="#Details_PO" aria-controls="Details_PO"> PO</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="challanBills-tab" href="#challanBills" aria-controls="challanBills">Challan </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="CreatedBills-tab" href="#CreatedBills" aria-controls="CreatedBills"> Bills </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="DailyProgress-tab" href="#DailyProgress" aria-controls="DailyProgress"> Progress </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Expenses-tab" href="#Expenses" aria-controls="Expenses"> Expenses </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Voucher-tab" href="#Voucher" aria-controls="Voucher"> Voucher </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Documents-tab" href="#Documents" aria-controls="Documents"> Documents </a>
+            </li>
+          {{/Accounts}}
+          
+          {{#Accounts}}
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="challanBills-tab" href="#challanBills" aria-controls="challanBills">Challan </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="CreatedBills-tab" href="#CreatedBills" aria-controls="CreatedBills"> Bills </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Expenses-tab" href="#Expenses" aria-controls="Expenses"> Expenses </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Voucher-tab" href="#Voucher" aria-controls="Voucher"> Voucher </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-secondary" data-toggle="pill" role="tab" aria-selected="true" id="Documents-tab" href="#Documents" aria-controls="Documents"> Documents </a>
+            </li>
+          {{/Accounts}}
+
+
+
+
+         
+           
+
+            
+          </ul>
+        </div>
+
+        <div class="card-body">
+          <div class="tab-content" id="custom-tabs-one-tabContent">
+            <div class="tab-pane fade show" role="tabpanel" id="ViewTenderDetails"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="TenderBOQ"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="AdditionalLabourCost"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="Details_PORequest"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="Details_PO"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="challanBills"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="CreatedBills"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="DailyProgress"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="Expenses"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="Voucher"></div>
+            <div class="tab-pane fade show" role="tabpanel" id="Documents"></div>
+
+          </div>
+        </div>
+
+        
+
+
+      </div>
+    </div>
+    
+  </div>
+{{/data}} 
+</script>
+
+
+
+  <script id="viewTender2_templ" type="text/x-mustache">
+  {{#data}}
+  
+  
+            <div class="card shadow mb-4">
+               <div class="card-body">
+                <div class="row">
+                  <div class="col-12  text-center">
+                        <h3  class="">Tender Details </h3>
+                  </div>
+                </div>
+              {{#Tender}}
+  
+                <div class="row">
+                  <div class="col-12 text center">
+                        <table class=" table table-borderless" style="text-size:100px">
+                          <tr>
+                            <th>Tender Name</th>
+                            <td class="text-info">: {{TenderName}}</td>
+                          </tr>
+                          <tr>
+                            <th>Tender Work Order</th>
+                            <td>: {{WorkOrderNo}}</td>
+                          </tr>
+                          <tr>
+                            <th>Site In Charge</th>
+                            <td>: {{SiteIncharge}}</td>
+                          </tr>
+                          <tr>
+                            <th>Site Supervisor</th>
+                            <td>: {{SiteSupervisor}}</td>
+                          </tr>
+                          <tr>
+                            <th>Department</th>
+                            <td>: {{Department}}</td>
+                          </tr>
+                          <tr>
+                            <th style="width:25%">Site Address</th>
+                            <td style="width:75%">: {{address}}</td>
+                          </tr>
+                          <tr>
+                            <th>Site Description</th>
+                            <td>: {{tender_description}}</td>
+                          </tr>
+                          <tr>
+                            <th>Defect Liability Period (In Years)</th>
+                            <td>: {{DefectLiabilityPeriod}}</td>
+                          </tr>
+                          <tr>
+                            <th>Note</th>
+                            <td>: {{Miscell}}</td>
+                          </tr>
+                        </table>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-12 text center">
+                        <table class="table table-bordered table-condensed ">
+                          <tr>
+                            <th></th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Amount</th>
+                            <th class="d-print-none"></th>
+                          </tr>
+                          <tr>
+                            <th>Tender</th><td>{{TenderStartDate}}</td><td>{{TenderEndDate}}</td><td>Exclude Moonsoon : {{#ExcludeMoonsoon}} yes{{/ExcludeMoonsoon}}{{^ExcludeMoonsoon}} No{{/ExcludeMoonsoon}}</span></td> <td class="d-print-none"></td>
+                          </tr>
+                         <!--  <tr>
+                            <th>EMD</th><td>{{EMDStartDate}}</td><td> {{EMDEndDate}} </td><td>{{EMDAmount}}</td> <td class="d-print-none"><a href="javascript:void(0);" onclick ="viewImage('{{EMDUpload}}')" >view</a></td>
+                          </tr> -->
+                          <tr>
+                            <th>EMD</th><td>{{EMDStartDate}}</td><td> NA </td><td>{{EMDAmount}}</td> <td class="d-print-none"><a href="javascript:void(0);" onclick ="viewImage('{{EMDUpload}}')" >view</a></td>
+                          </tr>
+                          <tr>
+                            <th>ASD</th><td>{{ASDStartDate}}</td><td>{{ASDEndDate}}</td><td>{{ASDAmount}}</td> <td class="d-print-none"><a href="javascript:void(0);" onclick ="viewImage('{{ASDUpload}}')" >view</a></td>
+                          </tr>
+                         
+                          <tr>
+                            <th>Performance BG</th><td>{{BGIssueDate}}</td><td>{{BGExpiryDate}}</td><td>{{BankAmount}}</td> <td class="d-print-none"><a href="javascript:void(0);" onclick ="viewImage('{{PerformanceBGUpload}}')" >view</a></td>
+                          </tr>
+                          <tr>
+                            <th>BG / Contract Deposit </th> 
+                              <td>{{ContractDepositIssueDate}}</td>
+                              <td>{{ContractDepositExpiryDate}}</td>
+                              <td>{{ContractDeposit}}</td> 
+                              <td class="d-print-none"><a href="javascript:void(0);" onclick ="viewImage('{{BGContractDepositUpload}}')" >view</a></td>
+                          </tr>
+                        
+                         <!--  <tr>
+                            <th>Retention</th><td>NA</td><td>{{RetentionEndDate}}</td><td> {{RetentionAmount}}</td> <td class="d-print-none"><a  href="javascript:void(0);"  onclick ="viewImage('{{RetentionUpload}}')" >view</a></td>
+                          </tr> -->
+                          <!-- <tr>
+                            <th>Insurance</th><td>NA</td><td>{{InsurancePolicyExpiryDate}}</td><td>NA</td> <td class="d-print-none"><a  href="javascript:void(0);"  onclick ="viewImage('{{MiscellUpload}}')" >view</a></td>
+                          </tr> -->
+                        </table>
+                  </div>
+                </div>
+  
+              {{/Tender}}
+  
+             
+                <div class="row">
+                  <div class="col-12 text center">
+                    <h3> Requested Materials</h3>
+                    {{#RequestedMaterial.length}}     
+                    <table class="table table-bordered text-center">
+                      <thead>
+                        <th>S.No</th>
+                        <th style="min-width:120px" class="fs-6">Item</th>
+                        <th>Description</th>
+                        <th>Order Quantity</th>
+                        <th style="min-width:120px">By date</th>
+                        <th class="text-center">Recieved quantity</th>
+                        <th class="text-center">Pending quantity</th>
+                        <th>Action</th>
+                      </thead>
+                      <tbody>
+                        {{resetIndex}}
+                        {{#RequestedMaterial}}
+                          <td>{{index}}</td>
+                          <td>{{item}}</td>
+                          <td title="{{description}}">{{DescShort}}</td>
+                          <td class="text-center">{{TotalConfirmedQty}}</td>
+                          <td class="text-center">{{required_by}}</td>
+                          <td class="text-center">{{TotalReceivedQty}}</td>
+                          <td class="text-center">{{remaining_qty}}</td>
+                          <td class="col-sm-2 text-center" id="ActionTd_{{id}}"> 
+                            {{#admin}}
+                              {{^confirm}}
+                                {{^rejected}}
+                                  <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                                  <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                                {{/rejected}}
+                              {{/confirm}}
+                              {{#confirm}}
+                                PDF 
+                              {{/confirm}}
+                            {{/admin}}
+
+                            {{^admin}}
+                              {{^confirm}}
+                                {{^rejected}}
+                                  <span class="text-info">Processing..</span>
+                                {{/rejected}}
+                              {{/confirm}}
+                              
+                            {{/admin}}
+
+
+                              
+
+                          </td>
+                          
+                        </tr>
+                      {{/RequestedMaterial}}
+
+                      </tbody>
+                    </table>
+                    {{/RequestedMaterial.length}}     
+                    {{^RequestedMaterial.length}}
+                      <div class="alert alert-danger" role="alert">
+                        No Requested PO against this tender
+                      </div>
+                    {{/RequestedMaterial.length}}     
+
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+              </div>
+  
+  
+  
+  
+            </div>
+         
+  </div>
+  {{/data}}
+  
+  </script>
+  
+  
+  
+
+
+
+<script id="TenderDetails_PO_BOQ_templ"  type="text/x-mustache">
+{{#data}}
+
+
+
+{{#BOQ.length}}
+<div class="card shadow mb-4">
+
+  <div class="card-body">
+    <div class=" table-responsive">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_DashBOQ" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">S.No</th>
+                <th style="min-width:120px" class="fs-6">Item</th>
+                <th>Description</th>
+                <th>Order Quantity</th>
+                <th style="min-width:120px">Date</th>
+                <th style="min-width:120px">Required By</th>
+                <th class="text-center">Recieved Quantity</th>
+                <th class="text-center">Pending Quantity</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#BOQ}}
+
+
+
+              <tr>
+                <td class="text-center">{{index}}</td>
+                <td class="text-center">{{item}}</td>
+                <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+                <td class="text-center">{{TotalConfirmedQty}}</td>
+                <td class="text-center">{{created_date}}</td>
+                <td class="text-center">{{required_by}}</td>
+                <td class="text-center">{{TotalReceivedQty}}</td>
+                <td class="text-center">{{remaining_qty}}</td>
+                <td class="col-sm-2 text-center" id="ActionTd_{{id}}"> 
+                  {{#admin}}
+                    {{^confirm}}
+                      {{^rejected}}
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_TenderDetailsPORequest({{id}},{{BOQ_Id}})">Reject </a>
+                      {{/rejected}}
+                    {{/confirm}}
+                    {{#confirm}}
+                      PDF 
+                    {{/confirm}}
+                  {{/admin}}
+
+                  {{^admin}}
+                    {{^confirm}}
+                      {{^rejected}}
+                        <span class="text-info">Processing..</span>
+                      {{/rejected}}
+                    {{/confirm}}
+                    
+                  {{/admin}}
+
+
+                    
+
+                </td>
+                
+              </tr>
+            {{/BOQ}}
+              
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{{/BOQ.length}}
+
+{{^BOQ.length}}
+<div class="card-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        No Requested PO against this tender
+      </div>
+    </div>
+  </div>
+</div>
+{{/BOQ.length}}
+
+
+
+{{/data}}
+</script>
+
+
+
+
+  
+  <script id="PO_BOQ_templ3" type="text/x-mustache">
+  {{#data}}
+
+        <div class="card shadow mb-4">
+          <!-- <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+          </div> -->
+          <div class="card-body">
+            {{#BOQ.length}}
+            <div class="table-responsive ">
+              <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_PO_BOQ" >
+                  <thead>
+                      <tr class="text-center">
+                        <th style="max-width: 2.4rem;">S.No</th>
+                        <th style="min-width:120px" class="fs-6">ITEM</th>
+                        <th>Description</th>
+                        <th class="text-center">Order Quantity</th>
+                        <!-- <th style="min-width:75px">Date</th> -->
+                        <th style="min-width:75px">Required On</th>
+                        <th class="text-center">Recieved Quantity</th>
+                        <th class="text-center">Pending Quantity</th>
+                        <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {{resetIndex}}
+                    {{#BOQ}}
+  
+  
+  
+                      <tr>
+                        <td class="text-center">{{index}}</td>
+                        <td>{{item}}</td>
+                        <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+                        <td class="text-center">{{TotalConfirmedQty}}</td>
+                        <!-- <td>{{created_date}}</td> -->
+                        <td class="text-center">{{required_by}}</td>
+                        <td class="text-center">{{TotalReceivedQty}}</td>
+                        <td class="text-center">{{pending_qty}}</td>
+                        <td class="col-sm-2 text-center" id="Td_PO_Action_{{id}}"> 
+                            {{^status}}
+                              {{#admin}}
+                              <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                              <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                              {{/admin}}
+  
+                              {{^admin}}
+                                <span class="text-info">Pending</span>
+  
+                              {{/admin}}
+  
+                            {{/status}}
+                            {{#status}}
+                              {{#purchase}}
+                                {{#received}}
+                                  <span class="text-success">Received </span> 
+                                  
+                                 
+                                {{/received}}
+                                {{^received}}
+                                  {{^admin}}
+                                    <a href="javascript:void(0);" onclick="ConfirmBOQsPO({{id}})" class="btn btn-warning btn-sm">Confirm</a>
+                                  {{/admin}}
+                                  {{#admin}}
+                                    <span class="text-info">Ordered</span>
+
+                                    {{#pdf_Available}}{{^reject}}<span id="ViewNPDF_{{id}}" title="View PDF"  data-toggle="tooltip" data-placement="top"  > | <a href="{{pdf_location}}" class="btn btn-link text-danger"  download="Dev-PurOrd_{{tender_id}}_{{boq_id}}_{{id}}.pdf"  ><i class="fas  fa-file-pdf text-danger"></i></a></span>{{/reject}}{{/pdf_Available}}
+
+
+                                     | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_ConfirmedRequest({{id}},{{TenderId}},'{{pdf_location}}')"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span></a>
+
+                                  {{/admin}}
+                                {{/received}}
+                              {{/purchase}}
+                              {{#reject}}
+                                  <span class="text-danger">Rejected</span>
+                              {{/reject}}
+                            {{/status}}
+  
+                            
+                        </td>
+                      </tr>
+                    {{/BOQ}}
+                      
+                  </tbody>
+              </table>
+            </div>
+             {{/BOQ.length}}
+             {{^BOQ.length}}
+  
+               <div class="alert alert-danger" role="alert">
+                No PO details angainst this tender!
+              </div>
+             {{/BOQ.length}}
+  
+            </div>
+          </div>
+        </div>
+    
+  
+  
+  
+  
+  {{/data}}
+  </script>
+  
+
+<script id="BOQ_templ2"  type="text/x-mustache">
+{{#data}}
+
+
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ List</h6>
+     
+      <div class=" no-arrow">
+        <a class="btn btn-info" href="javascript:void(0);" role="button" onclick="addNewBOQItem()">Add BOQ</a>
+      </div>
+  </div>
+  <div class="card-body">
+    {{#BOQ.length}}
+    <div class="table-responsive">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_BOQ1" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">S.No</th>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Total Quantity</th>
+                <th>Units</th>
+                <th class="text-center">Remaining Quantity</th>
+                <th>Action</th> 
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#BOQ}}
+
+
+              <tr class="text-center">
+                <td class="text-center">{{index}}</td>
+                <td class="text-center">{{item}}</td>
+                <td title="{{description}}"  data-toggle="tooltip" data-placement="top">{{DescShort}}</td>
+                <td class="text-center">{{total_qty}}</td>
+                <td class="text-center">{{unit}}</td>
+                <td class="text-center">{{remaining_qty}}</td>
+                <td class="col-sm-2 text-center"> 
+
+                      {{^admin}} 
+
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RequestedPO_tab({{id}},{{TenderId}})"   title="Request"  data-toggle="tooltip" data-placement="top" >Requests <i class="fas fa-request"></i>
+                      {{/admin}} 
+
+                      {{#admin}} 
+
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Edit_BOQ_TotalQty({{id}},{{TenderId}},{{total_qty}},'{{item}}',`{{DescShort}}`,'{{unit}}','{{remaining_qty}}')"   title="Edit"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-edit"></i>  </a> | 
+                        
+                        
+                        <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_BOQ({{id}},{{TenderId}})"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span></a> | 
+                        
+                        <a href="javascript:void(0);" class="btn btn-link p-0 " onclick="ViewBOQsPO_Tab({{id}},{{TenderId}})" data-toggle="tooltip" data-placement="top">PO </a> 
+
+                      {{/admin}}
+
+
+
+
+                </td>
+              </tr>
+            {{/BOQ}}
+              
+          </tbody>
+      </table>
+    </div>
+  </div>
+    {{/BOQ.length}}
+    {{^BOQ.length}}
+        <div class="alert alert-danger">
+          <strong>Not Created any BOQ  request yet!</strong>
+        </div>
+    {{/BOQ.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+
+  <script id="AddLabourCost_templ2" type="text/x-mustache">
+  {{#data}}
+  
+  {{#admin}}
+  
+  
+   <div class="">
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="font-weight-bold text-primary">Tender Amount Details </h6>
+            <div class=" no-arrow">
+              {{#TenderCosting}}
+                <a href="javascript:void(0);" class="btn btn-primary" onclick="EditTender_Costing('{{id}}','{{tender_id}}','{{tender_amount_1}}','{{above_below}}','{{percentage}}','{{labour_work_percentage}}','{{labour_amount}}')">Edit </a>
+              {{/TenderCosting}}
+  
+              {{^TenderCosting}}
+                <a href="javascript:void(0);" class="btn btn-primary" onclick="EditTender_Costing('{{id}}','{{tender_id}}','{{tender_amount_1}}','{{above_below}}','{{percentage}}','{{labour_work_percentage}}','{{labour_amount}}')">Add </a>
+              {{/TenderCosting}}
+  
+            </div>
+        </div>
+        <!-- Card Body -->
+        {{#TenderCosting}}
+        <div class="card-body">
+          <div class="row">
+
+
+            <div class=" col-sm-12 col-md-4 mb-2">
+              <div class="row">
+                <div class="col-12 Tender-Costing-heading" >
+                  <div class="float-left">
+                    Tender Amount: 
+                    <span class="spn-sub-head">
+                      (Proposed amount)
+                    </span>
+                  </div>
+                  <div class="float-left pl-2">
+                    <div class="div-main-amount"  >
+                       {{tender_amount}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-sm-12 col-md-4 mb-2 ">
+              <div class="row">
+                <div class="col-12 Tender-Costing-heading " >
+                  <div class="float-left">
+                    <div>Quoted Amount:</div>
+                    <span class="spn-sub-head">
+                    (<span class="{{#Below}}text-danger{{/Below}}{{^Below}}text-success{{/Below}}">{{#Below}}-{{/Below}}{{^Below}}+{{/Below}}{{percentage}}% of Tender amount </span>)
+                    </span>
+
+                  </div>
+                  <div class="div-main-amount float-left pl-2" >
+                     {{QuotedTenderAmount}}
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+            <div class="col-sm-12 col-md-4 mb-2">
+              <div class="row">
+                <div class="col-12 Tender-Costing-heading " >
+                  <div class="float-left">
+                    <div>Labour Amount:</div>
+                    <span  class="spn-sub-head">
+                    ( {{labour_work_percentage}}% of Quoted Tender Amount) </span>
+                  </div>
+                  <div class="div-main-amount float-left pl-2" >
+                     {{labour_amount}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/TenderCosting}}
+      {{^TenderCosting}}
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+              No labour details added !
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/TenderCosting}}
+    </div>
+  
+  
+  
+    
+  </div>
+  
+  {{#TenderCosting}}
+  
+  <div class="card shadow mb-4">
+    <div class="progress-bar progress-bar-striped active"  id="ProgressBar_LabourAmount" data-percentage="0">
+      <div class="red bar"><span>Labour Amount Paid Percentage. </span></div>
+      <div class="label2"></div>  
+    </div>
+  </div>
+  {{/TenderCosting}}
+  
+  
+   {{/admin}}
+  {{#TenderCosting}}
+  
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">UPLOADED LABOUR BILLS</h6>
+        {{#admin}}
+          <div>
+            Total spend labour amount: <strong class="pr-3">{{total_labour_amount}}</strong>
+            Balance: <strong class="pr-3 {{#isOver}}text-danger{{/isOver}}">{{balance_labour_amount}}</strong>
+          </div>
+        {{/admin}}
+        <div class=" no-arrow">
+          <a class="btn btn-info" href="javascript:void(0);" role="button" onclick="UploadBillLabour('{{tender_id}}')" >Upload Bills</a>
+      </div>
+    </div>
+  
+  
+    {{#Bills.length}}
+    <div class="card-body">
+      <div class="table-responsive ">
+        <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_labourBills" >
+            <thead>
+                <tr class="text-center">
+                  <th style="max-width: 2.4rem;">S.No</th>
+                  <th>Bill Number</th>
+                  <th>Description</th>
+                  <th>Vendor</th>
+                  <th>Bill Amount</th>
+                  <th>Bill Date</th>
+                  <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+              {{resetIndex}}
+              {{#Bills}}
+                <tr class="text-center">
+                  <td>{{index}}</td>
+                  <td>{{bill_number}}</td>
+                  <td>{{bill_name}}</td>
+                  <td>{{VendorName}}</td>
+                  <td>{{bill_amount}}</td>
+                  <td>{{bill_date}}</td>
+                  
+                  <td class="text-center">
+                    <a href="javascript:void(0);"   onclick="viewImage('{{url}}{{upload_bill}}')" title="view"  data-toggle="tooltip" data-placement="top" >view </a>{{#admin}} |
+  
+                    <a href="javascript:void(0);" onclick="DeleteTenderBill('{{id}}','{{tender_id}}')"  title="Delete"  data-toggle="tooltip" data-placement="top"  ><span  class="text-danger"> <i class="fas fa-trash"></i></span> </a>{{/admin}}
+  
+                  </td>
+                </tr>
+              {{/Bills}}
+                
+            </tbody>
+        </table>
+      </div>
+    </div>
+    {{/Bills.length}}
+    {{^Bills.length}}
+      <div class="card-body">
+        <div class="table-responsive">
+          <div class="alert alert-danger" role="alert">
+              No labour bill's added for this tender!
+            </div>
+        </div>
+      </div>
+    {{/Bills.length}}
+  </div>
+  
+  
+  
+  {{/TenderCosting}}
+  
+  {{^admin}}
+  {{^TenderCosting}}
+  
+  <div class="card-body">
+    <div class="table-responsive">
+      <div class="alert alert-danger" role="alert">
+          Tender costing is not added yet.
+        </div>
+    </div>
+  </div>
+  {{/TenderCosting}}
+  
+  {{/admin}}
+  
+  
+  
+  
+  {{/data}}
+  </script>
+
+
+
+
+
+<script id="challanBills_tmpl"  type="text/x-mustache">
+{{#data}}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Challan Details</h6>
+       
+        <div class=" no-arrow">
+          <a class="btn btn-info" href="javascript:void(0);" role="button" onclick="addNewChallanForm()">Add New Challan</a>
+      </div>
+    </div>
+  
+  
+
+
+
+  <div class="card-body">
+    {{#ChallanDetails.length}}
+
+    <div class="row justify-content-center mb-4">
+
+      <div class="col-md-2 col-lg-2 col-sm-12  form-group">
+        <label for="expense_type">Vendor</label><br/>
+        <div class="form-group" >
+          <select class="form-control form-control-user" id="Challan_vendor" name="Challan_vendor" onchange="SelectChellanForVendor(this.value)" >
+              <option value="">All Vendors</option>
+              {{#VendorList}}
+                <option value="{{id}}">{{name}}</option>
+              {{/VendorList}}
+          </select>
+        </div>
+      </div>
+
+      <div  class="col-md-3 col-lg-3 col-sm-12 form-group" >
+        <label for="challan_date_range" id="labelChellan">Date Range</label><br/>
+        <div class="form-group  " >
+          <div class="form-control form-control-user" id="challan_date_range"  name="challan_date_range" style="display:inline; width:75%">
+              <i class="fa fa-calendar"></i>&nbsp;
+              <span></span> <i class="fa fa-caret-down"></i>
+          </div>
+        </div>
+      </div>
+        
+    </div>
+
+
+    <div class="table-responsive" id="TableForSelectedVendor">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_TenderChallan" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>Company Name</th>
+                <th >Challan #</th>
+                <th>Description</th>
+              <!--   {{#admin}}
+                  <th>Amount</th>
+                {{/admin}} -->
+
+                <th>Challan Date</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#ChallanDetails}}
+              <tr class="text-center">
+                <td>
+                {{^admin}}
+                  {{^Accounts}}
+                    {{index}}
+                  {{/Accounts}}
+                {{/admin}}
+                {{#admin}}
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input CB_TenderChellan" value="{{id}}" name="CB_Chellan" onclick="CountSelected()">
+                  </div>
+                {{/admin}}
+                {{#Accounts}}
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input CB_TenderChellan" value="{{id}}" name="CB_Chellan" onclick="CountSelected()">
+                  </div>
+                {{/Accounts}}
+
+                </td>
+                <td>{{VendorCompanyName}}</td>
+                <td>{{challan_no}}</td>
+                <td class="text-left">{{challan_description}}</td>
+
+                <!-- {{#admin}}
+                  <th>{{challan_amount}}</th>
+                {{/admin}} -->
+
+                <td>{{challan_date}}</td>
+
+                <td class="col-sm-2" style="text-align:center"> 
+
+                  <a href="javascript:void(0);" class="btn btn-link p-0"  onclick="viewImageNew('{{challan_image}}', ' ','{{id}}','Chellan')"   > view </a>
+                      
+                  {{#admin}} 
+
+                     | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_chellan({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a>
+
+                  {{/admin}}
+
+
+
+
+                </td>
+              </tr>
+            {{/ChallanDetails}}
+              
+          </tbody>
+      </table>
+    </div>
+    <div>
+        <button class="btn btn-info d-none" id="btn_createBill" onclick="CreateBills();"> Create Bill</button>
+    </div>
+  </div>
+    {{/ChallanDetails.length}}
+    {{^ChallanDetails.length}}
+        <div class="alert alert-danger">
+          <strong>No Challan Details  request yet!</strong>
+        </div>
+    {{/ChallanDetails.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+
+
+
+
+<script id="sub_TableForSelectedVendor"  type="text/x-mustache">
+  {{#data}}
+    <div class="table-responsive" id="TableForSelectedVendor">
+      {{#ChallanDetails.length}}
+
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_SubTenderChallan" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>Company Name</th>
+                <th >Challan #</th>
+                <th>Description</th>
+              <!--   {{#admin}}
+                  <th>Amount</th>
+                {{/admin}} -->
+
+                <th>Challan Date</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#ChallanDetails}}
+              <tr class="text-center">
+                <td>
+                {{^admin}}
+                  {{^Accounts}}
+                    {{index}}
+                  {{/Accounts}}
+                {{/admin}}
+                {{#admin}}
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input CB_TenderChellan" value="{{id}}" name="CB_Chellan" onclick="CountSelected()">
+                  </div>
+                {{/admin}}
+                {{#Accounts}}
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input CB_TenderChellan" value="{{id}}" name="CB_Chellan" onclick="CountSelected()">
+                  </div>
+                {{/Accounts}}
+
+                </td>
+                <td>{{VendorCompanyName}}</td>
+                <td>{{challan_no}}</td>
+                <td class="text-left">{{challan_description}}</td>
+
+                <!-- {{#admin}}
+                  <th>{{challan_amount}}</th>
+                {{/admin}} -->
+
+                <td>{{challan_date}}</td>
+
+                <td class="col-sm-2" style="text-align:center"> 
+
+                  <a href="javascript:void(0);" class="btn btn-link p-0"  onclick="viewImageNew('{{challan_image}}', ' ','{{id}}','Chellan')"   > view </a>
+                      
+                  {{#admin}} 
+
+                     | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_chellan({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a>
+
+                  {{/admin}}
+
+
+
+
+                </td>
+              </tr>
+            {{/ChallanDetails}}
+              
+          </tbody>
+      </table>
+    </div>
+    {{/ChallanDetails.length}}
+    {{^ChallanDetails.length}}
+    <div class="alert alert-danger mt-4">
+      <strong>No Bills to display</strong>
+    </div>
+    {{/ChallanDetails.length}}
+
+
+  {{/data}}
+
+</script>
+
+
+
+
+
+<script id="CreateBillsForVendor_tmpl"  type="text/x-mustache">
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Create Bills </span></h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+
+                   
+      <form id="BillsForm" method='post' >
+
+        <div class="modal-body">
+          <div class="card-body">
+
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12 form-group">
+                  <label for="Challan_vendor">Bill Number</label> <br/>
+                  <span id="DisplayBillNumber"  ></span>
+                  <input type="hidden" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_bill_number" name="challan_bill_number" value="" readonly>
+              </div>
+              <div class="col-md-6 col-sm-12 mb-3 mb-sm-0 form-group">
+                <input type="hidden" name="vendor_id" id="vendor_id">
+                <input type="hidden" name="challan_ids" id="challan_ids">
+                <label for="Challan_vendor">Bill Type</label>
+                 <select class="form-control form-control-sm" id="Challan_BillType" name="Challan_BillType" >
+                      <option value="">--SELECT--</option>
+                    {{#data}}
+                      {{#BillType}}
+                        <option value="{{id}}">{{type}}</option>
+                      {{/BillType}}
+                    {{/data}}
+                </select>
+              </div>
+              
+            </div>
+
+          	<div class=" row">
+             <div class="col-md-6 col-sm-12 mb-3 form-group ">
+              <label for="challan_billdate">Bill Date</label>
+              <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_billdate" name="challan_billdate">
+            </div>
+            <div class="col-md-6 col-sm-12 mb-3 form-group ">
+              <label for="challan_billdate">Bill Amount</label>
+              <input type="number" class="form-control form-control-user" id="challan_billAmount" name="challan_billAmount" placeholder="" >
+            </div>
+
+
+            <div class="col-md-12 col-sm-12 ">
+              <label for="challan_description">Description</label>
+              <div class="form-group ">
+                <textarea class="form-control form-control-user" id="challan_billdescription" name="challan_billdescription" placeholder="Description" rows="5" ></textarea>
+              </div>
+            </div>
+
+
+
+
+            <div class="col-sm-12 form-group">
+              <div id="UploadBills_Div">
+                <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadBills" name="UploadBills" placeholder="Upload"  hidden oninput="CheckUploadedFile_('UploadBills')"  onchange="$('#uploadBillInfo').text(this.files[0].name)">
+                
+                <label class="btn btn-info" for="UploadBills" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+              </div>
+                <span class="label mt-2" id="UploadBills_Label"></span>
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          <button type="submit" id="SubmitButton" class="btn btn-primary" ><span id="SubmitBtnText"></span> Create Bill</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+
+</script>
+
+<!-- 
+<script id="CreateBillsForVendor_tmpl_dummy"  type="text/x-mustache">
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Create Bills </span></h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+
+                   
+      <form id="BillsForm" method='post' >
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-sm-6 mb-3 mb-sm-0 form-group">
+              <input type="hidden" name="vendor_id" id="vendor_id">
+              <input type="hidden" name="challan_ids" id="challan_ids">
+
+              <label for="Challan_vendor">Bill Type</label>
+               <select class="form-control form-control-sm" id="Challan_BillType" name="Challan_BillType" >
+                    <option value="">--SELECT--</option>
+                    <option value="Material">Material</option>
+                    <option value="Labour">Labour</option>
+                    <option value="Miscell">Miscell</option>
+              </select>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label for="Challan_vendor">Bill Number</label> <br/>
+                <span id="DisplayBillNumber"  ></span>
+                <input type="hidden" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_bill_number" name="challan_bill_number" value="" readonly>
+            </div>
+          </div>
+
+
+          <div class=" row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-sm-12 mb-3 form-group ">
+                  <label for="challan_billdate">Bill Date</label>
+                  <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_billdate" name="challan_billdate">
+                </div>
+                <div class="col-sm-12 mb-3 form-group ">
+                    <label for="challan_billAmount">Bill Amount</label>
+                    <input type="number" class="form-control form-control-user" id="challan_billAmount" name="challan_billAmount" placeholder="" value="">
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="challan_description">Description</label>
+              <div class="form-group ">
+                <textarea class="form-control form-control-user" id="challan_billdescription" name="challan_billdescription" placeholder="Description" rows="5" ></textarea>
+              </div>
+            </div>
+          </div>
+
+
+         
+          <div class="col-sm-6 form-group" id="">
+            <label class="UploadBills" for="">Upload bill</label>
+
+            <div id="UploadBills_Div form-group">
+              <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadBills" name="UploadBills" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('UploadBills')" >
+              
+              <label class="btn btn-info" for="UploadBills" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+              
+            </div>
+            <span class="label mt-2" id="UploadBills_Label"></span>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          <button type="submit" id="SubmitButton" class="btn btn-primary" ><span id="SubmitBtnText"></span> Create Bill</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+
+</script>
+
+ -->
+
+
+
+
+<script id="CreatedBills_tmpl"  type="text/x-mustache">
+{{#data}}
+
+
+<div class="card shadow mb-4">
+
+
+  <div class="card-body">
+    {{#CreatedBills.length}}
+
+    <div class="table-responsive" id="TableForSelectedVendor">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_TenderChallanBills" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>Company Name</th>
+                <th>Bill Type</th>
+                <th>Description</th>
+                <th>Bill Number</th>
+                <th style="min-width:75px">Bill Date</th>
+                <th>Bill Amount</th>
+                <th>Challan</th>
+                <th>Action</th>
+              
+
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#CreatedBills}}
+              <tr class="text-center">
+                <td>
+                  {{index}}
+                </td>
+                <td>{{VendorName}}</td>
+                <td>{{bill_type}}</td>
+                <td>{{bill_description}}</td>
+                <td>{{bill_number}}</td>
+                <td>{{bill_date}}</td>
+                <td>{{bill_amount}}</td>
+                <td><a href="javascript:void(0);"   onclick="viewChallan('{{challan_ids}}')"> View </a> </td>
+                <td style="min-width:85px" > 
+                    <a href="javascript:void(0);"   onclick="viewImage('{{url}}{{upload_bills}}')"> View Doc</a> 
+                   {{#admin}} 
+                    | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_chellanBills({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a> 
+
+                  {{/admin}}
+
+                </td>
+              
+
+
+              </tr>
+            {{/CreatedBills}}
+              
+          </tbody>
+      </table>
+    </div>
+    <div>
+        <button class="btn btn-info d-none" id="btn_createBill" onclick="CreateBills();"> Create Bill</button>
+    </div>
+  </div>
+    {{/CreatedBills.length}}
+    {{^CreatedBills.length}}
+        <div class="alert alert-danger">
+          <strong>No Bills created yet!</strong>
+        </div>
+    {{/CreatedBills.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+
+<script id="CreatedBillsChallan"  type="text/x-mustache">
+{{#data}}
+
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Challan details </span></h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+        <div class="modal-body">
+          <div class="card shadow mb-4">
+
+            <div class="card-body">
+              {{#ChallanDetails.length}}
+              <div class="table-responsive" id="TableForSelectedVendor">
+                <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_TenderChallanBills2" >
+                    <thead>
+                        <tr class="text-center">
+                          <th style="max-width: 2.4rem;">Sr #</th>
+                          <th>Vendor name</th>
+                          <th >Challan no</th>
+                          <th >Description</th>
+                          {{#admin}}
+                            <th>Amount</th>
+                          {{/admin}}
+                          <th>Challan date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {{resetIndex}}
+                      {{#ChallanDetails}}
+                        <tr class="text-center">
+                          <td>
+                            {{index}}
+                          </td>
+                          <td>{{VendorName}}</td>
+                          <td>{{challan_no}}</td>
+                          <td>{{challan_description}}</td>
+                          {{#admin}}
+                            <th>{{challan_amount}}</th>
+                          {{/admin}}
+                          <td>{{challan_date}}</td>
+                        </tr>
+                      {{/ChallanDetails}}
+                        
+                    </tbody>
+                </table>
+              </div>
+              
+            </div>
+              {{/ChallanDetails.length}}
+              {{^ChallanDetails.length}}
+                  <div class="alert alert-danger">
+                    <strong>No Challan Details  request yet!</strong>
+                  </div>
+              {{/ChallanDetails.length}}
+
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+        </div>
+  </div>
+</div>
+
+
+{{/data}}
+</script>
+
+
+
+<script id="ListPurchaseOrder_tab_templ"  type="text/x-mustache">
+
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Material orders 
+      <!-- <button class="btn btn-warning" onclick="TenderBOQDetails();">Back</button> -->
+    </h1>
+{{^admin}}
+    <a href="javascript:void(0);" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"   onclick="PlaceRequestPO({{BOQ_Id}},{{TenderId}})"><i class="fas fa-plus fa-sm text-white-50"></i> Place Request</a>
+{{/admin}}
+
+</div>
+
+
+
+
+<div class="card shadow mb-4">
+  <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+  </div> -->
+  <div class="card-body">
+    <div class="table-responsive">
+     {{#Requests.length}}
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_MaterialOrders" >
+
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">S.No</th>
+                <th style="min-width:120px" class="fs-6">Item</th>
+                <th>Description</th>
+                <th>Requested Quantity</th>
+                <!-- <th style="min-width:120px">Date</th> -->
+                <th style="min-width:120px">Required By</th>
+                <th>Remaining Quantity</th>
+                <th>Materials</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+             {{#Requests}}
+              <tr>
+                <td>{{index}}</td>
+                <td>{{item}}</td>
+                <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+
+                <td class="text-center">{{TotalRequestedQty}}</td>
+                <!-- <td>{{created_date}}</td> -->
+                <td class="text-center">{{required_by}}</td>
+                <td class="text-center">{{remaining_qty}}</td>
+                <td class="text-center"><a href="javascript:void(0);" class="btn btn-link" onclick="View_RequstedPO({{id}})">view</a></td>
+                <td class="col-sm-2 text-center" id="ActionTd_{{id}}">
+
+                  {{#Admin}}
+                  {{/Admin}}
+                  {{#status}}
+
+                    {{#purchase}}
+                      {{#received}}
+                        <span class="text-warning">Received</span>
+                      {{/received}}
+                      {{^received}}
+                        <span class="text-success">Ordered</span>
+                      {{/received}}
+
+                    {{/purchase}}
+                      {{#reject}}
+                        <span class="text-danger">Rejected.</span>
+                      {{/reject}}
+
+                  {{/status}}
+
+
+                  {{^status}}
+                    <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                    <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_TenderDetailsBOQPO({{id}},{{BOQ_Id}})">Reject </a>
+                  {{/status}}
+
+
+
+
+                  
+
+
+                </td>
+              </tr>
+           
+              
+          </tbody>{{/Requests}}
+      </table>
+        {{/Requests.length}}
+        {{^Requests.length}}
+        <div class="alert alert-danger">
+          <strong>No Request Found !</strong>
+        </div>
+        {{/Requests.length}}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{{/data}}
+
+</script>
+
+
+
+
+<script id="PO_BOQ_order_tab_templ"  type="text/x-mustache">
+
+{{#data}}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Material orders
+    </h1>
+
+{{^admin}}
+    <a href="javascript:void(0);" class="d-sm-inline-block btn btn-sm btn-success shadow-sm"   onclick="PlaceRequestPOTenderDetails({{BOQ_Id}},{{TenderId}})"><i class="fas fa-plus fa-sm text-white-50"></i> Place Request</a>
+{{/admin}}
+
+</div>
+
+
+
+
+<div class="card shadow mb-4">
+  <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">BOQ</h6>
+  </div> -->
+  <div class="card-body">
+    <div class="table-responsive">
+     {{#Requests.length}}
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_BOQ" >
+
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">S.No</th>
+                <th style="min-width:120px" class="fs-6">ITEM</th>
+                <th>Description</th>
+                <th>Requested Quantity</th>
+                <!-- <th style="min-width:120px">Date</th> -->
+                <th style="min-width:120px">Required by</th>
+                <th>Recieved Quantity</th>
+                <th>Materials</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+             {{#Requests}}
+              <tr>
+                <td>{{index}}</td>
+                <td>{{item}}</td>
+                <td title="{{description}}"  data-toggle="tooltip" data-placement="top"  >{{DescShort}}</td>
+
+                <td class="text-center">{{TotalRequestedQty}}</td>
+                <!-- <td>{{created_date}}</td> -->
+                <td class="text-center">{{required_by}}</td>
+                <td class="text-center">{{received_quantity}}</td>
+                <td class="text-center">
+                  <a href="javascript:void(0);" class="btn btn-link" onclick="View_RequstedPO({{id}})">view</a>
+                  
+                  
+
+                </td>
+                <td class="col-sm-2 text-center" id="ActionTd_{{id}}"> 
+
+
+                   {{^status}}
+                      {{#admin}}
+                      <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Purchase_OrderedRequest({{id}})">Purchase </a> | 
+                      <a href="javascript:void(0);" class="btn btn-link p-0" onclick="RejectOrder_BOQ({{id}},{{BOQ_Id}})">Reject </a>
+                      {{/admin}}
+
+                      {{^admin}}
+                        <span class="text-info">Pending</span>
+
+                      {{/admin}}
+
+                    {{/status}}
+                    {{#status}}
+                      {{#purchase}}
+                        {{#received}}
+                          <span class="text-success">Received</span>
+                          <!-- {{#pdf_Available}}<span id="ViewNPDF_{{id}}"> | <a href="{{pdf_location}}" class="btn btn-link text-danger"  download="Dev-PurOrd_{{tender_id}}_{{boq_id}}_{{id}}.pdf"  ><i class="fas  fa-file-pdf text-danger"></i></a></span>{{/pdf_Available}} -->
+                        {{/received}}
+
+                        {{^received}}
+
+                        {{^admin}}
+                          <a href="javascript:void(0);" onclick="ConfirmBOQsPO({{id}})" class="btn btn-warning">Confirm PO</a>
+                        {{/admin}}
+                        {{#admin}}
+                           <span class="text-success">Waiting for Delivery</span>
+                        {{/admin}}
+                        {{/received}}
+                      {{/purchase}}
+                      {{#reject}}
+                          <span class="text-danger">Rejected</span>
+                      {{/reject}}
+                    {{/status}}
+                      {{#pdf_Available}}{{^reject}}<span id="ViewNPDF_{{id}}"> | <a href="{{pdf_location}}" class="btn btn-link text-danger"  download="Dev-PurOrd_{{tender_id}}_{{boq_id}}_{{id}}.pdf"  ><i class="fas  fa-file-pdf text-danger"></i></a></span>{{/reject}}{{/pdf_Available}}
+                    
+                </td>
+              </tr>
+           
+              
+          </tbody>{{/Requests}}
+      </table>
+        {{/Requests.length}}
+        {{^Requests.length}}
+        <div class="alert alert-danger">
+          <strong>No Request Found !</strong>
+        </div>
+        {{/Requests.length}}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{{/data}}
+{{^data}}
+
+{{/data}}
+</script>
+
+
+
+
+<script id="DailyProgress_tmpl"  type="text/x-mustache">
+{{#data}}
+
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">Site Progress Imges</h6>
+     
+      <div class=" no-arrow">
+        <a class="btn btn-info" href="javascript:void(0);" role="button" onclick="addNewProgress()">Upload Image</a>
+      </div>
+  </div>
+  
+  
+
+
+
+  <div class="card-body">
+    {{#DailyProgress.length}}
+    
+    <div class="table-responsive" id="TableForSelectedVendor">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_DailyProgress" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#DailyProgress}}
+              <tr class="text-center">
+                <td> {{index}} </td>
+                <td>{{date}}</td>
+                <td>{{description}}</td>
+                <td class="col-sm-2" style="text-align:center"> 
+
+                  <a href="javascript:void(0);" class="btn btn-link p-0"  onclick="ViewProgressImage('{{id}}')"  > view </a>
+                      
+                  {{#admin}} 
+
+                        | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_Progress({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a>
+
+                  {{/admin}}
+
+
+
+
+                </td>
+              </tr>
+            {{/DailyProgress}}
+              
+          </tbody>
+      </table>
+    </div>
+    <div>
+        <button class="btn btn-info d-none" id="btn_createBill" onclick="CreateBills();"> Create Bill</button>
+    </div>
+  </div>
+    {{/DailyProgress.length}}
+    {{^DailyProgress.length}}
+        <div class="alert alert-danger">
+          <strong>No progress details created yet!</strong>
+        </div>
+    {{/DailyProgress.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+
+<script id="addNewTenderProgress_templ"  type="text/x-mustache">
+ <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle"> </span> Upload Progress</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="TenderProgressForm" method="post">
+  
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-sm-12 mb-3 form-group ">
+                <label for="progress_date">Progress Date</label>
+                <input type="hidden" id="tender_id" name="tender_id" value="">
+                <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="progress_date" name="progress_date">
+              </div>
+              <div class="col-lg-12 mb-3 form-group ">
+                  <label for="progress_date">Description</label>
+                  <textarea class="form-control form-control-user" id="progress_description" name="progress_description" placeholder="Description" rows="4" ></textarea>
+              </div>
+    
+              <div class="col-sm-12 form-group">
+                <div id="UploadProgress_Div">
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadProgress" name="UploadProgress[]" placeholder="Upload"  hidden oninput="CheckUploadedFile_('UploadProgress')"  onchange="$('#uploadBillInfo').text(this.files[0].name)" accept="image/png, image/gif, image/jpeg, image/jpg, image/bmp"   multiple="multiple" >
+                  
+                  <label class="btn btn-info" for="UploadProgress" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                </div>
+                  <span class="label mt-2" id="UploadProgress_Label"></span>
+              </div>
+            </div>
+               
+          </div>
+    
+        <div class="modal-footer">
+  
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  
+          <button type="submit" id="SubmitButton" class="btn btn-primary" >submit</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+  
+        </div>
+  
+      </form>
+  
+    </div>
+  </div>
+  
+  
+  
+</script>
+
+<!-- 
+<script id="addNewTenderProgress_templ_original"  type="text/x-mustache">
+  {{#data}}
+<div class="modal-dialog modal-sm" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Upload Progress</span></h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="TenderProgressForm">
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="col-sm-12 mb-3 form-group ">
+                <label for="progress_date">Progress Date</label>
+                <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="progress_date" name="progress_date">
+              </div>
+              <div class="col-lg-12 mb-3 form-group ">
+                  <label for="progress_date">Description</label>
+                  <textarea class="form-control form-control-user" id="progress_description" name="progress_description" placeholder="Description" rows="4" ></textarea>
+              </div>
+
+
+              <div class="col-sm-6 form-group" >
+                <div id="UploadProgress_Div  form-group">
+                  <input type="file" class="form-control " style="width:-webkit-fill-available" id="UploadProgress" name="UploadProgress" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('UploadProgress')" >
+                  
+                  <label class="btn btn-info" for="UploadProgress" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                  
+                </div>
+                <span class="label mt-2" id="UploadProgress_Label"></span>
+  
+              </div> 
+
+
+            </div>
+
+             
+
+
+
+          </div>
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button type="submit" id="SubmitButton" class="btn btn-primary" ><span id="SubmitBtnText">Add</span> Progress</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+              <span class="spinner-border spinner-border-sm"></span>
+              Please Wait...
+          </button>
+        </div>
+    </form>
+
+  </div>
+</div>
+  {{/data}}
+
+</script>
+ -->
+
+
+
+<script id="addNewTenderChallan_templ"  type="text/x-mustache">
+  {{#data}}
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel">Add New challan</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="TenderChallanForm" method="post">
+  
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-sm-6 mb-3 mb-sm-0 form-group">
+                <label for="Challan_vendor">Vendor</label>
+                 <select class="form-control form-control-sm" id="Challan_vendor" name="Challan_vendor" >
+                    <option value="">--SELECT--</option>
+                    {{#Vendor}}
+                      <option value="{{id}}">{{name}}</option>
+                    {{/Vendor}}
+                </select>
+              </div>
+              <div class="col-sm-6 form-group">
+                  <label for="Challan_vendor">Challan Number</label>
+                  <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_number" name="challan_number" placeholder="Challan number"  value="">
+              </div>
+            </div>
+
+            <div class=" row">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-sm-12 mb-3 form-group ">
+                    <label for="challan_date">Challan Date</label>
+                    <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_date" name="challan_date">
+                  </div>
+                  <div class="col-sm-12 mb-3 form-group ">
+                      <label for="challan_date">Challan Amount</label>
+                      <input type="number" class="form-control form-control-user" id="challan_amount" name="challan_amount" placeholder="" value="0">
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="challan_description">Description</label>
+                <div class="form-group ">
+                  <textarea class="form-control form-control-user" id="challan_description" name="challan_description" placeholder="Description" rows="5" ></textarea>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+
+              <div class="col-sm-12 form-group">
+                <div id="UploadChallan_Div">
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadChallan" name="UploadChallan" placeholder="Upload"  hidden oninput="CheckUploadedFile_('UploadChallan')"  onchange="$('#uploadBillInfo').text(this.files[0].name)">
+                  
+                  <label class="btn btn-info" for="UploadChallan" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                </div>
+                  <span class="label mt-2" id="UploadChallan_Label"></span>
+              </div>
+            </div>
+               
+          </div>
+    
+        <div class="modal-footer">
+  
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  
+          <button type="submit" id="SubmitButton" class="btn btn-primary" >submit</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+  
+        </div>
+  
+      </form>
+  
+    </div>
+  </div>
+  
+  {{/data}}
+
+
+</script>
+
+
+<!-- 
+
+<script id="addNewTenderChallan_templ_duplicate"  type="text/x-mustache">
+  {{#data}}
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Add New challan </span></h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="TenderChallanForm">
+
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+             
+
+
+                  <div class="row">
+                    <div class="col-sm-6 mb-3 mb-sm-0 form-group">
+                      <label for="Challan_vendor">Vendor</label>
+                       <select class="form-control form-control-sm" id="Challan_vendor" name="Challan_vendor" >
+                          <option value="">--SELECT--</option>
+                          {{#Vendor}}
+                            <option value="{{id}}">{{name}}</option>
+                          {{/Vendor}}
+                      </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="Challan_vendor">Challan Number</label>
+                        <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_number" name="challan_number" placeholder="Challan number"  value="">
+                    </div>
+                  </div>
+
+                  <div class=" row">
+                    <div class="col-6">
+                      <div class="row">
+                        <div class="col-sm-12 mb-3 form-group ">
+                          <label for="challan_date">Challan Date</label>
+                          <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="challan_date" name="challan_date">
+                        </div>
+                        <div class="col-sm-12 mb-3 form-group ">
+                            <label for="challan_date">Challan Amount</label>
+                            <input type="number" class="form-control form-control-user" id="challan_amount" name="challan_amount" placeholder="Challan Amount" value="">
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <label for="challan_description">Description</label>
+                      <div class="form-group ">
+                        <textarea class="form-control form-control-user" id="challan_description" name="challan_description" placeholder="Description" rows="5" ></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 form-group" id="">
+                    <label class="UploadChallan" for="">Upload Challan</label>
+      
+                    <div id="UploadChallan_Div ">
+                      <input type="file" class="form-control " style="width:-webkit-fill-available" id="UploadChallan" name="UploadChallan" placeholder="Upload"  hidden  oninput="CheckUploadedFile_('UploadChallan')" >
+                      
+                      <label class="btn btn-info" for="UploadChallan" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                      
+                    </div>
+                    <span class="label mt-2" id="UploadChallan_Label"></span>
+      
+                  </div> 
+
+
+                </div>
+
+             
+
+
+
+          </div>
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          <button type="submit" id="SubmitButton" class="btn btn-primary" ><span id="SubmitBtnText">Add</span> Challan</button>
+
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+  {{/data}}
+
+</script>
+ -->
+
+
+
+<script id="ViewProgressImages_tmpl"  type="text/x-mustache">
+{{#data}}
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel">View Progress Images</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+        <div class="modal-body ">
+          <div class="card-body  text-center">
+
+            <div class="row text-center align-bottom" >
+              {{#DailyProgressImage}}
+                <div class="col-sm-6 col-md-3  col-lg-2  mb-3 mb-sm-0 text-center align-bottom" >
+                  <div id="Block_{{id}}" >
+                    <a class=" hover-overlay ripple  align-bottom" href="javascript:void(0);" onclick="Popover_ProgressImageView('ProgressImage_{{id}}','{{image}}')" id="ProgressImage_{{id}}"  data-toggle="popover" data-placement="right"  style="text-decoration:none;" >
+                    <img alt="progress" class="img-fluid rounded" src="{{image}}" id="pop_image_{{id}}" /></a>
+                  </div>
+
+                  <button class="btn btn-info btn-sm degreeBtn" onClick="rotateImage_popover('-90','{{id}}','{{image}}')"> &#8635; </button>
+                  <button class="btn btn-info btn-sm degreeBtn" onClick="rotateImage_popover('90','{{id}}','{{image}}')"> &#8634;</button>
+                  <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_ProgressImage({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a>
+                  <input type="hidden" id="hid_src_{{id}}">
+                </div>
+              {{/DailyProgressImage}}
+                
+             
+            </div>
+          </div>
+        </div>
+
+           
+    
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        </div>
+    
+    </div>
+  </div>
+  
+{{/data}}
+
+
+</script>
+
+
+
+
+<script id="popover_viewImage"  type="text/x-mustache">
+  <div class="card ">
+    <div class="card-body">
+      <div class"row">
+        <div class="col-12">
+          <div id="loadImagePop">
+            <img alt="progress" id="imagePreview_pop" src="{{src}}" width="100%"/>
+          </div>
+            <input type="hidden" id="Hid_ImageId_pop" name="Hid_ImageId_pop" value="{{src}}">
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+
+
+<script id="Expenses_tmpl"  type="text/x-mustache">
+{{#data}}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Site Expenses</h6>
+       
+        <div class=" no-arrow">
+          <a class="btn btn-info" href="javascript:void(0);" role="button" onclick="addNewExpenses()">New Expenses</a>
+      </div>
+    </div>
+  
+  
+
+
+
+  <div class="card-body">
+    {{#Expenses.length}}
+    <div class="row justify-content-center mb-4">
+
+      <div class="col-sm-2 mb-3  form-group">
+        <label for="expense_type">Expense Type</label><br/>
+         <select class="form-control form-control-user" id="expense_type" name="expense_type" onchange="FilterExpenseTypeRange()" >
+            <option value="">--All Expenses--</option>
+            {{#ExpenseType}}
+              <option value="{{id}}">{{type}}</option>
+            {{/ExpenseType}}
+        </select>
+      </div>
+
+      <div  class="col-sm-3 mb-3 form-group" >
+        <label for="expense_date_range" style="margin-bottom: 15px;">Date Range</label><br/>
+        <div class="form-control form-control-user" id="expense_date_range"  name="expense_date_range" style="display:inline;">
+            <i class="fa fa-calendar"></i>&nbsp;
+            <span></span> <i class="fa fa-caret-down"></i>
+        </div>
+      </div>
+        
+    </div>
+
+
+    <div class="table-responsive" id="TableForSelectedRange">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_TenderExpense1" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>Expense Type</th>
+                <th>Summary</th>
+                <th>Report Date</th>
+                {{#admin}}
+                  <th>Amount</th>
+                {{/admin}}
+                <!-- <th>Photos</th> -->
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#Expenses}}
+              <tr class="text-center">
+                <td>
+                {{^admin}}
+                  {{^Accounts}}
+                    {{index}}
+                  {{/Accounts}}
+                {{/admin}}
+                {{#admin}}
+                  {{#closed}}#{{/closed}}
+                  {{^closed}}
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input CB_TenderExpense" value="{{id}}" name="CB_Expense" onclick="CountSelectedExpense()">
+                    </div>
+                  {{/closed}}
+
+                {{/admin}}
+
+                {{#Accounts}}
+                  {{#closed}}#{{/closed}}
+                  {{^closed}}
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input CB_TenderExpense" value="{{id}}" name="CB_Expense" onclick="CountSelectedExpense()">
+                    </div>
+                  {{/closed}}
+
+                {{/Accounts}}
+
+
+                </td>
+                <td>{{expense_type}}</td>
+                <td>{{summary}}</td>
+                <td>{{report_date}}</td>
+                {{#admin}}
+                  <td>{{amount_disp}}</td>
+                {{/admin}}
+               
+
+                <!-- <td></td> -->
+
+                <td class="col-sm-2" style="text-align:center"> 
+
+                  <a href="javascript:void(0);" class="btn btn-link p-0"  onclick="viewImage('{{image}}')"   > view </a>
+                  {{^closed}}
+                    | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Edit_Expense({{id}},{{expense_type_id}},{{amount}},'{{report_date}}','{{summary}}')"   title="Edit"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-edit text-info"></i> </a>
+                  {{/closed}}   
+                  {{#admin}} 
+
+                    | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_Expense({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a>
+
+                  {{/admin}}
+
+
+
+
+                </td>
+              </tr>
+            {{/Expenses}}
+              
+          </tbody>
+      </table>
+    </div>
+    <div>
+        <button class="btn btn-info d-none" id="btn_createVoucher" onclick="CreateVoucher();"> Create Voucher</button>
+    </div>
+  </div>
+    {{/Expenses.length}}
+    {{^Expenses.length}}
+        <div class="alert alert-danger">
+          <strong>No Expanse  Details  Found</strong>
+        </div>
+    {{/Expenses.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+
+
+<script id="subExpenses_tmpl"  type="text/x-mustache">
+{{#data}}
+  {{#Expenses.length}}
+    <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_TenderExpense2" >
+      <thead>
+          <tr class="text-center">
+            <th style="max-width: 2.4rem;">Sr #</th>
+            <th>Expense Type</th>
+            <th>Summary</th>
+            <th>Report Date</th>
+            {{#admin}}
+              <th>Amount</th>
+            {{/admin}}
+            <!-- <th>Photos</th> -->
+            <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+        {{resetIndex}}
+        {{#Expenses}}
+          <tr class="text-center">
+            <td>
+            {{^admin}}
+              {{index}}
+            {{/admin}}
+            {{#admin}}
+              {{#closed}}#{{/closed}}
+              {{^closed}}
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input CB_TenderExpense" value="{{id}}" name="CB_Expense" onclick="CountSelectedExpense()">
+                </div>
+              {{/closed}}
+
+            {{/admin}}
+
+            </td>
+            <td>{{expense_type}}</td>
+            <td>{{summary}}</td>
+            <td>{{report_date}}</td>
+            {{#admin}}
+              <td>{{amount_disp}}</td>
+            {{/admin}}
+           
+
+            <!-- <td></td> -->
+
+            <td class="col-sm-2" style="text-align:center"> 
+
+              <a href="javascript:void(0);" class="btn btn-link p-0"  onclick="viewImage('{{image}}')"   > view </a>
+              {{^closed}}
+                | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Edit_Expense({{id}},{{expense_type_id}},{{amount}},'{{report_date}}','{{summary}}')"   title="Edit"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-edit text-info"></i> </a>
+              {{/closed}}   
+              {{#admin}} 
+
+                | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_Expense({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a>
+
+              {{/admin}}
+
+
+
+
+            </td>
+          </tr>
+        {{/Expenses}}
+          
+      </tbody>
+    </table>
+  {{/Expenses.length}}
+  {{^Expenses.length}}
+    <div class="alert alert-danger">
+      <strong>No Expanse  Details  Found</strong>
+    </div>
+  {{/Expenses.length}}
+
+{{/data}}
+</script>
+
+
+
+<script id="addNewSiteExpenses"  type="text/x-mustache">
+  {{#data}}
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" >Site Expenses</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="SiteExpensesForm" method="post">
+  
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="row  mb-3 ">
+              <div class="col-lg-4 col-md-4 col-sm-12 mb-3 mb-sm-0 form-group">
+                <label for="Challan_vendor">Expense Date</label>
+                <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="expense_date" name="expense_date" >
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 mb-3 mb-sm-0 form-group">
+                <label for="Challan_vendor">Expense Type</label>
+                <select class="form-control form-control-user" style="width:-webkit-fill-available"  id="expense_type" name="expense_type" >
+                    <option value="">--SELECT--</option>
+                    {{#ExpenseType}}
+                      <option value="{{id}}">{{type}}</option>
+                    {{/ExpenseType}}
+                </select>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 mb-3 mb-sm-0 form-group">
+                <label for="Challan_vendor">Expense Amount</label>
+                <input type="number" class="form-control form-control-user" style="width:-webkit-fill-available" id="expense_amount" name="expense_amount" >
+              </div>
+
+              
+            </div>
+
+            <div class=" row  mb-3 ">
+              
+              <div class="col-12">
+                <label for="expense_summary">Expanse Summary</label>
+                <div class="form-group ">
+                  <textarea class="form-control form-control-user" id="expense_summary" name="expense_summary" placeholder="" rows="2" ></textarea>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+
+              <div class="col-sm-12 form-group">
+                <div id="UploadExpenses_Div">
+                  <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadExpenses" name="UploadExpenses" placeholder="Upload"  hidden oninput="CheckUploadedFile_('UploadExpenses')" >
+                  
+                  <label class="btn btn-info" for="UploadExpenses" ><i class="fas fa-upload  text-white-300"></i> upload</label>
+                </div>
+                  <span class="label mt-2" id="UploadExpenses_Label"></span>
+              </div>
+            </div>
+               
+          </div>
+    
+        <div class="modal-footer">
+  
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  
+          <button type="submit" id="SubmitButton" class="btn btn-primary" >submit</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+  
+        </div>
+  
+      </form>
+  
+    </div>
+  </div>
+  
+  {{/data}}
+
+
+</script>
+
+
+
+<script id="closeVouchers_tmpl"  type="text/x-mustache">
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel"><span id="ModelTitle">Create New Vouchers</span></h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+
+                   
+      <form id="VoucherBillsForm" method='post' >
+
+        <div class="modal-body">
+          <div class="card-body">
+
+          <div class=" row">
+            
+              <div class="col-sm-6 mb-3 form-group ">
+                <input type="hidden" name="voucher_ids" id="voucher_ids">
+                <label for="voucher_bill_number">Voucher Number</label> <br/>
+                <span id="DisplayVoucherBillNumber"  ></span>
+                <input type="hidden" id="voucher_bill_number" name="voucher_bill_number" value="" readonly>
+              </div>
+
+
+              <div class="col-sm-6 mb-3 form-group ">
+                <label for="voucher_billdate">Voucher Date</label>
+                <input type="date" class="form-control form-control-user" style="width:-webkit-fill-available" id="voucher_billdate" name="voucher_billdate">
+              </div>
+              <div class="col-sm-12 mb-3 form-group ">
+                  <label for="voucher_billAmount">Voucher Amount</label>
+                  <input type="number" class="form-control form-control-user" id="voucher_billAmount" name="voucher_billAmount" placeholder="" value="">
+              </div>
+                  
+              <div class="col-12">
+                <label for="voucher_billdescription">Description</label>
+                <div class="form-group ">
+                  <textarea class="form-control form-control-user" id="voucher_billdescription" name="voucher_billdescription"  rows="3" ></textarea>
+                </div>
+              </div>
+
+              
+            </div>
+            
+          </div>
+
+        </div>
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+          <button type="submit" id="SubmitButton" class="btn btn-primary" ><span id="SubmitBtnText"></span> Create Voucher</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+
+</script>
+
+
+
+<script id="CreatedVouchers_tmpl"  type="text/x-mustache">
+{{#data}}
+
+
+<div class="card shadow mb-4">
+
+
+  <div class="card-body">
+    {{#CreatedVoucher.length}}
+
+    <div class="table-responsive" id="TableForSelectedVendor">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_CreatedVouchers" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>Voucher Number</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Expense Amount</th>
+             
+                <th>Expenses</th>
+
+                {{#admin}} 
+                <th>Action</th>
+                {{/admin}} 
+              
+
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#CreatedVoucher}}
+              <tr class="text-center">
+                <td>
+                  {{index}}
+                </td>
+                <td>{{expenses_number}}</td>
+                <td>{{expenses_date}}</td>
+                <td>{{expenses_description}}</td>
+                <td>{{expenses_amount}}</td>
+                <td><a href="javascript:void(0);"   onclick="viewExpencesIds('{{expense_ids}}','{{id}}')"> View </a> </td>
+
+                {{#admin}}
+                <td style="min-width:85px" > 
+                    <a href="javascript:void(0);" class="btn btn-link p-0" onclick="Delete_Voucher({{id}})"   title="Remove"  data-toggle="tooltip" data-placement="top" > <i class="fas fa-trash text-danger"></i> </a> 
+                </td>
+                {{/admin}}
+              
+
+
+              </tr>
+            {{/CreatedVoucher}}
+              
+          </tbody>
+      </table>
+    </div>
+    <div>
+        <button class="btn btn-info d-none" id="btn_createBill" onclick="CreateBills();"> Create Bill</button>
+    </div>
+  </div>
+    {{/CreatedVoucher.length}}
+    {{^CreatedVoucher.length}}
+        <div class="alert alert-danger">
+          <strong>No Vouchers created yet!</strong>
+        </div>
+    {{/CreatedVoucher.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+<script id="CreatedVoucherBills"  type="text/x-mustache">
+{{#data}}
+
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title text-primary" id="">Debit Voucher</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="card-body mb-4" id="Print_DebitVoucher">
+        
+        <h3 class="text-center">Dev Engineers</h3>
+        <h6 style="font-size: 0.9rem">Off.: 307, Jalaram Business Center, Ganjawala Lane, Nr.Chamunda Circle, Borivali, (West), Mumbai 400 092.</h6>
+        <div style="width: 40%; float:left; font-weight:bold"> Voucher No :  {{VoucherNumber}} </div>
+        <div style="width: 40%; float:left; font-weight:bold">&nbsp </div>
+        <div style="width: 20% ;  float:right; text-right; font-weight:bold"> Date :  {{VoucherDate}} </div>
+        <div style="clear:both;"></div>
+        <div>
+
+          <table class="table table-bordered mt-2" >
+            <tr>
+              <td colspan="4">Debit to A/c : {{TenderName}}</td>
+
+            </tr>
+            <tr>
+              <td colspan="4">Paid to : {{SiteIncharge}} </td>
+            </tr>
+            <tr class="font-weight-bold" style="background:#f1f1f1;">
+              <td class="text-center">Expense Type</td>
+              <td class="text-center">Summary</td>
+              <td class="text-center">Expense Date</td>
+              <td class="text-center">Rs.</td>
+            </tr>
+            {{#Expenses}}
+              <tr style="background:#f1f1f1;">
+                <td>{{expense_type}}</td>
+                <td >{{summary}}</td>
+                <td class="text-center">{{report_date}}</td>
+                <td class="text-right">{{amount}}</td>
+              </tr>
+            {{/Expenses}}
+              <tr style="background:#f1f1f1;">
+                <td colspan="3" class="text-right">Total</td>
+                <td class="text-right">{{TotalAmount}}</td>
+              </tr>
+              <tr style="background:#f1f1f1;">
+                <td colspan="4" style="font-weight:bold;">{{InWords}}</td>
+              </tr>
+          </table>
+          <div class="float-right">Received Payment as above</div>
+
+          <div style="clear:both"></div>
+          <div style="width: 25%; float:left">&nbsp </div>
+          <div style="width: 25%; float:left">&nbsp </div>
+          <div style="width: 35%; float:left">&nbsp </div>
+          <div style="width: 15%; float:right"> 
+            <div style="width: 70px;height: 70px; border: 1px solid #d3cece; "></div> 
+          </div>
+          <div style="clear:both"></div>
+
+          <div style="width: 15%; float:left">&nbsp </div>
+          <div style="width: 25%; float:left" > <span style="border-top: 1px solid #d3cece; ">Authorised by</span> </div>
+          <div style="width: 35%; float:left"> <span style="border-top: 1px solid #d3cece; ">Verified by</span> </div>
+          <div style="width: 25%; float:right; text-align:center;"><span style="">Receiver's Signature</span> </div>
+
+
+
+
+
+        </div>
+
+   
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-danger btn-md" onclick="PrintContent('Print_DebitVoucher')"> Print <i class="fas fa-print " title="PDF" ></i></button>
+
+    </div>
+  </div>
+</div>
+
+
+{{/data}}
+</script>
+
+
+
+<script id="addNewTenderBOQItem_templ"  type="text/x-mustache">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title text-primary" id="exampleModalLabel">Add New BOQ Item</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <form id="TenderBOQItemForm" method="post">
+  
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-sm-12 form-group">
+                <label for="boq_item">Item</label>
+                <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="boq_item" name="boq_item">
+                
+              </div>
+              <div class="col-sm-12 form-group">
+                  <label for="boq_description">Description</label>
+                  <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="boq_description" name="boq_description" >
+              </div>
+              <div class="col-sm-12 form-group">
+                  <label for="boq_total_qty">Total Quantity</label>
+                  <input type="number" class="form-control form-control-user" style="width:-webkit-fill-available" id="boq_total_qty" name="boq_total_qty" >
+              </div>
+              <div class="col-sm-12 form-group">
+                  <label for="boq_unit">Units</label>
+                  <input type="text" class="form-control form-control-user" style="width:-webkit-fill-available" id="boq_unit" name="boq_unit" >
+              </div>
+              <div class="col-sm-12 form-group">
+                  <label for="boq_amount">Amount</label>
+                  <input type="number" class="form-control form-control-user" style="width:-webkit-fill-available" id="boq_amount" name="boq_amount"  >
+              </div>
+            </div>
+
+            
+               
+          </div>
+    
+        <div class="modal-footer">
+  
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  
+          <button type="submit" id="SubmitButton" class="btn btn-primary" >submit</button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+            Please Wait...
+          </button>
+  
+        </div>
+  
+      </form>
+  
+    </div>
+  </div>
+  
+
+
+</script>
+
+
+<script id="Documents_tmpl"  type="text/x-mustache">
+{{#data}}
+
+
+<div class="card shadow mb-4">
+  <form id="AddDocumentsForm">
+
+  <div class="card-body">
+    <div class="row">
+
+
+        <div class="col-md-2 col-sm-12 form-group">
+          <label for="challan_billAmount">Category</label>
+          <select class="form-control  form-control-user" id="document_category" name="document_category">
+              <option value="">--SELECT--</option>
+              {{#Category}}
+                <option value="{{id}}">{{name}}</option>
+              {{/Category}}
+          </select>
+        </div>
+        <div class="col-md-2 col-sm-12 form-group">
+          <label for="document_tag1">TAG1</label>
+          <input type="text" class="form-control form-control-user" id="document_tag1" name="document_tag1" >
+        </div>
+        <div class="col-md-2 col-sm-12 form-group">
+          <label for="document_tag2">TAG2</label>
+          <input type="text" class="form-control form-control-user" id="document_tag2" name="document_tag2" >
+        </div>
+        <div class="col-md-2 col-sm-12 form-group">
+          <br/>
+          <div id="UploadDocument_Div" class="mt-2">
+            <input type="file" class="form-control form-control-user" style="width:-webkit-fill-available" id="UploadDocument" name="UploadDocument" placeholder="Upload"  hidden oninput="CheckUploadedFile_('UploadDocument')"  onchange="$('#uploadBillInfo').text(this.files[0].name)">
+            
+            <label class="btn btn-info" for="UploadDocument" ><i class="fas fa-upload  text-white-300"></i> Select Files</label>
+          </div>
+            <span class="label mt-2" id="UploadDocument_Label"></span>
+        </div>
+
+        <div class="col-md-2 col-sm-12 form-group mt-2">
+          </br>
+          <button type="submit" id="SubmitButton" class="btn btn-primary" ><span id="SubmitBtnText"></span> Upload </button>
+          <button class="btn btn-primary d-none"  id="LoadingBtn" disabled>
+            <span class="spinner-border spinner-border-sm"></span>
+              Please Wait...
+          </button>
+        </div>
+
+
+
+    </div>
+    <div class="progress col-md-6 col-sm-12" >
+        <div class="progressDoc-bar"></div>
+    </div>
+  </div>
+
+  </form>
+
+  <div class="card-body">
+    
+    <div class="row mt-4 mb-4">
+      <div class="col-md-4 mb-4 mb-3 form-group">
+      </div>
+      <label class="col-sm-6 col-md-1" for="">Category</label>
+      <div class="col-sm-6 col-md-2 mb-sm-0 form-group">
+        <select class="form-control  form-control-user" onchange="filterCategory(this.value)">
+          <option value="">All Category</option>
+          {{#Category}}
+            <option value="{{id}}">{{name}}</option>
+          {{/Category}}
+        </select>
+      </div>
+    </div>
+
+    {{#Documents.length}}
+    <div class="table-responsive" id="TableForSelectedDocumentCategory">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_Documents" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>File Tags</th>
+                <th>Size</th>
+                <th>Uploaded By</th>
+                <th>Category</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#Documents}}
+              <tr class="text-center">
+                <td>
+                  {{index}}
+                </td>
+                <td>{{tag1}}, {{tag2}}</td>
+                <td><span id="DocList_{{id}}"></span> {{size}}</td>
+                <td>{{userName}}</td>
+                <td>{{category_type}}</td>
+                <td style="min-width:85px" > 
+                  <a href="javascript:void(0);" class="btn btn-link p-0" onclick="DownloadImage_PHPCode('{{id}}')"   title="Download"  data-toggle="tooltip" data-placement="top" >Download</a> 
+                  | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="clickToCopy('{{id}}')"   title="Copy"  data-toggle="tooltip" data-placement="top" >Copy</a> 
+                </td>
+              
+              </tr>
+            {{/Documents}}
+              
+          </tbody>
+      </table>
+    </div>
+    <div>
+        <button class="btn btn-info d-none" id="btn_createBill" onclick="CreateBills();"> Create Bill</button>
+    </div>
+  </div>
+  {{/Documents.length}}
+    {{^Documents.length}}
+        <div class="alert alert-danger">
+          <strong>No Documents created yet!</strong>
+        </div>
+    {{/Documents.length}}
+
+</div>
+
+
+
+
+
+{{/data}}
+</script>
+
+
+<script id="Documents_tmpl_sub"  type="text/x-mustache">
+{{#data}}
+
+    {{#Documents.length}}
+    <div class="table-responsive" id="TableForSelectedDocumentCategory">
+      <table class="table table-bordered" width="100%" cellspacing="0"  id="Dt_Documents_sub" >
+          <thead>
+              <tr class="text-center">
+                <th style="max-width: 2.4rem;">Sr #</th>
+                <th>File Tags</th>
+                <th>Size</th>
+                <th>Uploaded By</th>
+                <th>Category</th>
+                <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {{resetIndex}}
+            {{#Documents}}
+              <tr class="text-center">
+                <td>
+                  {{index}}
+                </td>
+                <td>{{tag1}}, {{tag1}}</td>
+                <td><span id="DocList_{{id}}"></span> {{size}}</td>
+                <td>{{userName}}</td>
+                <td>{{category_type}}</td>
+                <td style="min-width:85px" > 
+                  <a href="javascript:void(0);" class="btn btn-link p-0" onclick="DownloadImage_PHPCode('{{id}}')"   title="Download"  data-toggle="tooltip" data-placement="top" >Download</a> 
+                  | <a href="javascript:void(0);" class="btn btn-link p-0" onclick="clickToCopy('{{id}}')"   title="Copy"  data-toggle="tooltip" data-placement="top" >Copy</a> 
+                </td>
+              
+              </tr>
+            {{/Documents}}
+              
+          </tbody>
+      </table>
+    </div>
+   
+  {{/Documents.length}}
+  {{^Documents.length}}
+      <div class="alert alert-danger">
+        <strong>No Documents created yet!</strong>
+      </div>
+  {{/Documents.length}}
+
+
+{{/data}}
+</script>

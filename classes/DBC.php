@@ -259,6 +259,14 @@ class DBC extends mysqli
         return $this->insert_id;
     }
 
+    public function get_next_insert_id($table){
+        $sql = "SHOW TABLE STATUS LIKE '$table'";
+        $result = $this->query($sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row['Auto_increment'];
+    }
+
+
 
     
 

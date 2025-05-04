@@ -24,7 +24,7 @@
     </a>
 
     <!-- Modal-->
-    <div class="modal fade" id="BaseModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade small-device" id="BaseModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
     </div>
 
@@ -51,6 +51,7 @@
 <script type="text/javascript" src="js/MS_BOQ.js"></script>
 <script type="text/javascript" src="js/MS_TenderDetails.js"></script>
 <script type="text/javascript" src="js/MS_Inventory.js"></script>
+<script type="text/javascript" src="js/MS_Request.js"></script>
 
 <!-- <script type="text/javascript" src="assets/js/MS_Employees.js"></script> -->
 

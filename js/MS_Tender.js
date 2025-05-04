@@ -1500,7 +1500,9 @@ function ShowRequest(){
 }
 
 function ViewAllTenderPO(){
-  alert('here');
+  // alert('here');
 }
+
+
 
 
