@@ -715,6 +715,65 @@ Set Arrow Properties
 </style>
 
 
+
+  <style>
+   
+   .chat-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      height: 75vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 75%;
+    }
+    .sent {
+      align-self: flex-end;
+      background-color: #dcf8c6;
+    }
+    .received {
+      align-self: flex-start;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+    }
+    .timestamp {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 5px;
+    }
+    .username {
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .chat-footer {
+      border-top: 1px solid #ccc;
+      padding: 10px;
+      background-color: #f8f9fa;
+    }
+    .chat-footer .form-control {
+      border-radius: 20px;
+    }
+    .chat-footer .btn {
+      border-radius: 20px;
+    }
+  </style>
+
+
 </body>
 
 </html>

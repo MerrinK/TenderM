@@ -1,5 +1,7 @@
 <?php
+include "wassenger.php";
 include "config.php";
+
 
 /*
 ini_set('display_errors', 0);
@@ -32,14 +34,6 @@ if(isset($data['action']) &&  $data['action'] != ''){
     // Upload Challans
     if($action == "uploadTesting") {
 
-//         userid
-// tenderid
-// expense_type
-// challannumber
-// challandate
-// challandescription
-// photo
-// photo_str
 
     }
     if($action == "uploadChallan") {
@@ -49,7 +43,8 @@ if(isset($data['action']) &&  $data['action'] != ''){
         $userid = $dbc->real_escape_string(trim($data['userid']));
         $userid = (is_numeric($userid) ? (int)$userid : 0);
 
-      
+
+
         if($userid <= 0) {
             $opData->status     =   "fail";
             $opData->message     =   "User ID is missing!!!";
@@ -217,13 +212,18 @@ if(isset($data['action']) &&  $data['action'] != ''){
                 $dbc->insert_query($db,"tender_challan");
 
 
-            $sql = "SELECT tc.*, tenders.TenderName, vendors.company_name FROM `tender_challan` as tc, tenders, vendors where tc.tender_id=$tenderid and tc.created_by=$userid and tc.deleted=0 and tc.tender_id=tenders.id and tc.vendor_id=vendors.id order by tc.created_date desc";
 
-    		$result = $dbc->get_result($sql);
+              
 
-    		if(count($result)) {
-    		    $opData->challans = $result;
-    		}
+
+
+                // $sql = "SELECT tc.*, tenders.TenderName, vendors.company_name FROM `tender_challan` as tc, tenders, vendors where tc.tender_id=$tenderid and tc.created_by=$userid and tc.deleted=0 and tc.tender_id=tenders.id and tc.vendor_id=vendors.id order by tc.created_date desc";
+
+        		// $result = $dbc->get_result($sql);
+
+        		// if(count($result)) {
+        		//     $opData->challans = $result;
+        		// }
 
                 $opData->status     =   "success";
                 $opData->message     =   "Challan Uploaded Successfully !!!";
@@ -261,13 +261,43 @@ if(isset($data['action']) &&  $data['action'] != ''){
                 $opData->status     =   "success";
                 $opData->message     =   "Challan Uploadeds Successfully !!!";
 
-		$sql = "SELECT tc.*, tenders.TenderName, vendors.company_name FROM `tender_challan` as tc, tenders, vendors where tc.tender_id=$tenderid and tc.created_by=$userid and tc.deleted=0 and tc.tender_id=tenders.id and tc.vendor_id=vendors.id order by tc.created_date desc";
 
-        $result = $dbc->get_result($sql);
+                $sql1 = "SELECT CONCAT(first_name,' ', last_name) AS name FROM `users` where id=$userid";
+                $result1 = $dbc->get_result($sql1);
+                $sql2 = "SELECT t.TenderName, CONCAT(u.first_name,' ', u.last_name) AS SiteIncharge, u.mobile  FROM `tenders` t INNER JOIN users u ON u.id=t.SiteIncharge where t.id=$tenderid";
+                $result2 = $dbc->get_result($sql2);
+                $sql3 = "SELECT company_name FROM `vendors` where id=$vendorid";
+                $result3 = $dbc->get_result($sql3);
+                
 
-		if(count($result)) {
-		    $opData->challans = $result;
-		}
+                $updatedPath = str_replace('./', '/', $db['challan_image']);
+                $Img='https://www.devengineers.com/tenderm'. $updatedPath;
+                $mobile='+91'.$result2[0]['mobile'];
+
+
+                $message = "🔔 *Challan Added*\n\n" .
+                   "*By:* ".$result1[0]['name']."\n" .
+                   "*Tender:* ".$result2[0]['TenderName']."\n" .
+                   "*Vendor:* ".$result3[0]['company_name']."\n" .
+                   "*Amount:* ₹".$data['challanamount']."\n" .
+                   "*Challan No:* ".$data['challannumber']."\n" .
+                   "*Date:* ".$data['challandate']."\n" .
+                   "*Description:* \n".$data['challandescription']."\n" .
+                   "*Image:* \n".$Img;
+
+
+
+                $WhMSg1= sendWhatsappMessage($mobile, $message);
+
+
+
+		// $sql = "SELECT tc.*, tenders.TenderName, vendors.company_name FROM `tender_challan` as tc, tenders, vendors where tc.tender_id=$tenderid and tc.created_by=$userid and tc.deleted=0 and tc.tender_id=tenders.id and tc.vendor_id=vendors.id order by tc.created_date desc";
+
+        // $result = $dbc->get_result($sql);
+
+		// if(count($result)) {
+		//     $opData->challans = $result;
+		// }
 
                 file_put_contents($logFile, json_encode($opData), FILE_APPEND | LOCK_EX);                        
 
@@ -798,6 +828,13 @@ if(isset($data['action']) &&  $data['action'] != ''){
                 $opData->status     =   "success";
                 $opData->message     =   "Labor Bill Uploadeds Successfully !!!";
 
+
+
+               
+
+
+
+
 		
                 $sql = "SELECT tc.*, tenders.TenderName, vendors.company_name FROM `tender_labour_bills` as tc, tenders, vendors where tc.tender_id=$tenderid and tc.created_by=$userid and tc.deleted=0 and tc.tender_id=tenders.id and tc.vendor=vendors.id order by tc.created_date desc";
                 $result = $dbc->get_result($sql);
@@ -1011,6 +1048,36 @@ if(isset($data['action']) &&  $data['action'] != ''){
                 $dbc->insert_query($db,"tender_labour_bills");
                 $opData->status     =   "success";
                 $opData->message     =   "Labor Bill Uploadeds Successfully !!!";
+
+
+
+                $sql1 = "SELECT CONCAT(first_name,' ', last_name) AS name FROM `users` where id=$user_id";
+                $result1 = $dbc->get_result($sql1);
+                $sql2 = "SELECT t.TenderName, CONCAT(u.first_name,' ', u.last_name) AS SiteIncharge, u.mobile  FROM `tenders` t INNER JOIN users u ON u.id=t.SiteIncharge where t.id=$tender_id";
+                $result2 = $dbc->get_result($sql2);
+                $sql3 = "SELECT company_name FROM `vendors` where id=$vendor_id";
+                $result3 = $dbc->get_result($sql3);
+                
+
+                $updatedPath = str_replace('./', '/', $db['upload_bill']);
+                $Img='https://www.devengineers.com/tenderm'. $updatedPath;
+                $mobile='+91'.$result2[0]['mobile'];
+
+
+                $message = "🔔 *Labor Bill Added*\n\n" .
+                   "*By:* ".$result1[0]['name']."\n" .
+                   "*mobile:* ".$result2[0]['mobile']."\n" .
+                   "*Tender:* ".$result2[0]['TenderName']."\n" .
+                   "*Vendor:* ".$result3[0]['company_name']."\n" .
+                   "*Amount:* ₹".$bill_amount."\n" .
+                   "*Bill No:* ".$bill_number."\n" .
+                   "*Date:* ".$bill_date."\n" .
+                   "*Description:* \n".$bill_name."\n" .
+                   "*Image:* \n".$Img;
+
+
+                $WhMSg1= sendWhatsappMessage($mobile, $message);
+
 
         
                 $sql = "SELECT tc.*, tenders.TenderName, vendors.company_name FROM `tender_labour_bills` as tc, tenders, vendors where tc.tender_id=$tenderid and tc.created_by=$userid and tc.deleted=0 and tc.tender_id=tenders.id and tc.vendor=vendors.id order by tc.created_date desc";
@@ -1399,6 +1466,39 @@ if(isset($data['action']) &&  $data['action'] != ''){
                 $dbc->insert_query($db,"expenses");
                 $opData->status     =   "success";
                 $opData->message     =   "Expense Details Uploaded Successfully !!!";
+
+
+
+                $sql1 = "SELECT CONCAT(first_name,' ', last_name) AS name FROM `users` where id=$user_id";
+                $result1 = $dbc->get_result($sql1);
+                $sql2 = "SELECT t.TenderName, CONCAT(u.first_name,' ', u.last_name) AS SiteIncharge, u.mobile  FROM `tenders` t INNER JOIN users u ON u.id=t.SiteIncharge where t.id=$tender_id";
+                $result2 = $dbc->get_result($sql2);
+                $sql3 = "SELECT type FROM `expense_type` where id=$expense_type";
+                $result3 = $dbc->get_result($sql3);
+                
+
+                $updatedPath = str_replace('./', '/', $db['image']);
+                $Img='https://www.devengineers.com/tenderm'. $updatedPath;
+                $mobile='+91'.$result2[0]['mobile'];
+
+
+                $message = "🔔 *Expense Added*\n\n" .
+                   "*By:* ".$result1[0]['name']."\n" .
+                   "*mobile:* ".$result2[0]['mobile']."\n" .
+                   "*Tender:* ".$result2[0]['TenderName']."\n" .
+                   "*Expense Type:* ".$result3[0]['type']."\n" .
+                   "*Amount:* ₹".$amount."\n" .
+                   "*Date:* ".$date."\n" .
+                   "*Summary:* \n".$summary."\n" .
+                   "*Image:* \n".$Img;
+
+
+                $WhMSg1= sendWhatsappMessage($mobile, $message);
+
+
+
+
+
 
                
                 $sql = "SELECT tc.*, tenders.TenderName, expense_type.type FROM `expenses` as tc, tenders, expense_type where tc.tender_id=$tender_id and tc.created_by=$user_id and tc.deleted=0 and tc.tender_id=tenders.id and tc.expense_type=expense_type.id order by tc.created_date desc limit 5";

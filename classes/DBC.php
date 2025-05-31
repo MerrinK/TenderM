@@ -40,38 +40,38 @@ class DBC extends mysqli
 	
 	function _createInsertQuery($data,$table)
 	{
-		$query = 'insert  into ' . $table . ' (';
-                while (list($columns, ) = each($data)) {
-                                $query .= $columns . ', ';
-                }
+		$query = 'INSERT INTO ' . $table . ' (';
 
+        // Build the columns part of the query
+        foreach ($data as $column => $value) {
+            $query .= $column . ', ';
+        }
         $query = substr($query, 0, -2) . ') values (';
-        reset($data);
-       // echo $query."\n";
-        while (list(, $value) = each($data)) 
-        {
+
+        // Build the values part of the query
+        foreach ($data as $value) {
             switch ((string)$value) {
                 case 'now()':
-                $query .= 'now(), ';
-                break;
-
+                    $query .= 'now(), ';
+                    break;
                 case 'null':
-                $query .= 'null, ';
-                break;
-
+                case NULL:
+                    $query .= 'null, ';
+                    break;
                 default:
-                $query .= '\'' . addslashes($value) . '\', ';
-                break;
+                    $query .= '\'' . addslashes($value) . '\', ';
+                    break;
             }
         }
         $query = substr($query, 0, -2) . ')';
+    
         return $query;
 	}
 
     function insert_query($data, $table){
         //CommonFunction::addAccessLog($this,"DBC::insert_query","MODIFY",$table,json_encode($data));
         $query=$this->_createInsertQuery($data,$table);
-        //echo $query;
+        // echo $query;
         $this->queryresult = $this->update($query);
         if ($this->queryresult) { return true; } else { return false; }
     }

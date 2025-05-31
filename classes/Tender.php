@@ -1064,6 +1064,43 @@ public function DeleteBill(){
 		$data=array("Tender"=>$result0);
 		ajaxResponse("1", $data);
 	}
+
+	public function sendMessage(){
+
+        $data=array();
+		$data['sender_id']=$_SESSION['USER_ID'];
+		$data['message']=$_REQUEST['message'];
+		$data['chatbox_id']=$_REQUEST['po_id'];
+		$data['created_at']=date('Y-m-d H:i:s');
+		// $data['receiver_id']=0;
+		// print_r($data);
+
+		$result=$this->dbc->insert_query($data,"chats");
+
+		$chats = $this->dbc->get_insert_id();
+
+		if($chats>=1){
+			$data=array("Message"=>'chat added successfully');
+			ajaxResponse("1", $data);
+
+		}
+        
+
+
+	}
+
+	public function getMessages(){
+		$po_id=$_REQUEST['po_id'];
+
+		$sql= "SELECT c.*, CONCAT(u.first_name, ' ', u.last_name) AS username FROM chats c INNER JOIN users u ON u.id= c.sender_id WHERE c.deleted=0  AND  c.chatbox_id = '$po_id' ";
+		$result = $this->dbc->get_result($sql);
+
+		$data=array("po_id"=>$po_id,"Messages"=>$result,"user_id"=>$_SESSION['USER_ID']);
+		ajaxResponse("1", $data);
+
+	}
+
+
 }
 ?>
 
